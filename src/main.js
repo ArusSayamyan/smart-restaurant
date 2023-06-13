@@ -1,4 +1,8 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import BaseWrapper from "@/base/BaseWrapper.vue";
 
-createApp(App).mount('#app')
+const app = createApp(App);
+
+app.component('base-wrapper', BaseWrapper)
+app.mount('#app')
