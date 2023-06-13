@@ -13,28 +13,4 @@
 
 </script>
 
-<style scoped lang="scss">
-.nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 0;
-
-  &__logo {
-    margin-right: 15px;
-    width: 50px;
-  }
-
-  &__logoWrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  &__restaurantName {
-    color: #fff;
-    font-weight: 700;
-    font-size: 30px;
-  }
-}
-</style>
+<style scoped lang="scss" src="../styles/theNav.scss"></style>
