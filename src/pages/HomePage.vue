@@ -32,6 +32,10 @@ function checkCode() {
       status.value = obj.status
       enteredCode.value = null;
       router.push('/' + status.value)
+      localStorage.setItem('name', JSON.stringify({
+        name: obj.name,
+        statue: obj.status
+      }))
     }else {
       codeNotFound.value = true
     }

@@ -1,0 +1,138 @@
+.waitersPage {
+
+
+  &__main {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  &__orders{
+    max-width: 550px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__createOrder {
+    max-width: 200px;
+    width: 100%;
+    padding: 20px;
+    background-color: darkolivegreen;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  &__exit {
+    max-width: 100px;
+    width: 100%;
+    padding: 20px;
+    background-color: red;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__exitImg {
+    width: 30px;
+    height: 30px;
+  }
+
+  &__text {
+    text-align: center;
+    text-transform: uppercase;
+    color: #ffffff;
+  }
+
+  &__date {
+    background: #ccc;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 24px;
+  }
+
+
+  //changed
+
+  &__title {
+    font-size: 35px;
+    text-align: center;
+    font-weight: 700;
+    color: green;
+    text-transform: uppercase;
+    margin-bottom: 55px;
+  }
+
+  &__mainContent {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__formWrapper {
+    max-width: 350px;
+    width: 100%;
+  }
+
+  &__form {
+    width: 100%;
+    padding: 25px;
+    box-sizing: border-box;
+    box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
+    border-radius: 8px;
+  }
+
+  &__saveOrderBtn {
+    max-width: 150px;
+    width: 100%;
+    padding: 10px 0;
+    border: none;
+    border-radius: 8px;
+    margin: 0 auto;
+    display: block;
+    background: green;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+
+    &:hover {
+      background: #ffffff;
+      outline: 2px solid green;
+      color: green;
+    }
+  }
+
+  &__tableNumInput {
+    background: #ffffff;
+    border: 1px solid #ced4da;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    border-radius: 6px;
+    padding: 13px 13px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    width: 100%;
+    outline: none;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+
+  &__totalPrice {
+    margin: 0;
+    text-align: center;
+  }
+}
+
+.p-component {
+  width: 100%;
+  margin-bottom: 20px;
+}
