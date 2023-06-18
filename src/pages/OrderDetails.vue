@@ -8,7 +8,7 @@
         </div>
         <div class="orderDetails__check">
           <div class="orderDetails__header">
-            <h1>check</h1>
+            <h1>Order list</h1>
             <span v-if="select.length > 0">total price is {{ doubleCount }}$</span>
           </div>
           <table v-if="select.length > 0">
@@ -77,7 +77,14 @@
 import Accordion from 'primevue/accordion';
 import AccordionTab from 'primevue/accordiontab';
 import OrderList from 'primevue/orderlist';
-import img from '@/assets/logo.svg';
+
+//import images
+import eggBurger from '@/assets/eggBurger.png';
+import beef from '@/assets/beef.png';
+import cheese from '@/assets/cheese.png';
+import creamy from '@/assets/creamy.png';
+import chicken from '@/assets/chicken.png';
+import barbeque from '@/assets/barbeque.png';
 
 
 import {ref, computed} from 'vue';
@@ -86,40 +93,40 @@ const selection = ref()
 const select = ref([])
 const products = ref([
   {
-    name: 'product1',
+    name: 'Egg burger',
     price: '55',
-    img: img,
+    img: eggBurger,
     count: 0
   },
   {
-    name: 'product2',
+    name: 'Beef burger',
     price: '60',
-    img: img,
+    img: beef,
     count: 0
   },
   {
-    name: 'product3',
+    name: 'Cheese burger',
     price: '20',
-    img: img,
+    img: cheese,
     count: 0
   },
   {
-    name: 'product4',
+    name: 'Creamy mushroom',
     price: '55',
-    img: img,
+    img: creamy,
     count: 0
 
   },
   {
-    name: 'product5',
+    name: 'Spicy chicken',
     price: '60',
-    img: img,
+    img: chicken,
     count: 0
   },
   {
-    name: 'product6',
+    name: 'Barbeque chicken',
     price: '20',
-    img: img,
+    img: barbeque,
     count: 0
   }
 ]);
@@ -203,7 +210,7 @@ function selected() {
 }
 
 .w-4rem.shadow-2.flex-shrink-0.border-round {
-  width: 40px !important;
+  width: 60px !important;
 }
 
 .flex.flex-wrap.p-2.align-items-center.gap-3 {
