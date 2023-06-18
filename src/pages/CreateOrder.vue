@@ -41,17 +41,16 @@
           </div>
           <div class="createOrder__content">
             <p class="createOrder__btn" @click="getNumber($event)">7</p>
-            <p class="createOrder__btn">8</p>
-            <p class="createOrder__btn">9</p>
-            <p class="createOrder__btn">4</p>
-            <p class="createOrder__btn">5</p>
-            <p class="createOrder__btn">6</p>
-            <p class="createOrder__btn">1</p>
-            <p class="createOrder__btn">2</p>
-            <p class="createOrder__btn">3</p>
-            <p class="createOrder__btn">0</p>
-            <p class="createOrder__btn">.</p>
-            <p class="createOrder__btn">del</p>
+            <p class="createOrder__btn" @click="getNumber($event)">8</p>
+            <p class="createOrder__btn" @click="getNumber($event)">9</p>
+            <p class="createOrder__btn" @click="getNumber($event)">4</p>
+            <p class="createOrder__btn" @click="getNumber($event)">5</p>
+            <p class="createOrder__btn" @click="getNumber($event)">6</p>
+            <p class="createOrder__btn" @click="getNumber($event)">1</p>
+            <p class="createOrder__btn" @click="getNumber($event)">2</p>
+            <p class="createOrder__btn" @click="getNumber($event)">3</p>
+            <p class="createOrder__btn" @click="getNumber($event)">0</p>
+            <p class="createOrder__btn" @click="delNumber">del</p>
           </div>
           <button :disabled="disabled" class="createOrder__create" @click="orderDetails">
             create new order
@@ -82,7 +81,7 @@ const addCount = ref();
 const tabNumber = ref();
 const disabled = ref(true);
 function getNumber(event) {
-  count.value.value = event.target.textContent
+  count.value.value = count.value.value + event.target.textContent
 }
 
 function setCount() {
@@ -104,6 +103,12 @@ function getTableNumber(tableNum) {
 // change main page
 function orderDetails() {
   router.push('/order')
+}
+
+//delete input value
+
+function delNumber() {
+  count.value.value = '';
 }
 
 </script>
@@ -136,6 +141,11 @@ function orderDetails() {
     color: #ffff;
     font-weight: 600;
     font-size: 20px;
+    cursor: pointer;
+
+    &:last-child {
+      flex-basis: 65%;
+    }
   }
 
   &__input {
