@@ -1,44 +1,26 @@
 <template>
-  <base-wrapper>
-    <div class="tables">
-      <h1>Select a table</h1>
+  <div class="tables">
+      <h1 class="tables__title">Select a table</h1>
       <div class="tables__tableWrapper">
-        <div class="tables__content">
+        <div class="tables__content" v-for="table in tables" :key="table" @click="emitEvent(table)">
           <img src="../assets/table.png" alt="" class="tables__img">
-          <p class="tables__number">1</p>
-        </div>
-        <div class="tables__content">
-          <img src="../assets/table.png" alt="" class="tables__img">
-          <p class="tables__number">2</p>
-        </div>
-        <div class="tables__content">
-          <img src="../assets/table.png" alt="" class="tables__img">
-          <p class="tables__number">3</p>
-        </div>
-        <div class="tables__content">
-          <img src="../assets/table.png" alt="" class="tables__img">
-          <p class="tables__number">4</p>
-        </div>
-        <div class="tables__content">
-          <img src="../assets/table.png" alt="" class="tables__img">
-          <p class="tables__number">5</p>
-        </div>
-        <div class="tables__content">
-          <img src="../assets/table.png" alt="" class="tables__img">
-          <p class="tables__number">6</p>
-        </div>
-        <div class="tables__content">
-          <img src="../assets/table.png" alt="" class="tables__img">
-          <p class="tables__number">7</p>
+          <p class="tables__number">{{ table }}</p>
         </div>
       </div>
     </div>
-  </base-wrapper>
 </template>
 
 <script setup>
+// import {ref} from 'vue';
+import {defineEmits} from 'vue';
+const tables = [1, 2, 3, 4, 5, 6, 7]
 
-import BaseWrapper from "@/base/BaseWrapper.vue";
+const emit = defineEmits(['myEvent'])
+
+const emitEvent = (table)=> {
+  emit('myEvent', table)
+}
+
 </script>
 
 <style scoped lang="scss">
@@ -51,8 +33,12 @@ import BaseWrapper from "@/base/BaseWrapper.vue";
     gap: 25px;
   }
 
+  &__title {
+    margin-top: 0;
+  }
+
   &__content {
-    max-width: 300px;
+    max-width: 100px;
     width: 100%;
     justify-content: center;
     display: flex;
@@ -65,13 +51,14 @@ import BaseWrapper from "@/base/BaseWrapper.vue";
 
   &__number {
     text-align: center;
-    font-size: 28px;
+    font-size: 20px;
     color: #ffffff;
     font-weight: 700;
+    margin: 0;
   }
 
   &__img {
-    width: 80px;
+    width: 30px;
   }
 }
 </style>

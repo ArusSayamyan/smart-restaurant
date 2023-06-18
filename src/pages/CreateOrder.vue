@@ -1,8 +1,12 @@
 <template>
   <base-wrapper>
     <div class="createOrder">
+
+
       <div class="createOrder__block">
         <div class="createOrder__categories">
+          <MainTables @myEvent="getTableNumber"/>
+          <div>
           <div class="createOrder__orderCategory">
             <p class="createOrder__item">Main</p>
             <p class="createOrder__item"></p>
@@ -19,6 +23,7 @@
             <p class="createOrder__item"></p>
             <p class="createOrder__item"></p>
           </div>
+          </div>
         </div>
         <div class="createOrder__info">
           <div class="createOrder__list">
@@ -27,7 +32,7 @@
           </div>
           <div class="createOrder__list">
             <p class="createOrder__desc">Table</p>
-            <router-link  to="/tables" class="createOrder__count"></router-link>
+            <p class="createOrder__count">{{ tabNumber }}</p>
           </div>
         </div>
         <div class="createOrder__inputs">
@@ -48,9 +53,9 @@
             <p class="createOrder__btn">.</p>
             <p class="createOrder__btn">del</p>
           </div>
-          <p class="createOrder__create">
+          <button :disabled="disabled" class="createOrder__create" @click="orderDetails">
             create new order
-          </p>
+          </button>
           <p class="createOrder__create">
             create empty order
           </p>
@@ -67,9 +72,15 @@
 <script setup>
 import BaseWrapper from "@/base/BaseWrapper.vue";
 import {ref} from 'vue';
+import MainTables from "@/pages/MainTables.vue";
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
 
 const count = ref();
 const addCount = ref();
+const tabNumber = ref();
+const disabled = ref(true);
 function getNumber(event) {
   count.value.value = event.target.textContent
 }
@@ -77,7 +88,24 @@ function getNumber(event) {
 function setCount() {
   addCount.value.textContent = count.value.value
   count.value.value = ''
+  if(tabNumber.value !== undefined) {
+    disabled.value = false
+  }
 }
+
+//get table number
+function getTableNumber(tableNum) {
+  tabNumber.value = tableNum
+  if(addCount.value.textContent !== '') {
+    disabled.value = false
+  }
+}
+
+// change main page
+function orderDetails() {
+  router.push('/order')
+}
+
 </script>
 
 <style scoped lang="scss">
@@ -124,6 +152,18 @@ function setCount() {
     text-transform: uppercase;
     background: #4c74bcb5;
     cursor: pointer;
+    border: none;
+    display: block;
+    width: 100%;
+    margin-top: 8px;
+    font-size: 16px;
+
+    &[disabled=disabled], &:disabled{
+      border: 1px solid #999999;
+      background-color: #cccccc;
+      color: #666666;
+      cursor:unset
+    }
   }
 
   &__control {
@@ -175,13 +215,17 @@ function setCount() {
     margin-right: 35px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: space-between;
     gap: 15px;
   }
 
   &__orderCategory {
     display: flex;
     justify-content: space-between;
+
+    &:first-child {
+      margin-bottom: 15px;
+    }
   }
 
   &__item {

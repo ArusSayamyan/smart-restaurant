@@ -3,7 +3,7 @@ import WaitersPage from "@/pages/WaitersPage.vue";
 import ManagerPage from "@/pages/ManagerPage.vue";
 import HomePage from "@/pages/HomePage.vue";
 import CreateOrder from "@/pages/CreateOrder.vue";
-import MainTables from "@/pages/MainTables.vue";
+import OrderDetails from "@/pages/OrderDetails.vue";
 
 //components
 
@@ -29,8 +29,8 @@ const router = createRouter({
             component: CreateOrder
         },
         {
-            path: '/tables',
-            component: MainTables
+            path: '/order',
+            component: OrderDetails
         },
     ]
 })
