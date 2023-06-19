@@ -1,6 +1,8 @@
 <template>
   <base-wrapper>
     <div class="orderDetails">
+      <save-order :showModal="showModal" @myEvent="showModal = false" content="do you really want to save this order" id="save"></save-order>
+      <save-order :showCancelModal="showCancelModal" @myEvent="showCancelModal = false" content="do you really want to cancel this order" id="cancel"></save-order>
       <div class="orderDetails__info">
         <div class="orderDetails__nav">
           <span>{{ object.statue }} {{ object.name }}</span>
@@ -18,6 +20,10 @@
               <td>{{ sel.count * +sel.price }}$</td>
             </tr>
           </table>
+        </div>
+        <div class="orderDetails__controlBtns">
+          <button class="orderDetails__saveOrder"><img src="../assets/check.svg" alt="" class="orderDetails__iconSave" @click="showModal = true"></button>
+          <button class="orderDetails__delOrder"><img src="../assets/exit.svg" alt="" class="orderDetails__icon" @click="showCancelModal = true"></button>
         </div>
       </div>
       <div class="orderDetails__menu">
@@ -42,27 +48,59 @@
                       </template>
                     </OrderList>
                   </AccordionTab>
+                  <AccordionTab header="Desserts">
+                    <OrderList v-model="desserts" listStyle="height:auto" dataKey="id" v-model:selection="selection"
+                               @click="selected">
+                      <template> List of Products</template>
+                      <template #item="slotProps">
+                        <div class="flex flex-wrap p-2 align-items-center gap-3">
+                          <img class="w-4rem shadow-2 flex-shrink-0 border-round" :src="slotProps.item.img"
+                               :alt="slotProps.item.name"/>
+                          <div class="flex-1 flex flex-column gap-2">
+                            <span class="font-bold">{{ slotProps.item.name }}</span>
+                          </div>
+                          <span class="font-bold text-900">$ {{ slotProps.item.price }}</span>
+                        </div>
+                      </template>
+                    </OrderList>
+                  </AccordionTab>
+                  <AccordionTab header="Appetizer">
+                    <OrderList v-model="appetizer" listStyle="height:auto" dataKey="id" v-model:selection="selection"
+                               @click="selected">
+                      <template> List of Products</template>
+                      <template #item="slotProps">
+                        <div class="flex flex-wrap p-2 align-items-center gap-3">
+                          <img class="w-4rem shadow-2 flex-shrink-0 border-round" :src="slotProps.item.img"
+                               :alt="slotProps.item.name"/>
+                          <div class="flex-1 flex flex-column gap-2">
+                            <span class="font-bold">{{ slotProps.item.name }}</span>
+                          </div>
+                          <span class="font-bold text-900">$ {{ slotProps.item.price }}</span>
+                        </div>
+                      </template>
+                    </OrderList>
+                  </AccordionTab>
                 </Accordion>
               </AccordionTab>
               <AccordionTab header="Bar">
-                <OrderList v-model="products" listStyle="height:auto" dataKey="id" v-model:selection="selection"
-                           @click="selected">
-                  <template #header> List of Products</template>
-                  <template #item="slotProps">
-                    <div class="flex flex-wrap p-2 align-items-center gap-3">
-                      <img class="w-4rem shadow-2 flex-shrink-0 border-round" :src="slotProps.item.img"
-                           :alt="slotProps.item.name"/>
-                      <div class="flex-1 flex flex-column gap-2">
-                        <span class="font-bold">{{ slotProps.item.name }}</span>
-                        <div class="flex align-items-center gap-2">
-                          <i class="pi pi-tag text-sm"></i>
-                          <span>{{ slotProps.item.category }}</span>
+                <Accordion>
+                  <AccordionTab header="Beverages">
+                    <OrderList v-model="beverages" listStyle="height:auto" dataKey="id" v-model:selection="selection"
+                               @click="selected">
+                      <template> List of Products</template>
+                      <template #item="slotProps">
+                        <div class="flex flex-wrap p-2 align-items-center gap-3">
+                          <img class="w-4rem shadow-2 flex-shrink-0 border-round" :src="slotProps.item.img"
+                               :alt="slotProps.item.name"/>
+                          <div class="flex-1 flex flex-column gap-2">
+                            <span class="font-bold">{{ slotProps.item.name }}</span>
+                          </div>
+                          <span class="font-bold text-900">$ {{ slotProps.item.price }}</span>
                         </div>
-                      </div>
-                      <span class="font-bold text-900">$ {{ slotProps.item.price }}</span>
-                    </div>
-                  </template>
-                </OrderList>
+                      </template>
+                    </OrderList>
+                  </AccordionTab>
+                </Accordion>
               </AccordionTab>
             </Accordion>
           </div>
@@ -74,6 +112,7 @@
 </template>
 
 <script setup>
+
 import Accordion from 'primevue/accordion';
 import AccordionTab from 'primevue/accordiontab';
 import OrderList from 'primevue/orderlist';
@@ -85,10 +124,27 @@ import cheese from '@/assets/cheese.png';
 import creamy from '@/assets/creamy.png';
 import chicken from '@/assets/chicken.png';
 import barbeque from '@/assets/barbeque.png';
+import melon from '@/assets/melon.png';
+import apple from '@/assets/apple.png';
+import velvet from '@/assets/velvet.png';
+import fruit from '@/assets/fruit.png';
+import fries from '@/assets/fries.png';
+import nugget from '@/assets/nugget.png';
+import sausage from '@/assets/sausage.png';
+import chickenWings from '@/assets/chickenWings.png';
+import lemonade from '@/assets/lemonade.png';
+import softDrink from '@/assets/softDrink.png';
+import lemonTea from '@/assets/lemonTea.png';
+import milkShake from '@/assets/milkShake.png';
+import orangeJuice from '@/assets/orangeJuice.png';
+import appleJuice from '@/assets/appleJuice.png';
+import berryFrappe from '@/assets/berryFrappe.png';
 
 
 import {ref, computed} from 'vue';
 
+const showModal = ref(false)
+const showCancelModal = ref(false)
 const selection = ref()
 const select = ref([])
 const products = ref([
@@ -127,6 +183,104 @@ const products = ref([
     name: 'Barbeque chicken',
     price: '20',
     img: barbeque,
+    count: 0
+  }
+]);
+const desserts = ref([
+  {
+    name: 'Melon ice cream',
+    price: '55',
+    img: melon,
+    count: 0
+  },
+  {
+    name: 'Apple pie',
+    price: '60',
+    img: apple,
+    count: 0
+  },
+  {
+    name: 'Red velvet cake',
+    price: '20',
+    img: velvet,
+    count: 0
+  },
+  {
+    name: 'Fruit salad',
+    price: '55',
+    img: fruit,
+    count: 0
+
+  }
+]);
+const appetizer = ref([
+  {
+    name: 'French fries',
+    price: '55',
+    img: fries,
+    count: 0
+  },
+  {
+    name: 'Nugget',
+    price: '60',
+    img: nugget,
+    count: 0
+  },
+  {
+    name: 'Sausage',
+    price: '20',
+    img: sausage,
+    count: 0
+  },
+  {
+    name: 'Chicken wings',
+    price: '55',
+    img: chickenWings,
+    count: 0
+
+  }
+]);
+const beverages = ref([
+  {
+    name: 'Lemonade',
+    price: '55',
+    img: lemonade,
+    count: 0
+  },
+  {
+    name: 'Soft drink',
+    price: '60',
+    img: softDrink,
+    count: 0
+  },
+  {
+    name: 'Lemon tea',
+    price: '20',
+    img: lemonTea,
+    count: 0
+  },
+  {
+    name: 'Milk shake',
+    price: '55',
+    img: milkShake,
+    count: 0
+  },
+  {
+    name: 'Orange juice',
+    price: '55',
+    img: orangeJuice,
+    count: 0
+  },
+  {
+    name: 'Apple juice',
+    price: '55',
+    img: appleJuice,
+    count: 0
+  },
+  {
+    name: 'Berry frappe',
+    price: '55',
+    img: berryFrappe,
     count: 0
   }
 ]);
@@ -194,6 +348,40 @@ function selected() {
     height: 100%;
     border: 1px solid #000;
     padding: 20px;
+    position: relative;
+  }
+
+  &__saveOrder, &__delOrder {
+    width: 50px;
+    background: red;
+    margin: 0;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+  }
+
+  &__saveOrder {
+    background: green;
+  }
+
+  &__icon {
+    width: 20px;
+  }
+
+  &__iconSave {
+    width: 30px;
+  }
+
+  &__controlBtns {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: flex-end;
+    column-gap: 15px;
   }
 
   &__menu {

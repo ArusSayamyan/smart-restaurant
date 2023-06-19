@@ -1,28 +1,26 @@
 <template>
   <base-wrapper>
     <div class="createOrder">
-
-
       <div class="createOrder__block">
         <div class="createOrder__categories">
           <MainTables @myEvent="getTableNumber"/>
           <div>
-          <div class="createOrder__orderCategory">
-            <p class="createOrder__item">Main</p>
-            <p class="createOrder__item"></p>
-            <p class="createOrder__item"></p>
-            <p class="createOrder__item"></p>
-            <p class="createOrder__item"></p>
-            <p class="createOrder__item"></p>
-          </div>
-          <div class="createOrder__orderCategory">
-            <p class="createOrder__item"></p>
-            <p class="createOrder__item"></p>
-            <p class="createOrder__item"></p>
-            <p class="createOrder__item"></p>
-            <p class="createOrder__item"></p>
-            <p class="createOrder__item"></p>
-          </div>
+            <div class="createOrder__orderCategory">
+              <p class="createOrder__item">Main</p>
+              <p class="createOrder__item"></p>
+              <p class="createOrder__item"></p>
+              <p class="createOrder__item"></p>
+              <p class="createOrder__item"></p>
+              <p class="createOrder__item"></p>
+            </div>
+            <div class="createOrder__orderCategory">
+              <p class="createOrder__item"></p>
+              <p class="createOrder__item"></p>
+              <p class="createOrder__item"></p>
+              <p class="createOrder__item"></p>
+              <p class="createOrder__item"></p>
+              <p class="createOrder__item"></p>
+            </div>
           </div>
         </div>
         <div class="createOrder__info">
@@ -72,7 +70,8 @@
 import BaseWrapper from "@/base/BaseWrapper.vue";
 import {ref} from 'vue';
 import MainTables from "@/pages/MainTables.vue";
-import { useRouter } from 'vue-router'
+import {useRouter} from 'vue-router'
+
 const router = useRouter()
 
 
@@ -80,6 +79,7 @@ const count = ref();
 const addCount = ref();
 const tabNumber = ref();
 const disabled = ref(true);
+
 function getNumber(event) {
   count.value.value = count.value.value + event.target.textContent
 }
@@ -87,7 +87,7 @@ function getNumber(event) {
 function setCount() {
   addCount.value.textContent = count.value.value
   count.value.value = ''
-  if(tabNumber.value !== undefined) {
+  if (tabNumber.value !== undefined) {
     disabled.value = false
   }
 }
@@ -95,7 +95,7 @@ function setCount() {
 //get table number
 function getTableNumber(tableNum) {
   tabNumber.value = tableNum
-  if(addCount.value.textContent !== '') {
+  if (addCount.value.textContent !== '') {
     disabled.value = false
   }
 }
@@ -168,11 +168,11 @@ function delNumber() {
     margin-top: 8px;
     font-size: 16px;
 
-    &[disabled=disabled], &:disabled{
+    &[disabled=disabled], &:disabled {
       border: 1px solid #999999;
       background-color: #cccccc;
       color: #666666;
-      cursor:unset
+      cursor: unset
     }
   }
 

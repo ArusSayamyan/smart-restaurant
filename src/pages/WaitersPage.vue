@@ -18,45 +18,12 @@
             <img src="../assets/exit.svg" alt="" class="waitersPage__exitImg">
           </div>
         </div>
-        <!--      <div class="waitersPage__mainContent">-->
-        <!--        <TableList/>-->
-        <!--        <div class="waitersPage__formWrapper">-->
-        <!--          <form action="" class="waitersPage__form" @submit.prevent="setData">-->
-        <!--            <input type="number" class="waitersPage__tableNumInput" placeholder="Table number" v-model="tableNumber">-->
-        <!--            <div class="card flex justify-content-center">-->
-        <!--              <MultiSelect v-model="selectedBurger" :options="burger" filter :optionLabel="optionGroupLabel"-->
-        <!--                           placeholder="Select Burger"-->
-        <!--                           :maxSelectedLabels="3" class="w-full md:w-20rem" @change="getPrice($event)"/>-->
-        <!--            </div>-->
-        <!--            <div class="card flex justify-content-center">-->
-        <!--              <MultiSelect v-model="selectedDessert" :options="desserts" filter :optionLabel="optionGroupLabel"-->
-        <!--                           placeholder="Select Dessert"-->
-        <!--                           :maxSelectedLabels="3" class="w-full md:w-20rem"  @change="getPrice($event)"/>-->
-        <!--            </div>-->
-        <!--            <div class="card flex justify-content-center">-->
-        <!--              <MultiSelect v-model="selectedBeverage" :options="beverages" filter :optionLabel="optionGroupLabel"-->
-        <!--                           placeholder="Select Beverages"-->
-        <!--                           :maxSelectedLabels="3" class="w-full md:w-20rem"  @change="getPrice($event)"/>-->
-        <!--            </div>-->
-        <!--            <div class="card flex justify-content-center">-->
-        <!--              <MultiSelect v-model="selectedAppetizer" :options="appetizer" filter :optionLabel="optionGroupLabel"-->
-        <!--                           placeholder="Select Appetizer"-->
-        <!--                           :maxSelectedLabels="3" class="w-full md:w-20rem"  @change="getPrice($event)"/>-->
-        <!--            </div>-->
-        <!--            <button class="waitersPage__saveOrderBtn">Save order</button>-->
-        <!--            <p class="waitersPage__totalPrice">{{ totalPrice }}$</p>-->
-        <!--          </form>-->
-        <!--        </div>-->
-        <!--      </div>-->
       </div>
     </base-wrapper>
   </div>
 </template>
 
 <script setup>
-// import BaseWrapper from "@/base/BaseWrapper.vue";
-// import MultiSelect from 'primevue/multiselect';
-// import TableList from '@/components/TablesList';
 //
 import {computed} from "vue";
 // import {defineAsyncComponent} from 'vue'
@@ -65,10 +32,6 @@ const router = useRouter()
 
 const object = JSON.parse(localStorage.getItem('name'))
 console.dir(object)
-//
-// const PrintOrder = defineAsyncComponent(() =>
-//     import('@/components/PrintOrder.vue')
-// )
 
 //FUNCTION EXIT
 
@@ -79,15 +42,21 @@ function exit() {
 const date = computed(()=> {
   const today = new Date();
   const year = today.getFullYear();
-  const month = today.getMonth() + 1; // Months are zero-based, so add 1
+  let month = today.getMonth() + 1; // Months are zero-based, so add 1
   const day = today.getDate();
+
+  if(month < 10) {
+    month = '0' + month
+  }
 
 // Get time
   const hours = today.getHours();
-  const minutes = today.getMinutes();
-  const seconds = today.getSeconds();
+  let minutes = today.getMinutes();
+  // if(minutes < 10) {
+  //   minutes = '0' + minutes
+  // }
 
-  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  return `${year}-${month}-${day} ${hours}:${minutes}`;
 })
 
 // const selectedBurger = ref();
@@ -99,38 +68,6 @@ const date = computed(()=> {
 // const totalPrice = ref(0);
 // let dataArr = JSON.parse(localStorage.getItem("order")) || [];
 
-// const burger = ref([
-//   {name: 'Egg burger', code: 'NY', price: 3},
-//   {name: 'Beef burger', code: 'RM', price: 5},
-//   {name: 'Cheese burger', code: 'LDN', price: 6},
-//   {name: 'Creamy mushroom', code: 'IST', price: 7},
-//   {name: 'Spicy chicken', code: 'PRS', price: 6},
-//   {name: 'Barbeque chicken', code: 'PRS', price: 9}
-// ]);
-//
-// const desserts = ref([
-//   {name: 'Melon ice cream', code: 'NY', price: 4},
-//   {name: 'Apple pie', code: 'RM', price: 4},
-//   {name: 'Red velvet cake', code: 'LDN', price: 4},
-//   {name: 'Fruit salad', code: 'IST', price: 7}
-// ]);
-//
-// const beverages = ref([
-//   {name: 'Lemonade', code: 'NY', price: 3},
-//   {name: 'Soft drink', code: 'RM', price: 5},
-//   {name: 'Lemon tea', code: 'LDN', price: 6},
-//   {name: 'Milk shake', code: 'IST', price: 7},
-//   {name: 'Orange juice', code: 'IST', price: 6},
-//   {name: 'Apple juice', code: 'IST', price: 9},
-//   {name: 'Berry frappe', code: 'IST', price: 12}
-// ]);
-//
-// const appetizer = ref([
-//   {name: 'French fries', code: 'NY', price: 4},
-//   {name: 'Nugget', code: 'RM', price: 4},
-//   {name: 'Sausage', code: 'LDN', price: 4},
-//   {name: 'Chicken wings', code: 'IST', price: 7}
-// ]);
 //
 // const optionGroupLabel = (group) => {
 //   return group.name + ' - ' + group.price + '$';
