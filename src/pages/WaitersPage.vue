@@ -5,7 +5,6 @@
       <p class="waitersPage__date">{{ object.statue }}  {{ object.name }}</p>
     </div>
     <base-wrapper>
-      <!--    <teleport to="body"> <print-order v-if="printing"></print-order></teleport>-->
       <div class="waitersPage__main">
         <div class="waitersPage__orders">
           <router-link to="/createOrder" class="waitersPage__createOrder">
