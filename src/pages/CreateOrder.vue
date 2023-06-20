@@ -13,13 +13,16 @@
               <p class="createOrder__item"></p>
               <p class="createOrder__item"></p>
             </div>
-            <div class="createOrder__orderCategory">
-              <p class="createOrder__item"></p>
-              <p class="createOrder__item"></p>
-              <p class="createOrder__item"></p>
-              <p class="createOrder__item"></p>
-              <p class="createOrder__item"></p>
-              <p class="createOrder__item"></p>
+            <div class="createOrder__checkWrapper">
+              <div class="createOrder__checkList"  v-for="item in productsList" :key="item">
+                <div class="createOrder__list">
+                  <div v-for="obj in item" :key="obj">
+                    <p v-if="obj.tableNumber">Table number - {{ obj.tableNumber }}</p>
+                    <p class="createOrder__prodItem" v-if="obj.name">{{ obj.name }}-{{ obj.count }}
+                      {{ obj.count * obj.price }}$</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -30,7 +33,7 @@
           </div>
           <div class="createOrder__list">
             <p class="createOrder__desc">Table</p>
-            <p class="createOrder__count">{{ tabNumber }}</p>
+            <p class="createOrder__count" ref="tableText">{{ tabNumber }}</p>
           </div>
         </div>
         <div class="createOrder__inputs">
@@ -71,14 +74,20 @@ import BaseWrapper from "@/base/BaseWrapper.vue";
 import {ref} from 'vue';
 import MainTables from "@/pages/MainTables.vue";
 import {useRouter} from 'vue-router'
+import {useStore} from 'vuex';
+
+const store = useStore();
 
 const router = useRouter()
 
-
 const count = ref();
+const tableText = ref();
 const addCount = ref();
 const tabNumber = ref();
 const disabled = ref(true);
+
+
+const productsList = JSON.parse(localStorage.getItem('selectedItems'))
 
 function getNumber(event) {
   count.value.value = count.value.value + event.target.textContent
@@ -102,6 +111,9 @@ function getTableNumber(tableNum) {
 
 // change main page
 function orderDetails() {
+  store.commit('updateSelectedProducts', {
+    tableNumber: tabNumber.value
+  })
   router.push('/order')
 }
 
@@ -253,5 +265,26 @@ function delNumber() {
       background: darkgray;
     }
   }
+
+  &__checkList {
+    max-width: 210px;
+    width: 100%;
+    border: 1px solid #000;
+    padding: 5px;
+    border-radius: 5px;
+  }
+
+  &__prodItem {
+    padding: 5px;
+    border-bottom: 1px solid #3c3637;
+    margin: 3px 0;
+  }
+
+  &__checkWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 15px;
+  }
+
 }
 </style>

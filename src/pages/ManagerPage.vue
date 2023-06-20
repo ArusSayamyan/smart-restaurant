@@ -5,7 +5,6 @@
         Manager
       </h1>
       <div class="managerPage__checks">
-        <TableList/>
         <order-list></order-list>
       </div>
     </div>
@@ -13,10 +12,8 @@
 </template>
 
 <script setup>
-import TableList from "@/components/TablesList.vue";
 import BaseWrapper from "@/base/BaseWrapper.vue";
 
-// let orders = JSON.parse(localStorage.getItem("order"))
 </script>
 <style scoped lang="scss">
 .managerPage {

@@ -11,13 +11,13 @@
         <div class="orderDetails__check">
           <div class="orderDetails__header">
             <h1>Order list</h1>
-            <span v-if="select.length > 0">total price is {{ doubleCount }}$</span>
+            <span v-if="selectedItems.length > 0">total price is {{ doubleCount }}$</span>
           </div>
-          <table v-if="select.length > 0">
-            <tr v-for="sel in select" :key="sel.name">
-              <td>{{ sel.name }}</td>
-              <td>{{ sel.count }}</td>
-              <td>{{ sel.count * +sel.price }}$</td>
+          <table v-if="selectedItems.length > 0">
+            <tr v-for="sel in selectedItems" :key="sel">
+              <td v-if="sel.name">{{ sel.name }}</td>
+              <td v-if="sel.count">{{ sel.count }}</td>
+              <td v-if="sel.price">{{ sel.count * +sel.price }}$</td>
             </tr>
           </table>
         </div>
@@ -142,11 +142,11 @@ import berryFrappe from '@/assets/berryFrappe.png';
 
 
 import {ref, computed} from 'vue';
-
+import {useStore} from 'vuex';
+const store = useStore();
 const showModal = ref(false)
 const showCancelModal = ref(false)
 const selection = ref()
-const select = ref([])
 const products = ref([
   {
     name: 'Egg burger',
@@ -285,17 +285,20 @@ const beverages = ref([
   }
 ]);
 
-const object = JSON.parse(localStorage.getItem('name'))
 
+//get selected items from store with getter
+const selectedItems = store.getters.getSelectedProducts;
+
+const object = JSON.parse(localStorage.getItem('name'))
 // ADD SELECTED PRODUCT TO LIST
 function selected() {
-  if (!select.value.includes(...selection.value)) {
-    select.value.push(...selection.value)
+  if (!selectedItems.includes(...selection.value)) {
+    store.commit('updateSelectedProducts', ...selection.value)
     for (let item of selection.value) {
       item.count = 1
     }
   } else {
-    for (let item of select.value) {
+    for (let item of selectedItems) {
       for (let sel of selection.value) {
         if (item === sel) {
           item.count++
@@ -306,7 +309,7 @@ function selected() {
   }}
 
   const doubleCount = computed(() => {
-    return select.value.reduce(
+    return selectedItems.reduce(
         (accumulator, currentValue) => accumulator + (currentValue.count * (+currentValue.price)),
         0
     );
@@ -388,6 +391,7 @@ function selected() {
     flex-basis: 50%;
     background-color: #cccccc;
     height: 100%;
+    padding: 20px;
   }
 
   &__header {
