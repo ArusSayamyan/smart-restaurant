@@ -2,26 +2,34 @@
   {
     "code": "1548",
     "status": "waiter",
-    "name": "Jack"
+    "name": "Jack",
+    "id": "waiter1"
   },
   {
     "code": "7895",
     "status": "waiter",
-    "name": "Mari"
+    "name": "Mari",
+    "id": "waiter2"
+
   },
   {
     "code": "2654",
     "status": "waiter",
-    "name": "Nick"
+    "name": "Nick",
+    "id": "waiter3"
+
   },
   {
     "code": "1588",
     "status": "waiter",
-    "name": "Nick"
+    "name": "Nick",
+    "id": "waiter4"
+
   },
   {
     "code": "155265",
-    "status": "manager"
+    "status": "manager",
+    "id": "manager1"
   },
   {
     "code": "125478",

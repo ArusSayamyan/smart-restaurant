@@ -309,10 +309,8 @@ function selected() {
   }}
 
   const doubleCount = computed(() => {
-    return selectedItems.reduce(
-        (accumulator, currentValue) => accumulator + (currentValue.count * (+currentValue.price)),
-        0
-    );
+    const flattened = selectedItems.reduce((acc, curr) => acc.concat(curr), []);
+    return flattened.reduce((acc, curr) => acc + (curr.count * curr.price), 0);
   });
 
 //date
@@ -328,6 +326,9 @@ function selected() {
 
     return `${year}-${month}-${day} ${hours}:${minutes}`;
   })
+
+console.log(selectedItems)
+
 </script>
 
 <style scoped lang="scss">
