@@ -81,11 +81,10 @@
 .trey .bottom {
   background-color: #fff;
   padding: 0 5px;
-  margin: 0 auto;
   width: 160px;
   z-index: 6;
   position: relative;
-  margin-top: 75px;
+  margin: 75px auto 0;
   border-radius: 5px 5px 0 0;
 }
 
