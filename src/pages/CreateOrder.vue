@@ -5,14 +5,6 @@
         <div class="createOrder__categories">
           <MainTables @myEvent="getTableNumber"/>
           <div>
-            <div class="createOrder__orderCategory">
-              <p class="createOrder__item">Main</p>
-              <p class="createOrder__item"></p>
-              <p class="createOrder__item"></p>
-              <p class="createOrder__item"></p>
-              <p class="createOrder__item"></p>
-              <p class="createOrder__item"></p>
-            </div>
             <div class="createOrder__checkWrapper">
               <div class="createOrder__checkList"  v-for="item in productsList" :key="item">
                 <div class="createOrder__list">
@@ -33,7 +25,7 @@
           </div>
           <div class="createOrder__list">
             <p class="createOrder__desc">Table</p>
-            <p class="createOrder__count" ref="tableText">{{ tabNumber }}</p>
+            <p class="createOrder__count">{{ tabNumber }}</p>
           </div>
         </div>
         <div class="createOrder__inputs">
@@ -81,13 +73,12 @@ const store = useStore();
 const router = useRouter()
 
 const count = ref();
-const tableText = ref();
 const addCount = ref();
 const tabNumber = ref();
 const disabled = ref(true);
+const loginId = store.getters.getLoginId;
 
-
-const productsList = JSON.parse(localStorage.getItem('selectedItems'))
+const productsList = JSON.parse(localStorage.getItem(loginId))
 
 function getNumber(event) {
   count.value.value = count.value.value + event.target.textContent
@@ -111,9 +102,7 @@ function getTableNumber(tableNum) {
 
 // change main page
 function orderDetails() {
-  store.commit('updateSelectedProducts', {
-    tableNumber: tabNumber.value
-  })
+  store.commit('updateSelectedTables', tabNumber.value)
   router.push('/order')
 }
 
@@ -237,7 +226,6 @@ function delNumber() {
     margin-right: 35px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     gap: 15px;
   }
 

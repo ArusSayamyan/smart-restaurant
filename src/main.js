@@ -20,6 +20,8 @@ const store = createStore({
     state() {
         return {
             selectedProducts: [],
+            selectedTables: [],
+            loginId: ''
         }
     },
     mutations: {
@@ -27,10 +29,24 @@ const store = createStore({
             state.selectedProducts.push(payload)
         },
 
+        updateSelectedTables(state, payload) {
+            state.selectedTables.push(payload)
+        },
+
+        changeLoginId(state, payload) {
+            state.loginId = payload
+        },
     },
     getters: {
         getSelectedProducts(state) {
             return state.selectedProducts
+        },
+
+        getLoginId(state) {
+            return state.loginId
+        },
+        getSelectedTables(state) {
+            return state.selectedTables
         },
     },
 })

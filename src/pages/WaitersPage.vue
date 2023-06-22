@@ -7,7 +7,7 @@
     <base-wrapper>
       <div class="waitersPage__main">
         <div class="waitersPage__orders">
-          <router-link to="/createOrder" class="waitersPage__createOrder">
+          <router-link :to="object.id + '/createOrder'" class="waitersPage__createOrder">
             <span class="waitersPage__text">Create order</span>
           </router-link>
           <div class="waitersPage__createOrder">
@@ -30,7 +30,6 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const object = JSON.parse(localStorage.getItem('name'))
-console.dir(object)
 
 //FUNCTION EXIT
 

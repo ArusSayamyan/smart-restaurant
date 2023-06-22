@@ -18,10 +18,14 @@ import {defineProps, defineEmits, defineAsyncComponent, ref} from 'vue';
 import {useStore} from 'vuex';
 const store = useStore();
 
+
 const printOrder = ref(false)
 //get selected items from store with getter
 const selectedItems = store.getters.getSelectedProducts;
 
+
+//get loginId of waiter
+const loginId = store.getters.getLoginId;
 
 const PrintOrder = defineAsyncComponent(() =>
     import('@/components/PrintOrder.vue')
@@ -34,12 +38,12 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['myEvent'])
+const tables = store.getters.getSelectedTables;
 
 
 //FUNCTION OF SAVING ORDER
 function saveOrder() {
   if (props.id === 'save') {
-    console.log('save order')
     emit('myEvent', false)
 
     //SHOW PRINTING ANIMATION
@@ -47,9 +51,14 @@ function saveOrder() {
 
 
     //add items to localStorage
-    let dataArr = JSON.parse(localStorage.getItem("selectedItems")) || [];
+    let dataArr = JSON.parse(localStorage.getItem(loginId)) || [];
     dataArr.push(selectedItems);
-    localStorage.setItem('selectedItems', JSON.stringify(dataArr))
+    localStorage.setItem(loginId, JSON.stringify(dataArr))
+    //add table numbers to localStorage
+
+    let tableArr = JSON.parse(localStorage.getItem('tables')) || [];
+    tableArr.push(...tables);
+    localStorage.setItem('tables', JSON.stringify(tableArr))
 
     //HIDE PRINTING ANIMATION AFTER 3 SECONDS
     setTimeout(() => {
@@ -59,7 +68,6 @@ function saveOrder() {
     emit('myEvent', false)
   }
 }
-
 
 function canselOrder() {
   emit('myEvent', false)

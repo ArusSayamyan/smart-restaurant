@@ -19,29 +19,32 @@
 <script setup>
 import {ref} from 'vue';
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 import TheNav from "@/layout/TheNav.vue";
 import data from '@/json/data.json'
 const enteredCode = ref();
 const status = ref('');
 const codeNotFound = ref(false)
 const router = useRouter()
+const store = useStore()
 // const route = useRoute()
 function checkCode() {
   for(let obj of data) {
     if(enteredCode.value === +obj.code){
+      store.commit('changeLoginId', obj.id)
       status.value = obj.status
       enteredCode.value = null;
-      router.push('/' + status.value)
+      router.push('/' + status.value + '/' + obj.id)
       localStorage.setItem('name', JSON.stringify({
         name: obj.name,
-        statue: obj.status
+        statue: obj.status,
+        id: obj.id
       }))
     }else {
       codeNotFound.value = true
     }
   }
 }
-
 </script>
 <style scoped lang="scss" src="../styles/app.scss">
 

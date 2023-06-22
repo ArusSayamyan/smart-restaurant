@@ -17,15 +17,15 @@ const router = createRouter({
             component: HomePage
         },
         {
-            path: '/waiter',
-            component: WaitersPage
+            path: '/waiter/:id',
+            component: WaitersPage,
         },
         {
             path: '/manager',
             component: ManagerPage
         },
         {
-            path: '/createOrder',
+            path: '/waiter/:id/createOrder',
             component: CreateOrder
         },
         {
