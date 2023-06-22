@@ -12,7 +12,7 @@
 
 <script setup>
 // import {ref} from 'vue';
-import {defineEmits, ref} from 'vue';
+import {defineEmits} from 'vue';
 const tables = [
   {
     table: 1,
@@ -43,12 +43,11 @@ const tables = [
     selected: false
   }
 ]
-const tableText = ref();
 const emit = defineEmits(['myEvent'])
 const tablesList = JSON.parse(localStorage.getItem('tables'))
 
 for(let tab of tables) {
-  if(tablesList.includes(tab.table)) {
+  if(tablesList && tablesList.includes(tab.table)) {
     tab.selected = true;
   }
 }
@@ -57,52 +56,6 @@ const emitEvent = (table)=> {
   emit('myEvent', table)
 }
 
-
-
-
-console.dir(tableText)
 </script>
 
-<style scoped lang="scss">
-.tables {
-  &__tableWrapper {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    gap: 25px;
-  }
-
-  &__title {
-    margin-top: 0;
-  }
-
-  &__content {
-    max-width: 100px;
-    width: 100%;
-    justify-content: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 15px;
-    background: cadetblue;
-    cursor: pointer;
-  }
-
-  &__number {
-    text-align: center;
-    font-size: 20px;
-    color: #ffffff;
-    font-weight: 700;
-    margin: 0;
-  }
-
-  &__img {
-    width: 30px;
-  }
-
-  &__selected {
-    background: red
-  }
-}
-</style>
+<style scoped lang="scss" src="../styles/mainTables.scss"></style>
