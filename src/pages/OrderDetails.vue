@@ -152,38 +152,44 @@ const products = ref([
     name: 'Egg burger',
     price: '55',
     img: eggBurger,
-    count: 0
+    count: 0,
+    table: ''
   },
   {
     name: 'Beef burger',
     price: '60',
     img: beef,
-    count: 0
+    count: 0,
+    table: ''
   },
   {
     name: 'Cheese burger',
     price: '20',
     img: cheese,
-    count: 0
+    count: 0,
+    table: ''
   },
   {
     name: 'Creamy mushroom',
     price: '55',
     img: creamy,
-    count: 0
+    count: 0,
+    table: ''
 
   },
   {
     name: 'Spicy chicken',
     price: '60',
     img: chicken,
-    count: 0
+    count: 0,
+    table: ''
   },
   {
     name: 'Barbeque chicken',
     price: '20',
     img: barbeque,
-    count: 0
+    count: 0,
+    table: ''
   }
 ]);
 const desserts = ref([
@@ -191,25 +197,29 @@ const desserts = ref([
     name: 'Melon ice cream',
     price: '55',
     img: melon,
-    count: 0
+    count: 0,
+    table: ''
   },
   {
     name: 'Apple pie',
     price: '60',
     img: apple,
-    count: 0
+    count: 0,
+    table: ''
   },
   {
     name: 'Red velvet cake',
     price: '20',
     img: velvet,
-    count: 0
+    count: 0,
+    table: ''
   },
   {
     name: 'Fruit salad',
     price: '55',
     img: fruit,
-    count: 0
+    count: 0,
+    table: ''
 
   }
 ]);
@@ -218,26 +228,29 @@ const appetizer = ref([
     name: 'French fries',
     price: '55',
     img: fries,
-    count: 0
+    count: 0,
+    table: ''
   },
   {
     name: 'Nugget',
     price: '60',
     img: nugget,
-    count: 0
+    count: 0,
+    table: ''
   },
   {
     name: 'Sausage',
     price: '20',
     img: sausage,
-    count: 0
+    count: 0,
+    table: ''
   },
   {
     name: 'Chicken wings',
     price: '55',
     img: chickenWings,
-    count: 0
-
+    count: 0,
+    table: ''
   }
 ]);
 const beverages = ref([
@@ -245,49 +258,57 @@ const beverages = ref([
     name: 'Lemonade',
     price: '55',
     img: lemonade,
-    count: 0
+    count: 0,
+    table: ''
   },
   {
     name: 'Soft drink',
     price: '60',
     img: softDrink,
-    count: 0
+    count: 0,
+    table: ''
   },
   {
     name: 'Lemon tea',
     price: '20',
     img: lemonTea,
-    count: 0
+    count: 0,
+    table: ''
   },
   {
     name: 'Milk shake',
     price: '55',
     img: milkShake,
-    count: 0
+    count: 0,
+    table: ''
   },
   {
     name: 'Orange juice',
     price: '55',
     img: orangeJuice,
-    count: 0
+    count: 0,
+    table: ''
   },
   {
     name: 'Apple juice',
     price: '55',
     img: appleJuice,
-    count: 0
+    count: 0,
+    table: ''
   },
   {
     name: 'Berry frappe',
     price: '55',
     img: berryFrappe,
-    count: 0
+    count: 0,
+    table: ''
   }
 ]);
 
 
 //get selected items from store with getter
 const selectedItems = store.getters.getSelectedProducts;
+const selectedTable = store.getters.getSelectedTables;
 
 const object = JSON.parse(localStorage.getItem('name'))
 // ADD SELECTED PRODUCT TO LIST
@@ -295,6 +316,9 @@ function selected() {
   if (!selectedItems.includes(...selection.value)) {
     store.commit('updateSelectedProducts', ...selection.value)
     for (let item of selection.value) {
+      for(let i = 0; i < selectedTable.length; i++){
+        item.table = selectedTable[selectedTable.length-1].table
+      }
       item.count = 1
     }
   } else {
@@ -331,95 +355,8 @@ console.log(selectedItems)
 
 </script>
 
-<style scoped lang="scss">
-.orderDetails {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  height: 100vh;
+<style scoped lang="scss" src="../styles/orderDetails.scss">
 
-  &__nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #000000;
-    color: #ffffff;
-    padding: 15px;
-  }
-
-  &__info {
-    flex-basis: 50%;
-    height: 100%;
-    border: 1px solid #000;
-    padding: 20px;
-    position: relative;
-  }
-
-  &__saveOrder, &__delOrder {
-    width: 50px;
-    background: red;
-    margin: 0;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    cursor: pointer;
-  }
-
-  &__saveOrder {
-    background: green;
-  }
-
-  &__icon {
-    width: 20px;
-  }
-
-  &__iconSave {
-    width: 30px;
-  }
-
-  &__controlBtns {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    display: flex;
-    justify-content: flex-end;
-    column-gap: 15px;
-  }
-
-  &__menu {
-    flex-basis: 50%;
-    background-color: #cccccc;
-    height: 100%;
-    padding: 20px;
-  }
-
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-}
-
-.w-4rem.shadow-2.flex-shrink-0.border-round {
-  width: 60px !important;
-}
-
-.flex.flex-wrap.p-2.align-items-center.gap-3 {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-table {
-  width: 100%;
-}
-
-table tr:last-child {
-  background-color: #000000;
-  color: #ffffff;
-}
 
 
 </style>

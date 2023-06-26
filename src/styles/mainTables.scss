@@ -22,6 +22,8 @@
     background: cadetblue;
     cursor: pointer;
     border-radius: 8px;
+    position: relative;
+
   }
 
   &__number {
@@ -37,6 +39,27 @@
   }
 
   &__selected {
-    background: red
+    background: red;
+
+    &--disabled {
+      pointer-events: none;
+      &:after {
+        position: absolute;
+        content: '';
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+        border-radius: 8px;
+        background: #856f6f82;
+        box-sizing: border-box;
+
+      }
+    }
   }
+
+
 }

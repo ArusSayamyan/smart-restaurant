@@ -1,0 +1,88 @@
+.orderDetails {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  height: 100vh;
+
+  &__nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #000000;
+    color: #ffffff;
+    padding: 15px;
+  }
+
+  &__info {
+    flex-basis: 50%;
+    height: 100%;
+    border: 1px solid #000;
+    padding: 20px;
+    position: relative;
+  }
+
+  &__saveOrder, &__delOrder {
+    width: 50px;
+    background: red;
+    margin: 0;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+  }
+
+  &__saveOrder {
+    background: green;
+  }
+
+  &__icon {
+    width: 20px;
+  }
+
+  &__iconSave {
+    width: 30px;
+  }
+
+  &__controlBtns {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: flex-end;
+    column-gap: 15px;
+  }
+
+  &__menu {
+    flex-basis: 50%;
+    background-color: #cccccc;
+    height: 100%;
+    padding: 20px;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.w-4rem.shadow-2.flex-shrink-0.border-round {
+  width: 60px !important;
+}
+
+.flex.flex-wrap.p-2.align-items-center.gap-3 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+table {
+  width: 100%;
+}
+
+table tr:last-child {
+  background-color: #000000;
+  color: #ffffff;
+}
