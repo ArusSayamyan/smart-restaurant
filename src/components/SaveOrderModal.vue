@@ -41,6 +41,7 @@ const emit = defineEmits(['myEvent'])
 const tables = store.getters.getSelectedTables;
 
 
+
 //FUNCTION OF SAVING ORDER
 function saveOrder() {
   if (props.id === 'save') {
@@ -60,6 +61,9 @@ function saveOrder() {
     tableArr.push(...tables);
     localStorage.setItem('tables', JSON.stringify(tableArr))
 
+
+
+
     //HIDE PRINTING ANIMATION AFTER 3 SECONDS
     setTimeout(() => {
       printOrder.value = false
@@ -73,57 +77,7 @@ function canselOrder() {
   emit('myEvent', false)
 }
 
-
 </script>
 
-<style scoped lang="scss">
-.saveOrderModal {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-  max-width: 1320px;
-  background: #00000052;
-
-
-  &__content {
-    background-color: #ffffff;
-    border-radius: 15px;
-    max-width: 500px;
-    width: 100%;
-    margin: 0 auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 25px;
-  }
-
-  &__desc {
-    text-align: center;
-    font-size: 24px;
-  }
-
-  &__btns {
-    display: flex;
-    justify-content: space-evenly;
-  }
-
-  &__enter, &__cancel {
-    border: none;
-    max-width: 150px;
-    width: 100%;
-    padding: 15px;
-    border-radius: 8px;
-    background-color: darkgreen;
-    color: #ffffff;
-    text-transform: uppercase;
-    margin: 0;
-    cursor: pointer;
-  }
-
-  &__cancel {
-    background-color: red;
-  }
-}
+<style scoped lang="scss" src="../styles/saveOrderModal.scss">
 </style>

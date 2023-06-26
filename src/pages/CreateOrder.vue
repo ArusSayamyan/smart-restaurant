@@ -4,18 +4,6 @@
       <div class="createOrder__block">
         <div class="createOrder__categories">
           <MainTables @myEvent="getTableNumber"/>
-          <div>
-            <div class="createOrder__checkWrapper">
-              <div class="createOrder__checkList"  v-for="item in productsList" :key="item">
-                <div class="createOrder__list">
-                  <div v-for="obj in item" :key="obj">
-                    <p class="createOrder__prodItem" v-if="obj.name">{{ obj.name }}-{{ obj.count }}
-                      {{ obj.count * obj.price }}$</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
           <div class="createOrder__selectedDesc">
             <div class="createOrder__box">
               <div class="createOrder__freeBox"></div>
@@ -57,9 +45,9 @@
           <button :disabled="disabled" class="createOrder__create" @click="orderDetails">
             create new order
           </button>
-          <p class="createOrder__create">
-            create empty order
-          </p>
+          <!--          <p class="createOrder__create">-->
+          <!--            create empty order-->
+          <!--          </p>-->
           <div class="createOrder__control">
             <p class="createOrder__del"><img src="../assets/exit.svg" alt="" class="createOrder__icon"></p>
             <p class="createOrder__save"><img src="../assets/check.svg" alt="" class="createOrder__iconSave"></p>
@@ -85,10 +73,7 @@ const count = ref();
 const addCount = ref();
 const tabNumber = ref();
 const disabled = ref(true);
-const loginId = store.getters.getLoginId;
 
-const productsList = JSON.parse(localStorage.getItem(loginId))
-console.log(loginId)
 function getNumber(event) {
   count.value.value = count.value.value + event.target.textContent
 }
@@ -111,7 +96,11 @@ function getTableNumber(tableNum) {
 
 // change main page
 function orderDetails() {
-  store.commit('updateSelectedTables', tabNumber.value)
+  const waiter = JSON.parse(localStorage.getItem('name'))
+  store.commit('updateSelectedTables', {
+    id: waiter.id,
+    table: tabNumber.value
+  })
   router.push('/order')
 }
 

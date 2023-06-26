@@ -4,6 +4,7 @@ import ManagerPage from "@/pages/ManagerPage.vue";
 import HomePage from "@/pages/HomePage.vue";
 import CreateOrder from "@/pages/CreateOrder.vue";
 import OrderDetails from "@/pages/OrderDetails.vue";
+import OrderListPage from "@/pages/OrderListsPage.vue";
 
 //components
 
@@ -31,6 +32,10 @@ const router = createRouter({
         {
             path: '/order',
             component: OrderDetails
+        },
+        {
+            path: '/orderList/:id',
+            component: OrderListPage
         },
     ]
 })

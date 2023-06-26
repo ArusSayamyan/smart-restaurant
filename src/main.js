@@ -20,6 +20,7 @@ const store = createStore({
         return {
             selectedProducts: [],
             selectedTables: [],
+            table: null,
             loginId: ''
         }
     },
@@ -35,6 +36,10 @@ const store = createStore({
         changeLoginId(state, payload) {
             state.loginId = payload
         },
+
+       selectTable(state, payload) {
+            state.table = payload
+        },
     },
     getters: {
         getSelectedProducts(state) {
@@ -46,6 +51,9 @@ const store = createStore({
         },
         getSelectedTables(state) {
             return state.selectedTables
+        },
+        getTable(state) {
+            return state.table
         },
     },
 })
