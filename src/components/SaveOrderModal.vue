@@ -16,12 +16,16 @@
 <script setup>
 import {defineProps, defineEmits, defineAsyncComponent, ref} from 'vue';
 import {useStore} from 'vuex';
+import {useRouter} from "vue-router";
+const router = useRouter()
 const store = useStore();
 
 
 const printOrder = ref(false)
 //get selected items from store with getter
 const selectedItems = store.getters.getSelectedProducts;
+const table = store.getters.getTable;
+
 
 
 //get loginId of waiter
@@ -41,7 +45,6 @@ const emit = defineEmits(['myEvent'])
 const tables = store.getters.getSelectedTables;
 
 
-
 //FUNCTION OF SAVING ORDER
 function saveOrder() {
   if (props.id === 'save') {
@@ -53,20 +56,34 @@ function saveOrder() {
 
     //add items to localStorage
     let dataArr = JSON.parse(localStorage.getItem(loginId)) || [];
-    dataArr.push(selectedItems);
-    localStorage.setItem(loginId, JSON.stringify(dataArr))
+    if(window.history.state.back === '/orderList/' + loginId) {
+      let filteredArray;
+      for(let item of selectedItems) {
+        filteredArray = dataArr.filter(subArray =>
+            subArray.some(obj => obj.table !== item.table)
+        );
+        item.table = table
+      }
+      filteredArray.push(selectedItems);
+      localStorage.setItem(loginId, JSON.stringify(filteredArray))
+    }else {
+      dataArr.push(selectedItems);
+      localStorage.setItem(loginId, JSON.stringify(dataArr))
+    }
+
+
+
     //add table numbers to localStorage
+
 
     let tableArr = JSON.parse(localStorage.getItem('tables')) || [];
     tableArr.push(...tables);
     localStorage.setItem('tables', JSON.stringify(tableArr))
 
-
-
-
     //HIDE PRINTING ANIMATION AFTER 3 SECONDS
     setTimeout(() => {
       printOrder.value = false
+      router.push('/waiter/' + loginId + '/createOrder')
     }, 3000)
   } else if (props.id === 'cancel') {
     emit('myEvent', false)

@@ -22,7 +22,7 @@ const router = createRouter({
             component: WaitersPage,
         },
         {
-            path: '/manager',
+            path: '/manager/:id',
             component: ManagerPage
         },
         {

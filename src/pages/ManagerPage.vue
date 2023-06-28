@@ -1,11 +1,8 @@
 <template>
   <base-wrapper>
     <div class="managerPage">
-      <h1>
-        Manager
-      </h1>
       <div class="managerPage__checks">
-        <order-list></order-list>
+        <MainTables/>
       </div>
     </div>
   </base-wrapper>
@@ -13,6 +10,7 @@
 
 <script setup>
 import BaseWrapper from "@/base/BaseWrapper.vue";
+import MainTables from "@/pages/MainTables.vue";
 
 </script>
 <style scoped lang="scss">

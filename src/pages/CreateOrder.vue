@@ -109,6 +109,7 @@ function orderDetails() {
 function delNumber() {
   count.value.value = '';
 }
+// localStorage.clear()
 
 </script>
 
