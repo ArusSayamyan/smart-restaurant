@@ -94,9 +94,12 @@ function allLists(table) {
 }
 
 for(let obj of tables) {
-  if(obj.selected) {
-    obj.disabled = true
+  for(let tab of tablesList) {
+    if(obj.selected && tab.id !== waiters.id && obj.table === tab.table) {
+      obj.disabled = true
+    }
   }
+
  if (localStorage.getItem(waiters.id)) {
    const prods = JSON.parse(localStorage.getItem(waiters.id))
    for(let prod of prods) {
@@ -109,7 +112,6 @@ for(let obj of tables) {
  }
 }
 
-// localStorage.clear()
 </script>
 
 <style scoped lang="scss" src="../styles/mainTables.scss"></style>

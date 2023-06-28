@@ -1,8 +1,10 @@
 <template>
   <base-wrapper>
     <div class="orderDetails">
-      <save-order :showModal="showModal" @myEvent="showModal = false" content="do you really want to save this order" id="save"></save-order>
-      <save-order :showCancelModal="showCancelModal" @myEvent="showCancelModal = false" content="do you really want to cancel this order" id="cancel"></save-order>
+      <save-order :showModal="showModal" @myEvent="showModal = false" content="do you really want to save this order"
+                  id="save"></save-order>
+      <save-order :showCancelModal="showCancelModal" @myEvent="showCancelModal = false"
+                  content="do you really want to cancel this order" id="cancel"></save-order>
       <div class="orderDetails__info">
         <div class="orderDetails__nav">
           <span>{{ object.statue }} {{ object.name }}</span>
@@ -22,8 +24,10 @@
           </table>
         </div>
         <div class="orderDetails__controlBtns">
-          <button class="orderDetails__saveOrder"><img src="../assets/check.svg" alt="" class="orderDetails__iconSave" @click="showModal = true"></button>
-          <button class="orderDetails__delOrder"><img src="../assets/exit.svg" alt="" class="orderDetails__icon" @click="showCancelModal = true"></button>
+          <button class="orderDetails__saveOrder"><img src="../assets/check.svg" alt="" class="orderDetails__iconSave"
+                                                       @click="showModal = true"></button>
+          <button class="orderDetails__delOrder"><img src="../assets/exit.svg" alt="" class="orderDetails__icon"
+                                                      @click="showCancelModal = true"></button>
         </div>
       </div>
       <div class="orderDetails__menu">
@@ -105,7 +109,6 @@
             </Accordion>
           </div>
         </div>
-
       </div>
     </div>
   </base-wrapper>
@@ -143,6 +146,7 @@ import berryFrappe from '@/assets/berryFrappe.png';
 
 import {ref, computed} from 'vue';
 import {useStore} from 'vuex';
+
 const store = useStore();
 const showModal = ref(false)
 const showCancelModal = ref(false)
@@ -312,8 +316,25 @@ const selectedTable = store.getters.getSelectedTables;
 
 const object = JSON.parse(localStorage.getItem('name'))
 // ADD SELECTED PRODUCT TO LIST
+
+//add new item of list
+
 function selected() {
-  if (!selectedItems.includes(...selection.value)) {
+  const loginId = JSON.parse(localStorage.getItem('name'))
+  // const table = store.getters.getTable
+    for (let item of selectedItems) {
+      for (let sel of selection.value) {
+        for(let i = 0; i < selectedTable.length; i++){
+          item.table = selectedTable[selectedTable.length-1].table
+        }
+        if ('name' in item && item.name === sel.name) {
+          item.count++
+          return
+        }
+      }
+    }
+
+  if (!selectedItems.includes(...selection.value) || window.history.state.back === '/orderList/' + loginId.id) {
     store.commit('updateSelectedProducts', ...selection.value)
     for (let item of selection.value) {
       for(let i = 0; i < selectedTable.length; i++){
@@ -321,42 +342,32 @@ function selected() {
       }
       item.count = 1
     }
-  } else {
-    for (let item of selectedItems) {
-      for (let sel of selection.value) {
-        if (item === sel) {
-          item.count++
-        }
-      }
+  }
+}
 
-    }
-  }}
-
-  const doubleCount = computed(() => {
-    const flattened = selectedItems.reduce((acc, curr) => acc.concat(curr), []);
-    return flattened.reduce((acc, curr) => acc + (curr.count * curr.price), 0);
-  });
+const doubleCount = computed(() => {
+  const flattened = selectedItems.reduce((acc, curr) => acc.concat(curr), []);
+  return flattened.reduce((acc, curr) => acc + (curr.count * curr.price), 0);
+});
 
 //date
-  const date = computed(() => {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth() + 1; // Months are zero-based, so add 1
-    const day = today.getDate();
+const date = computed(() => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth() + 1; // Months are zero-based, so add 1
+  const day = today.getDate();
 
 // Get time
-    const hours = today.getHours();
-    const minutes = today.getMinutes();
+  const hours = today.getHours();
+  const minutes = today.getMinutes();
 
-    return `${year}-${month}-${day} ${hours}:${minutes}`;
-  })
+  return `${year}-${month}-${day} ${hours}:${minutes}`;
+})
 
-console.log(selectedItems)
 
 </script>
 
 <style scoped lang="scss" src="../styles/orderDetails.scss">
-
 
 
 </style>

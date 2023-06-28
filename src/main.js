@@ -29,9 +29,14 @@ const store = createStore({
             state.selectedProducts.push(payload)
         },
 
+        updateProducts(state, payload) {
+            state.selectedProducts = payload
+        },
+
         updateSelectedTables(state, payload) {
             state.selectedTables.push(payload)
         },
+
 
         changeLoginId(state, payload) {
             state.loginId = payload
