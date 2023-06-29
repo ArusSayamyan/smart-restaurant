@@ -22,6 +22,7 @@ const store = useStore();
 
 
 const printOrder = ref(false)
+
 //get selected items from store with getter
 const selectedItems = store.getters.getSelectedProducts;
 const table = store.getters.getTable;

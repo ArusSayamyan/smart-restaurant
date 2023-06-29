@@ -1,6 +1,6 @@
 <template>
   <div class="tables">
-    <h1 class="tables__title">Select a table</h1>
+    <h1 class="tables__title" v-if="waiters.id.includes('waiter')">Select a table</h1>
     <div class="tables__tableWrapper">
       <div class="tables__content" v-for="table in tables" :key="table.table"
            @click="!table.selected ? emitEvent(table.table) : allLists(table.table)"
@@ -97,6 +97,8 @@ for(let obj of tables) {
   for(let tab of tablesList) {
     if(obj.selected && tab.id !== waiters.id && obj.table === tab.table) {
       obj.disabled = true
+    }if(waiters.statue === 'cashier') {
+      obj.disabled = false
     }
   }
 
