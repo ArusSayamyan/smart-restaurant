@@ -4,7 +4,7 @@
 
   &__block {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
   }
 
   &__content {
@@ -106,7 +106,7 @@
   }
 
   &__categories {
-    width: 100%;
+    width: 70%;
     margin-right: 35px;
     display: flex;
     flex-direction: column;
@@ -181,4 +181,8 @@
     column-gap: 15px;
   }
 
+}
+
+.calculateInputs {
+  display: flex;
 }

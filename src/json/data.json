@@ -33,6 +33,16 @@
   },
   {
     "code": "125478",
-    "status": "manager"
+    "status": "manager",
+    "id": "manager2"
+  },
+  {
+    "code": "155266",
+    "status": "cashier",
+    "id": "cashier1"
+  },
+  {
+    "code": "135478",
+    "status": "cashier2"
   }
 ]
