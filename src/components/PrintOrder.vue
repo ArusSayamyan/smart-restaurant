@@ -1,6 +1,4 @@
-<script setup>
 
-</script>
 
 <template>
   <div class="printContent">
@@ -26,8 +24,11 @@
           </div>
           <div class='e5'>
             <div class='e51'></div>
-            <div class='text'>
+            <div class='text' v-if="names.statue !== 'cashier'">
               SAVED
+            </div>
+            <div class='text' v-else>
+              PAYED
             </div>
             <div class='e52'></div>
           </div>
@@ -49,6 +50,10 @@
     </div>
   </div>
 </template>
+
+<script setup>
+const names = JSON.parse(localStorage.getItem('name'))
+</script>
 
 <style scoped lang="scss" src="../styles/printOrder.scss">
 

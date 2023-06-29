@@ -1,5 +1,6 @@
 <template>
   <base-wrapper>
+    <PrintOrder v-if="printOrder"></PrintOrder>
     <div class="orderListPage">
       <h1>Order list page</h1>
       <div class="orderListPage__wrapper">
@@ -13,7 +14,6 @@
             </div>
           </div>
           <p class="orderListPage__totalPrice">total Price {{ totalPrice }}$</p>
-
         </div>
         <div class="orderListPage__payBlock" v-if="showPayBlock">
           <CalculateInput @payOrder="payedOrder"/>
@@ -26,10 +26,12 @@
 
 
 <script setup>
-
+const PrintOrder = defineAsyncComponent(() =>
+    import('@/components/PrintOrder.vue')
+)
 import {useStore} from 'vuex';
 import {useRouter} from 'vue-router';
-import {computed, ref} from 'vue'
+import {computed, defineAsyncComponent, ref} from 'vue'
 
 //import components
 import BaseWrapper from "@/base/BaseWrapper.vue";
@@ -40,6 +42,8 @@ const showPayBlock = ref(false)
 const router = useRouter()
 const store = useStore();
 const orderPayed = ref(false);
+const printOrder = ref(false);
+
 
 
 const loginId = store.getters.getLoginId;
@@ -68,7 +72,7 @@ for (let i = 0; i < arr.length; i++) {
   products = arr[arr.length - 1]
 }
 
-//get totla price
+//get total price
 
 const totalPrice = computed(() => {
   let price = 0;
@@ -82,7 +86,11 @@ const totalPrice = computed(() => {
 //emit payed value
 
 function payedOrder (payed) {
-  orderPayed.value = payed
+  printOrder.value = true
+  setTimeout(() => {
+    printOrder.value = false
+    orderPayed.value = payed
+  }, 3000)
 }
 
 
