@@ -26,6 +26,8 @@ function getTableNumber(tableNum) {
 
 <style scoped lang="scss">
 .cashierPage {
+  padding-top: 90px;
+
   &__wrapper {
     display: flex;
     justify-content: space-between;

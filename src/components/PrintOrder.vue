@@ -28,7 +28,7 @@
               SAVED
             </div>
             <div class='text' v-else>
-              PAYED
+              PAID
             </div>
             <div class='e52'></div>
           </div>

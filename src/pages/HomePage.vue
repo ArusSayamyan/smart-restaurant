@@ -1,6 +1,5 @@
 <template>
 <div class="homePage">
-  <TheNav/>
   <base-wrapper>
     <div class="homePage__signIn">
       <form action="" class="homePage__signInForm" @submit.prevent="checkCode">
@@ -20,7 +19,6 @@
 import {ref} from 'vue';
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-import TheNav from "@/layout/TheNav.vue";
 import data from '@/json/data.json'
 const enteredCode = ref();
 const status = ref('');

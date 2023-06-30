@@ -70,16 +70,17 @@ const emit = defineEmits(['myEvent'])
 let tablesList = [];
 if (localStorage.getItem('tables')) {
   tablesList = JSON.parse(localStorage.getItem('tables'))
-
-}
-
-for (let tab of tables) {
-  for (let selTable of tablesList) {
-    if (tablesList && selTable.table === tab.table) {
-      tab.selected = true;
+  for (let tab of tables) {
+    for (let selTable of tablesList) {
+      if (tablesList && selTable.table === tab.table) {
+        tab.selected = true;
+      }
     }
   }
+
 }
+
+
 
 //make tables disables
 

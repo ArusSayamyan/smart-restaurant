@@ -13,9 +13,6 @@
           <div class="waitersPage__createOrder">
             <p class="waitersPage__text">change order</p>
           </div>
-          <div class="waitersPage__exit" @click="exit">
-            <img src="../assets/exit.svg" alt="" class="waitersPage__exitImg">
-          </div>
         </div>
       </div>
     </base-wrapper>
@@ -24,15 +21,9 @@
 
 <script setup>
 import {computed} from "vue";
-import { useRouter } from 'vue-router'
-const router = useRouter()
-
 const object = JSON.parse(localStorage.getItem('name'))
 
 //FUNCTION EXIT
-function exit() {
-  router.push('/')
-}
 
 const date = computed(()=> {
   const today = new Date();
