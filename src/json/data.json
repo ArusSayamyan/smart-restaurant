@@ -39,10 +39,13 @@
   {
     "code": "155266",
     "status": "cashier",
-    "id": "cashier1"
+    "id": "cashier1",
+    "name": "Emma"
   },
   {
     "code": "135478",
-    "status": "cashier2"
+    "status": "cashier",
+    "id": "cashier2",
+    "name": "Mari"
   }
 ]

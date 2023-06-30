@@ -1,5 +1,6 @@
 <template>
   <div class="mainContainer">
+    <TheNav/>
     <router-view>
 
     </router-view>
@@ -7,6 +8,7 @@
 </template>
 
 <script setup>
+import TheNav from "@/layout/TheNav.vue";
 </script>
 <style>
 body {

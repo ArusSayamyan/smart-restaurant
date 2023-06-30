@@ -6,7 +6,7 @@
       <div class="orderListPage__wrapper">
         <div class="orderListPage__checkList">
           <img src="../assets/pencil.svg" alt="" class="orderListPage__editList" @click="editList" v-if="!showPayBlock">
-          <img src="../assets/payedOrder.svg" alt="" class="orderListPage__editList" v-else-if="orderPayed">
+          <img src="../assets/payedOrder.svg" alt="" class="orderListPage__editList" v-else-if="orderPaid">
           <div class="orderListPage__list" v-for="item in products" :key="item">
             <div v-if="item.table === table">
               <p class="orderListPage__prodItem">{{ item.name }}-{{ item.count }}
@@ -16,7 +16,7 @@
           <p class="orderListPage__totalPrice">total Price {{ totalPrice }}$</p>
         </div>
         <div class="orderListPage__payBlock" v-if="showPayBlock">
-          <CalculateInput @payOrder="payedOrder"/>
+          <CalculateInput @payOrder="paidOrder"/>
         </div>
       </div>
 
@@ -41,19 +41,18 @@ import CalculateInput from "@/components/CalculateInput.vue";
 const showPayBlock = ref(false)
 const router = useRouter()
 const store = useStore();
-const orderPayed = ref(false);
+const orderPaid = ref(false);
 const printOrder = ref(false);
-
-
-
 const loginId = store.getters.getLoginId;
 const table = store.getters.getTable
 let productsList = JSON.parse(localStorage.getItem(loginId))
 let products;
+const waiter = JSON.parse(localStorage.getItem('name'))
 
 
 
-//chashie chan see all orderLists
+
+//cashier can see all orderLists
 if (loginId.includes('cashier')) {
   showPayBlock.value = true;
   const getProducts = JSON.parse(localStorage.getItem('tables'))
@@ -72,7 +71,7 @@ for (let i = 0; i < arr.length; i++) {
   products = arr[arr.length - 1]
 }
 
-//get total price
+//GET TOTAL PRICE
 
 const totalPrice = computed(() => {
   let price = 0;
@@ -83,13 +82,14 @@ const totalPrice = computed(() => {
 });
 
 
-//emit payed value
+//emit paid value and add printing component with animation
 
-function payedOrder (payed) {
+function paidOrder (paid) {
   printOrder.value = true
+  orderPaid.value = paid
   setTimeout(() => {
     printOrder.value = false
-    orderPayed.value = payed
+    router.push('/cashier/' + waiter.id)
   }, 3000)
 }
 
@@ -103,42 +103,5 @@ function editList() {
 
 
 </script>
-<style scoped lang="scss">
-.orderListPage {
-  &__checkList {
-    max-width: 210px;
-    width: 100%;
-    border: 1px solid #000;
-    padding: 5px;
-    border-radius: 5px;
-    position: relative;
-  }
-
-  &__checkWrapper {
-    display: flex;
-    flex-wrap: wrap;
-    column-gap: 15px;
-  }
-
-  &__editList {
-    position: absolute;
-    right: 8px;
-    cursor: pointer;
-  }
-
-  &__wrapper {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  &__checkList {
-    height: fit-content;
-  }
-
-  &__totalPrice {
-    text-transform: uppercase;
-    font-weight: bold;
-    font-style: italic;
-  }
-}
+<style scoped lang="scss" src="@/styles/orderListPage.scss">
 </style>

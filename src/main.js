@@ -8,7 +8,7 @@ import "primevue/resources/themes/lara-light-indigo/theme.css";
 import "primevue/resources/primevue.min.css";
 
 
-//MODAL COMPO
+//MODAL COMPONENT
 const SaveOrderModal = defineAsyncComponent(() =>
     import('@/components/SaveOrderModal.vue')
 )
