@@ -19,6 +19,10 @@
     position: absolute;
     right: 8px;
     cursor: pointer;
+
+    &--payCard {
+      right: 35px;
+    }
   }
 
   &__wrapper {

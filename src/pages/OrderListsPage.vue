@@ -6,6 +6,7 @@
       <div class="orderListPage__wrapper">
         <div class="orderListPage__checkList">
           <img src="../assets/pencil.svg" alt="" class="orderListPage__editList" @click="editList" v-if="!showPayBlock">
+          <img src="../assets/pay.svg" alt="" class="orderListPage__editList orderListPage__editList--payCard" v-if="showPayCard" @click="payForOrder">
           <img src="../assets/payedOrder.svg" alt="" class="orderListPage__editList" v-else-if="orderPaid">
           <div class="orderListPage__list" v-for="item in products" :key="item">
             <div v-if="item.table === table">
@@ -39,6 +40,7 @@ import CalculateInput from "@/components/CalculateInput.vue";
 
 //variables
 const showPayBlock = ref(false)
+const showPayCard = ref(false)
 const router = useRouter()
 const store = useStore();
 const orderPaid = ref(false);
@@ -52,9 +54,17 @@ const waiter = JSON.parse(localStorage.getItem('name'))
 
 
 
-//cashier can see all orderLists
+//cashier and manager can see all orderLists
 if (loginId.includes('cashier')) {
   showPayBlock.value = true;
+  const getProducts = JSON.parse(localStorage.getItem('tables'))
+  for (let obj of getProducts) {
+    if (obj.table === table) {
+      productsList = JSON.parse(localStorage.getItem(obj.id))
+    }
+  }
+}else if(loginId.includes('manager')) {
+  showPayCard.value = true;
   const getProducts = JSON.parse(localStorage.getItem('tables'))
   for (let obj of getProducts) {
     if (obj.table === table) {
@@ -72,7 +82,6 @@ for (let i = 0; i < arr.length; i++) {
 }
 
 //GET TOTAL PRICE
-
 const totalPrice = computed(() => {
   let price = 0;
   for(let item of products) {
@@ -99,6 +108,10 @@ function editList() {
   const result = products.filter(item => item.table === table)
   store.commit('updateProducts', result)
   router.push('/order')
+}
+
+function payForOrder() {
+  showPayBlock.value = true
 }
 
 

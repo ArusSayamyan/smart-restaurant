@@ -32,12 +32,10 @@ import CalculateInput from '@/components/CalculateInput.vue'
 const tabNumber = ref();
 import {ref} from 'vue';
 
-//get table number
+//GET TABLE NUMBER
 function getTableNumber(tableNum) {
   tabNumber.value = tableNum
 }
-
-// localStorage.clear()
 
 </script>
 

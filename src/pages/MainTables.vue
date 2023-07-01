@@ -87,18 +87,18 @@ if (localStorage.getItem('tables')) {
 
 const emitEvent = (table) => {
   emit('myEvent', table)
+
 }
 
 function allLists(table) {
   store.commit('selectTable', table)
   router.push('/orderList/' + waiters.id)
 }
-
 for(let obj of tables) {
   for(let tab of tablesList) {
     if(obj.selected && tab.id !== waiters.id && obj.table === tab.table) {
       obj.disabled = true
-    }if(waiters.statue === 'cashier') {
+    }if(waiters.statue !== 'waiter') {
       obj.disabled = false
     }
   }
