@@ -2,11 +2,11 @@
   <div class="calculateInputs">
     <div class="createOrder__info">
       <div class="createOrder__list">
-        <p class="createOrder__desc" v-if="waiter.statue !== 'cashier'">Count of guests</p>
-        <p class="createOrder__desc" v-else>payment</p>
+        <p class="createOrder__desc" v-if="waiter.statue !== 'cashier' && !currentRout">Count of guests</p>
+        <p class="createOrder__desc" v-else-if="currentRout || waiter.statue === 'cashier'">payment</p>
         <p class="createOrder__count" ref="countOfGuests" @click="setCount"></p>
       </div>
-      <div class="createOrder__list" v-if="waiter.statue !== 'cashier'">
+      <div class="createOrder__list" v-if="waiter.statue !== 'cashier' && !currentRout">
         <p class="createOrder__desc">Table</p>
         <p class="createOrder__count" ref="addCount">{{ props.tabNumber }}</p>
       </div>
@@ -28,10 +28,10 @@
         <p class="createOrder__btn" @click="getNumber($event)">0</p>
         <p class="createOrder__btn" @click="delNumber">del</p>
       </div>
-      <button :disabled="disabled" v-if="waiter.statue !== 'cashier'" class="createOrder__create" @click="orderDetails">
+      <button :disabled="disabled" v-if="waiter.statue !== 'cashier' && !currentRout" class="createOrder__create" @click="orderDetails">
         create new order
       </button>
-      <div class="createOrder__control" v-if="waiter.statue === 'cashier'">
+      <div class="createOrder__control" v-if="waiter.statue !== 'waiter' && currentRout">
         <div class="createOrder__del"><img src="../assets/exit.svg" alt="" class="createOrder__icon"></div>
         <div class="createOrder__save" @click="emitEvent(true)"><img src="../assets/check.svg" alt=""
                                                                      class="createOrder__iconSave"></div>
@@ -47,30 +47,28 @@ import {ref, defineProps, defineEmits} from 'vue';
 
 import {useRouter} from 'vue-router'
 import {useStore} from 'vuex';
+
 const store = useStore();
+const router = useRouter()
 
 const addCount = ref();
 const countOfGuests = ref();
 const tables = JSON.parse(localStorage.getItem('tables'))
 const emit = defineEmits(['payOrder'])
+const currentRout = router.currentRoute.value.path.includes('orderList')
 
 
 const props = defineProps({
   tabNumber: {type: Number, required: false},
 })
 
-
-const router = useRouter()
-
 const count = ref();
-const tabNumber = ref();
 const disabled = ref(true);
 const waiter = JSON.parse(localStorage.getItem('name'))
 
 function getNumber(event) {
   count.value.value = count.value.value + event.target.textContent
 }
-
 
 function setCount() {
   if (waiter.statue === 'cashier') {
@@ -79,10 +77,11 @@ function setCount() {
     countOfGuests.value.textContent = count.value.value
   }
   count.value.value = ''
-  if (tabNumber.value !== undefined || countOfGuests.value.textContent !== '') {
+  if (props.tabNumber !== undefined && countOfGuests.value.textContent !== '') {
     disabled.value = false
   }
 }
+
 
 function orderDetails() {
   store.commit('updateSelectedTables', {
@@ -113,8 +112,8 @@ const emitEvent = (paid) => {
 
     //delete paid order products from localStorage
     let waiterId = '';
-    for(let obj of tables) {
-      if(table === obj.table) {
+    for (let obj of tables) {
+      if (table === obj.table) {
         waiterId = obj.id
         const productList = JSON.parse(localStorage.getItem(waiterId))
         const filteredProds = productList.filter(subArray =>
@@ -123,12 +122,10 @@ const emitEvent = (paid) => {
         localStorage.setItem(waiterId, JSON.stringify(filteredProds))
       }
     }
-
-    //change router
-
   }
 
 }
+
 </script>
 
 

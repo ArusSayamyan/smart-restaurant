@@ -46,6 +46,4 @@ function checkCode() {
 
 // localStorage.clear();
 </script>
-<style scoped lang="scss" src="../styles/app.scss">
-
-</style>
+<style scoped lang="scss" src="../styles/app.scss"></style>
