@@ -25,7 +25,6 @@ const status = ref('');
 const codeNotFound = ref(false)
 const router = useRouter()
 const store = useStore()
-// const route = useRoute()
 function checkCode() {
   for(let obj of data) {
     if(enteredCode.value === +obj.code){

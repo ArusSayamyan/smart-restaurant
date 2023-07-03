@@ -37,6 +37,9 @@ const store = createStore({
             state.selectedTables.push(payload)
         },
 
+        updateTables(state, payload) {
+            state.selectedTables.push = payload
+        },
 
         changeLoginId(state, payload) {
             state.loginId = payload

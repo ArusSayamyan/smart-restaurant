@@ -82,9 +82,7 @@ if (localStorage.getItem('tables')) {
 
 
 
-//make tables disables
-
-
+//MAKE TABLE DISABLED
 const emitEvent = (table) => {
   emit('myEvent', table)
 

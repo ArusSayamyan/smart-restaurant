@@ -17,6 +17,7 @@
 import {defineProps, defineEmits, defineAsyncComponent, ref} from 'vue';
 import {useStore} from 'vuex';
 import {useRouter} from "vue-router";
+
 const router = useRouter()
 const store = useStore();
 
@@ -26,7 +27,6 @@ const printOrder = ref(false)
 //get selected items from store with getter
 const selectedItems = store.getters.getSelectedProducts;
 const table = store.getters.getTable;
-
 
 
 //get loginId of waiter
@@ -57,9 +57,9 @@ function saveOrder() {
 
     //add items to localStorage
     let dataArr = JSON.parse(localStorage.getItem(loginId)) || [];
-    if(window.history.state.back === '/orderList/' + loginId) {
+    if (window.history.state.back === '/orderList/' + loginId) {
       let filteredArray;
-      for(let item of selectedItems) {
+      for (let item of selectedItems) {
         filteredArray = dataArr.filter(subArray =>
             subArray.some(obj => obj.table !== item.table)
         );
@@ -67,11 +67,21 @@ function saveOrder() {
       }
       filteredArray.push(selectedItems);
       localStorage.setItem(loginId, JSON.stringify(filteredArray))
-    }else {
+      if (loginId.includes('manager')) {
+        const worker = JSON.parse(localStorage.getItem('tables'))
+        for (let item of worker) {
+          if (item.table === table) {
+            dataArr = JSON.parse(localStorage.getItem(item.id))
+            dataArr.push(selectedItems);
+            localStorage.setItem(item.id, JSON.stringify(dataArr))
+          }
+
+        }
+      }
+    } else {
       dataArr.push(selectedItems);
       localStorage.setItem(loginId, JSON.stringify(dataArr))
     }
-
 
 
     //add table numbers to localStorage

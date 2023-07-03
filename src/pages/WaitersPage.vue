@@ -24,7 +24,6 @@ import {computed} from "vue";
 const object = JSON.parse(localStorage.getItem('name'))
 
 //FUNCTION EXIT
-
 const date = computed(()=> {
   const today = new Date();
   const year = today.getFullYear();
@@ -35,14 +34,11 @@ const date = computed(()=> {
     month = '0' + month
   }
 
-// Get time
+//GET TIME
   const hours = today.getHours();
   let minutes = today.getMinutes();
-
   return `${year}-${month}-${day} ${hours}:${minutes}`;
 })
-
-
 </script>
 
 <style scoped lang="scss" src="../styles/waiters.scss"></style>
