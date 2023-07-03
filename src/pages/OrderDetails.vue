@@ -115,12 +115,14 @@
 </template>
 
 <script setup>
-
+// IMPORT COMPONENTS
 import Accordion from 'primevue/accordion';
 import AccordionTab from 'primevue/accordiontab';
 import OrderList from 'primevue/orderlist';
+import {ref, computed} from 'vue';
+import {useStore} from 'vuex';
 
-//import images
+//IMPORT IMAGES
 import eggBurger from '@/assets/eggBurger.png';
 import beef from '@/assets/beef.png';
 import cheese from '@/assets/cheese.png';
@@ -143,14 +145,13 @@ import orangeJuice from '@/assets/orangeJuice.png';
 import appleJuice from '@/assets/appleJuice.png';
 import berryFrappe from '@/assets/berryFrappe.png';
 
-
-import {ref, computed} from 'vue';
-import {useStore} from 'vuex';
-
+//VARIABLES
 const store = useStore();
 const showModal = ref(false)
 const showCancelModal = ref(false)
 const selection = ref()
+
+// LIST OF PRODUCTS
 const products = ref([
   {
     name: 'Egg burger',
@@ -315,9 +316,8 @@ const selectedItems = store.getters.getSelectedProducts;
 const selectedTable = store.getters.getSelectedTables;
 
 const object = JSON.parse(localStorage.getItem('name'))
-// ADD SELECTED PRODUCT TO LIST
 
-//add new item of list
+//ADD NEW ITEM OF SELECTED PRODUCTS
 
 function selected() {
   const loginId = JSON.parse(localStorage.getItem('name'))
@@ -350,14 +350,14 @@ const doubleCount = computed(() => {
   return flattened.reduce((acc, curr) => acc + (curr.count * curr.price), 0);
 });
 
-//date
+//DATE
 const date = computed(() => {
   const today = new Date();
   const year = today.getFullYear();
   const month = today.getMonth() + 1; // Months are zero-based, so add 1
   const day = today.getDate();
 
-// Get time
+// GET TIME
   const hours = today.getHours();
   const minutes = today.getMinutes();
 

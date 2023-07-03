@@ -4,7 +4,7 @@
       <div class="managerPage__checks">
         <MainTables @myEvent="getTableNumber"/>
       </div>
-      <CalculateInput :tabNumber="tabNumber" />
+      <CalculateInput :tabNumber="tabNumber"/>
     </div>
   </base-wrapper>
 </template>
@@ -20,6 +20,8 @@ function getTableNumber(tableNum) {
   tabNumber.value = tableNum
 }
 </script>
+
+
 <style scoped lang="scss">
 .managerPage {
   padding-top: 155px;
@@ -28,6 +30,10 @@ function getTableNumber(tableNum) {
 
   &__checks {
     display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin-right: 35px;
+    gap: 15px;
   }
 }
 </style>

@@ -7,6 +7,7 @@
         <div class="orderListPage__checkList">
           <img src="../assets/pencil.svg" alt="" class="orderListPage__editList" @click="editList" v-if="!showPayBlock">
           <img src="../assets/pay.svg" alt="" class="orderListPage__editList orderListPage__editList--payCard" v-if="showPayCard" @click="payForOrder">
+          <img src="../assets/trash.svg" alt="" class="orderListPage__editList orderListPage__editList--delCard" v-if="showPayCard" @click="delOrder">
           <img src="../assets/payedOrder.svg" alt="" class="orderListPage__editList" v-else-if="orderPaid">
           <div class="orderListPage__list" v-for="item in products" :key="item">
             <div v-if="item.table === table">
@@ -27,18 +28,17 @@
 
 
 <script setup>
-const PrintOrder = defineAsyncComponent(() =>
-    import('@/components/PrintOrder.vue')
-)
 import {useStore} from 'vuex';
 import {useRouter} from 'vue-router';
 import {computed, defineAsyncComponent, ref} from 'vue'
 
-//import components
+//IMPORT COMPONENTS
 import BaseWrapper from "@/base/BaseWrapper.vue";
 import CalculateInput from "@/components/CalculateInput.vue";
-
-//variables
+const PrintOrder = defineAsyncComponent(() =>
+    import('@/components/PrintOrder.vue')
+)
+//VARIABLES
 const showPayBlock = ref(false)
 const showPayCard = ref(false)
 const router = useRouter()
@@ -54,7 +54,7 @@ const waiter = JSON.parse(localStorage.getItem('name'))
 
 
 
-//cashier and manager can see all orderLists
+//CASHIER AND MANAGER CAN SEE OLL ORDERS
 if (loginId.includes('cashier')) {
   showPayBlock.value = true;
   const getProducts = JSON.parse(localStorage.getItem('tables'))
@@ -91,8 +91,7 @@ const totalPrice = computed(() => {
 });
 
 
-//emit paid value and add printing component with animation
-
+//EMIT PAID VALUE AND ADD PRINTING COMPONENT WITH ANIMATION
 function paidOrder (paid) {
   printOrder.value = true
   orderPaid.value = paid
@@ -103,7 +102,7 @@ function paidOrder (paid) {
 }
 
 
-//edit order List
+//EDIT ORDER LIST
 function editList() {
   const result = products.filter(item => item.table === table)
   store.commit('updateProducts', result)
@@ -112,6 +111,26 @@ function editList() {
 
 function payForOrder() {
   showPayBlock.value = true
+}
+
+//DELETE ORDER
+function delOrder() {
+  let worker = JSON.parse(localStorage.getItem('tables'))
+  let filtered;
+  let filteredTabs;
+  for (let item of worker) {
+    if (item.table === table) {
+      const prods = JSON.parse(localStorage.getItem(item.id))
+      filtered = prods.filter(subArray =>
+          subArray.some(obj => obj.table !== table)
+      );
+      filteredTabs = worker.filter(obj => obj.table !== table);
+      store.commit('updateTables', filteredTabs)
+      localStorage.setItem(item.id, JSON.stringify(filtered))
+      localStorage.setItem('tables', JSON.stringify(filteredTabs))
+    }
+    router.push('/manager/' + loginId)
+  }
 }
 
 
