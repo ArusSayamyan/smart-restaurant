@@ -15,6 +15,7 @@ import MainTables from "@/pages/MainTables.vue";
 import CalculateInput from "@/components/CalculateInput.vue";
 
 
+
 const tabNumber = ref();
 function getTableNumber(tableNum) {
   tabNumber.value = tableNum

@@ -1,6 +1,7 @@
 <template>
   <base-wrapper>
     <div class="createOrder">
+
       <div class="createOrder__block">
         <div class="createOrder__categories">
           <MainTables @myEvent="getTableNumber"/>
@@ -26,7 +27,8 @@
 //IMPORT COMPONENTS
 import BaseWrapper from "@/base/BaseWrapper.vue";
 import MainTables from "@/pages/MainTables.vue";
-import CalculateInput from '@/components/CalculateInput.vue'
+import CalculateInput from '@/components/CalculateInput.vue';
+
 
 //VARIABLES
 const tabNumber = ref();

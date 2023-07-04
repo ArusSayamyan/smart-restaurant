@@ -2,6 +2,9 @@
   <base-wrapper>
     <PrintOrder v-if="printOrder"></PrintOrder>
     <div class="orderListPage">
+      <transition-group name="p-message" tag="div" v-if="orderDeleted">
+        <Message severity="success">Success Message Content</Message>
+      </transition-group>
       <h1>Order list page</h1>
       <div class="orderListPage__wrapper">
         <div class="orderListPage__checkList">
@@ -35,6 +38,7 @@ import {computed, defineAsyncComponent, ref} from 'vue'
 //IMPORT COMPONENTS
 import BaseWrapper from "@/base/BaseWrapper.vue";
 import CalculateInput from "@/components/CalculateInput.vue";
+import Message from "primevue/message";
 const PrintOrder = defineAsyncComponent(() =>
     import('@/components/PrintOrder.vue')
 )
@@ -45,6 +49,7 @@ const router = useRouter()
 const store = useStore();
 const orderPaid = ref(false);
 const printOrder = ref(false);
+const orderDeleted = ref(false);
 const loginId = store.getters.getLoginId;
 const table = store.getters.getTable
 let productsList = JSON.parse(localStorage.getItem(loginId))
@@ -97,7 +102,7 @@ function paidOrder (paid) {
   orderPaid.value = paid
   setTimeout(() => {
     printOrder.value = false
-    router.push('/cashier/' + waiter.id)
+      router.push('/cashier/' + waiter.id)
   }, 3000)
 }
 
@@ -129,7 +134,11 @@ function delOrder() {
       localStorage.setItem(item.id, JSON.stringify(filtered))
       localStorage.setItem('tables', JSON.stringify(filteredTabs))
     }
-    router.push('/manager/' + loginId)
+    orderDeleted.value = true
+    setTimeout(()=> {
+      orderDeleted.value = false
+      router.push('/manager/' + loginId)
+    }, 3000)
   }
 }
 

@@ -19,15 +19,14 @@
     position: absolute;
     right: 8px;
     cursor: pointer;
+    width: 20px;
 
     &--payCard {
       right: 35px;
     }
     &--delCard {
-      right: 55px;
+      right: 62px;
     }
-
-
   }
 
   &__wrapper {
@@ -44,4 +43,5 @@
     font-weight: bold;
     font-style: italic;
   }
+
 }

@@ -20,6 +20,9 @@
               <td v-if="sel.name">{{ sel.name }}</td>
               <td v-if="sel.count">{{ sel.count }}</td>
               <td v-if="sel.price">{{ sel.count * +sel.price }}$</td>
+              <td v-if="object.id.includes('manager') && fromEditPage" class="orderDetails__delItem"
+                  @click="delOrderItem(sel.table, sel.name)">x
+              </td>
             </tr>
           </table>
         </div>
@@ -150,6 +153,16 @@ const store = useStore();
 const showModal = ref(false)
 const showCancelModal = ref(false)
 const selection = ref()
+// const selectedItems =
+const selectedTable = store.getters.getSelectedTables;
+const selectedItems = computed(() => {
+  return store.getters.getSelectedProducts;
+});
+const object = JSON.parse(localStorage.getItem('name'))
+const fromEditPage = window.history.state.back === '/orderList/' + object.id
+const deletedProds = ref([]);
+// const router = useRouter()
+
 
 // LIST OF PRODUCTS
 const products = ref([
@@ -312,33 +325,30 @@ const beverages = ref([
 
 
 //get selected items from store with getter
-const selectedItems = store.getters.getSelectedProducts;
-const selectedTable = store.getters.getSelectedTables;
 
-const object = JSON.parse(localStorage.getItem('name'))
 
 //ADD NEW ITEM OF SELECTED PRODUCTS
 
 function selected() {
   const loginId = JSON.parse(localStorage.getItem('name'))
   // const table = store.getters.getTable
-    for (let item of selectedItems) {
-      for (let sel of selection.value) {
-        for(let i = 0; i < selectedTable.length; i++){
-          item.table = selectedTable[selectedTable.length-1].table
-        }
-        if ('name' in item && item.name === sel.name) {
-          item.count++
-          return
-        }
+  for (let item of selectedItems.value) {
+    for (let sel of selection.value) {
+      for (let i = 0; i < selectedTable.length; i++) {
+        item.table = selectedTable[selectedTable.length - 1].table
+      }
+      if ('name' in item && item.name === sel.name) {
+        item.count++
+        return
       }
     }
+  }
 
-  if (!selectedItems.includes(...selection.value) || window.history.state.back === '/orderList/' + loginId.id) {
+  if (!selectedItems.value.includes(...selection.value) || window.history.state.back === '/orderList/' + loginId.id) {
     store.commit('updateSelectedProducts', ...selection.value)
     for (let item of selection.value) {
-      for(let i = 0; i < selectedTable.length; i++){
-        item.table = selectedTable[selectedTable.length-1].table
+      for (let i = 0; i < selectedTable.length; i++) {
+        item.table = selectedTable[selectedTable.length - 1].table
       }
       item.count = 1
     }
@@ -346,9 +356,10 @@ function selected() {
 }
 
 const doubleCount = computed(() => {
-  const flattened = selectedItems.reduce((acc, curr) => acc.concat(curr), []);
+  const flattened = selectedItems.value.reduce((acc, curr) => acc.concat(curr), []);
   return flattened.reduce((acc, curr) => acc + (curr.count * curr.price), 0);
 });
+
 
 //DATE
 const date = computed(() => {
@@ -364,7 +375,13 @@ const date = computed(() => {
   return `${year}-${month}-${day} ${hours}:${minutes}`;
 })
 
+//DELETE ORDER ITEM
 
+function delOrderItem(table, prodName) {
+  // const id = store.getters.getLoginId
+  deletedProds.value = selectedItems.value.filter(item => item.name !== prodName)
+  store.commit('updateProducts', deletedProds.value)
+}
 </script>
 
 <style scoped lang="scss" src="../styles/orderDetails.scss">
