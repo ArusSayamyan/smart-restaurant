@@ -67,6 +67,11 @@
     justify-content: space-between;
     align-items: center;
   }
+
+  &__delItem {
+    cursor: pointer;
+    text-align: center;
+  }
 }
 
 .w-4rem.shadow-2.flex-shrink-0.border-round {

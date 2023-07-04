@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import {defineProps, defineEmits, defineAsyncComponent, ref} from 'vue';
+import {defineProps, defineEmits, defineAsyncComponent, ref, computed} from 'vue';
 import {useStore} from 'vuex';
 import {useRouter} from "vue-router";
 
@@ -25,8 +25,9 @@ const store = useStore();
 const printOrder = ref(false)
 
 //get selected items from store with getter
-const selectedItems = store.getters.getSelectedProducts;
-const table = store.getters.getTable;
+const selectedItems = computed(() => {
+  return store.getters.getSelectedProducts;
+});const table = store.getters.getTable;
 
 
 //get loginId of waiter
@@ -59,27 +60,27 @@ function saveOrder() {
     let dataArr = JSON.parse(localStorage.getItem(loginId)) || [];
     if (window.history.state.back === '/orderList/' + loginId) {
       let filteredArray;
-      for (let item of selectedItems) {
+      for (let item of selectedItems.value) {
         filteredArray = dataArr.filter(subArray =>
             subArray.some(obj => obj.table !== item.table)
         );
         item.table = table
       }
-      filteredArray.push(selectedItems);
+      filteredArray.push(selectedItems.value);
       localStorage.setItem(loginId, JSON.stringify(filteredArray))
       if (loginId.includes('manager')) {
         const worker = JSON.parse(localStorage.getItem('tables'))
         for (let item of worker) {
           if (item.table === table) {
             dataArr = JSON.parse(localStorage.getItem(item.id))
-            dataArr.push(selectedItems);
+            dataArr.push(selectedItems.value);
             localStorage.setItem(item.id, JSON.stringify(dataArr))
           }
 
         }
       }
     } else {
-      dataArr.push(selectedItems);
+      dataArr.push(selectedItems.value);
       localStorage.setItem(loginId, JSON.stringify(dataArr))
     }
 
@@ -94,7 +95,11 @@ function saveOrder() {
     //HIDE PRINTING ANIMATION AFTER 3 SECONDS
     setTimeout(() => {
       printOrder.value = false
-      router.push('/waiter/' + loginId + '/createOrder')
+      if(loginId.includes('manager')) {
+        router.push('/manager/' + loginId)
+      }else {
+        router.push('/waiter/' + loginId + '/createOrder')
+      }
     }, 3000)
   } else if (props.id === 'cancel') {
     emit('myEvent', false)
