@@ -8,6 +8,8 @@ import CreateOrder from "@/pages/CreateOrder.vue";
 import OrderDetails from "@/pages/OrderDetails.vue";
 import OrderListPage from "@/pages/OrderListsPage.vue";
 import CashierPage from "@/pages/CashierPage.vue";
+import StopList from "@/pages/StopList.vue";
+import EditList from "@/pages/EditList.vue";
 
 
 const router = createRouter({
@@ -40,6 +42,14 @@ const router = createRouter({
         {
             path: '/orderList/:id',
             component: OrderListPage
+        },
+        {
+            path: '/stopList',
+            component: StopList
+        },
+        {
+            path: '/editList',
+            component: EditList
         },
     ]
 })

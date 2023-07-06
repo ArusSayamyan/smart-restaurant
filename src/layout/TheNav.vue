@@ -2,7 +2,7 @@
     <nav class="nav">
       <div class="nav__logoWrapper">
         <img src="../assets/logo.png" alt="restaurantLogo" class="nav__logo">
-        <span class="nav__restaurantName">Smart Restaurant</span>
+        <router-link to="/" class="nav__restaurantName">Smart Restaurant</router-link>
       </div>
       <div class="nav__exit" @click="exit" v-if="router.currentRoute.value.path !== '/'">
         <img src="../assets/exit.svg" alt="" class="nav__exitImg">

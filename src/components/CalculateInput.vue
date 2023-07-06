@@ -33,8 +33,11 @@
       </button>
       <div class="createOrder__control" v-if="waiter.statue !== 'waiter' && currentRout">
         <div class="createOrder__del"><img src="../assets/exit.svg" alt="" class="createOrder__icon"></div>
-        <div class="createOrder__save" @click="emitEvent(true)"><img src="../assets/check.svg" alt=""
-                                                                     class="createOrder__iconSave"></div>
+        <div class="createOrder__save" @click="emitEvent(true)"><img src="../assets/check.svg" alt="" class="createOrder__iconSave"></div>
+      </div>
+      <div class="createOrder__control" v-if="waiter.statue === 'manager' && !currentRout">
+        <div class="createOrder__del"><router-link to="/stopList" class="createOrder__link">stop list</router-link></div>
+        <div class="createOrder__save"><router-link to="/editList" class="createOrder__link">Edit list</router-link></div>
       </div>
     </div>
   </div>

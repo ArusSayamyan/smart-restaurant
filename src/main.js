@@ -6,6 +6,27 @@ import BaseWrapper from "@/base/BaseWrapper.vue";
 import PrimeVue from 'primevue/config';
 import "primevue/resources/themes/lara-light-indigo/theme.css";
 import "primevue/resources/primevue.min.css";
+import eggBurger from "@/assets/eggBurger.png";
+import beef from "@/assets/beef.png";
+import cheese from "@/assets/cheese.png";
+import creamy from "@/assets/creamy.png";
+import chicken from "@/assets/chicken.png";
+import barbeque from "@/assets/barbeque.png";
+import melon from "@/assets/melon.png";
+import apple from "@/assets/apple.png";
+import velvet from "@/assets/velvet.png";
+import fruit from "@/assets/fruit.png";
+import fries from "@/assets/fries.png";
+import nugget from "@/assets/nugget.png";
+import sausage from "@/assets/sausage.png";
+import chickenWings from "@/assets/chickenWings.png";
+import lemonade from "@/assets/lemonade.png";
+import softDrink from "@/assets/softDrink.png";
+import lemonTea from "@/assets/lemonTea.png";
+import milkShake from "@/assets/milkShake.png";
+import orangeJuice from "@/assets/orangeJuice.png";
+import appleJuice from "@/assets/appleJuice.png";
+import berryFrappe from "@/assets/berryFrappe.png";
 
 
 //MODAL COMPONENT
@@ -21,7 +42,240 @@ const store = createStore({
             selectedProducts: [],
             selectedTables: [],
             table: null,
-            loginId: ''
+            loginId: '',
+            productList: [
+                {
+                    name: 'Egg burger',
+                    price: '55',
+                    img: eggBurger,
+                    count: 0,
+                    table: '',
+                    minCount: 'not found',
+                    id: '1000',
+                    category: 'burger'
+
+                },
+                {
+                    name: 'Beef burger',
+                    price: '60',
+                    img: beef,
+                    count: 0,
+                    table: '',
+                    minCount: 'not found',
+                    id: '1001',
+                    category: 'burger'
+
+                },
+                {
+                    name: 'Cheese burger',
+                    price: '20',
+                    img: cheese,
+                    count: 0,
+                    table: '',
+                    minCount: 'not found',
+                    id: '1002',
+                    category: 'burger'
+
+                },
+                {
+                    name: 'Creamy mushroom',
+                    price: '55',
+                    img: creamy,
+                    count: 0,
+                    table: '',
+                    minCount: 'not found',
+                    id: '1003',
+                    category: 'burger'
+
+
+                },
+                {
+                    name: 'Spicy chicken',
+                    price: '60',
+                    img: chicken,
+                    count: 0,
+                    table: '',
+                    minCount: 'not found',
+                    id: '1004',
+                    category: 'burger'
+
+                },
+                {
+                    name: 'Barbeque chicken',
+                    price: '20',
+                    img: barbeque,
+                    count: 0,
+                    table: '',
+                    minCount: 'not found',
+                    id: '1005',
+                    category: 'burger'
+                },
+                {
+                    name: 'Melon ice cream',
+                    price: '55',
+                    img: melon,
+                    count: 0,
+                    table: '',
+                    minCount: 'not found',
+                    id: '1006',
+                    category: 'dessert'
+                },
+                {
+                    name: 'Apple pie',
+                    price: '60',
+                    img: apple,
+                    count: 0,
+                    table: '',
+                    minCount: 'not found',
+                    id: '1007',
+                    category: 'dessert'
+                },
+                {
+                    name: 'Red velvet cake',
+                    price: '20',
+                    img: velvet,
+                    count: 0,
+                    table: '',
+                    minCount: 'not found',
+                    id: '1008',
+                    category: 'dessert'
+
+                },
+                {
+                    name: 'Fruit salad',
+                    price: '55',
+                    img: fruit,
+                    count: 0,
+                    table: '',
+                    minCount: 'not found',
+                    id: '1009',
+                    category: 'dessert'
+
+                },
+                {
+                    name: 'French fries',
+                    price: '55',
+                    img: fries,
+                    count: 0,
+                    table: '',
+                    minCount: 'not found',
+                    id: '1006',
+                    category: 'appetizer'
+
+                },
+                {
+                    name: 'Nugget',
+                    price: '60',
+                    img: nugget,
+                    count: 0,
+                    table: '',
+                    minCount: 'not found',
+                    id: '1007',
+                    category: 'appetizer'
+
+
+                },
+                {
+                    name: 'Sausage',
+                    price: '20',
+                    img: sausage,
+                    count: 0,
+                    table: '',
+                    minCount: 'not found',
+                    id: '1008',
+                    category: 'appetizer'
+
+                },
+                {
+                    name: 'Chicken wings',
+                    price: '55',
+                    img: chickenWings,
+                    count: 0,
+                    table: '',
+                    minCount: 'not found',
+                    id: '1009',
+                    category: 'appetizer'
+
+                },
+                {
+                    name: 'Lemonade',
+                    price: '55',
+                    img: lemonade,
+                    count: 0,
+                    table: '',
+                    minCount: 'not found',
+                    id: '1010',
+                    category: 'beverages'
+
+                },
+                {
+                    name: 'Soft drink',
+                    price: '60',
+                    img: softDrink,
+                    count: 0,
+                    table: '',
+                    minCount: 'not found',
+                    id: '1011',
+                    category: 'beverages'
+
+                },
+                {
+                    name: 'Lemon tea',
+                    price: '20',
+                    img: lemonTea,
+                    count: 0,
+                    table: '',
+                    minCount: 'not found',
+                    id: '1012',
+                    category: 'beverages'
+
+                },
+                {
+                    name: 'Milk shake',
+                    price: '55',
+                    img: milkShake,
+                    count: 0,
+                    table: '',
+                    minCount: 'not found',
+                    id: '1013',
+                    category: 'beverages'
+
+                },
+                {
+                    name: 'Orange juice',
+                    price: '55',
+                    img: orangeJuice,
+                    count: 0,
+                    table: '',
+                    minCount: 'not found',
+                    id: '1014',
+                    category: 'beverages'
+
+                },
+                {
+                    name: 'Apple juice',
+                    price: '55',
+                    img: appleJuice,
+                    count: 0,
+                    table: '',
+                    minCount: 'not found',
+                    id: '1015',
+                    category: 'beverages'
+
+                },
+                {
+                    name: 'Berry frappe',
+                    price: '55',
+                    img: berryFrappe,
+                    count: 0,
+                    table: '',
+                    minCount: 'not found',
+                    id: '1016',
+                    category: 'beverages'
+
+                }
+
+            ]
         }
     },
     mutations: {
@@ -63,6 +317,9 @@ const store = createStore({
         getTable(state) {
             return state.table
         },
+        getProductList(state) {
+            return state.productList
+        }
     },
 })
 
