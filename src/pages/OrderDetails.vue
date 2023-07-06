@@ -169,7 +169,7 @@ const deletedProds = ref([]);
 
 //ADD NEW ITEM OF SELECTED PRODUCTS
 
-function selected(event) {
+function selected() {
   const loginId = JSON.parse(localStorage.getItem('name'))
   for (let item of selectedItems.value) {
     for (let sel of selection.value) {
