@@ -72,6 +72,25 @@
     cursor: pointer;
     text-align: center;
   }
+
+  &__disabled {
+    pointer-events: none;
+
+    &:after {
+      position: absolute;
+      content: '';
+      width: 100%;
+      height: 100%;
+      justify-content: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 15px;
+      background: #856f6f82;
+      box-sizing: border-box;
+      left: 0;
+    }
+  }
 }
 
 .w-4rem.shadow-2.flex-shrink-0.border-round {

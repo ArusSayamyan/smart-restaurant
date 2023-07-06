@@ -40,23 +40,27 @@
               <AccordionTab header="Kitchen">
                 <Accordion>
                   <AccordionTab header="burgers">
-                    <OrderList v-model="products" listStyle="height:auto" dataKey="id" v-model:selection="selection"
+                    <OrderList v-model="burgers" listStyle="height:auto" dataKey="id" v-model:selection="selection"
                                @click="selected">
                       <template> List of Products</template>
-                      <template #item="slotProps">
-                        <div class="flex flex-wrap p-2 align-items-center gap-3">
-                          <img class="w-4rem shadow-2 flex-shrink-0 border-round" :src="slotProps.item.img"
-                               :alt="slotProps.item.name"/>
+                      <template #item="item">
+                        <div class="flex flex-wrap p-2 align-items-center gap-3"
+                             :class="{'orderDetails__disabled':item.item.minCount <= 0}">
+                          <img class="w-4rem shadow-2 flex-shrink-0 border-round" :src="item.item.img"
+                               :alt="item.item.name"/>
                           <div class="flex-1 flex flex-column gap-2">
-                            <span class="font-bold">{{ slotProps.item.name }}</span>
+                            <span class="font-bold">{{ item.item.name }}</span>
                           </div>
-                          <span class="font-bold text-900">$ {{ slotProps.item.price }}</span>
+                          <span class="font-bold text-900" v-if="+item.item.minCount >= 0">{{
+                              item.item.minCount
+                            }}</span>
+                          <span class="font-bold text-900">$ {{ item.item.price }}</span>
                         </div>
                       </template>
                     </OrderList>
                   </AccordionTab>
                   <AccordionTab header="Desserts">
-                    <OrderList v-model="desserts" listStyle="height:auto" dataKey="id" v-model:selection="selection"
+                    <OrderList v-model="dessert" listStyle="height:auto" dataKey="id" v-model:selection="selection"
                                @click="selected">
                       <template> List of Products</template>
                       <template #item="slotProps">
@@ -72,7 +76,7 @@
                     </OrderList>
                   </AccordionTab>
                   <AccordionTab header="Appetizer">
-                    <OrderList v-model="appetizer" listStyle="height:auto" dataKey="id" v-model:selection="selection"
+                    <OrderList v-model="appetizers" listStyle="height:auto" dataKey="id" v-model:selection="selection"
                                @click="selected">
                       <template> List of Products</template>
                       <template #item="slotProps">
@@ -92,7 +96,7 @@
               <AccordionTab header="Bar">
                 <Accordion>
                   <AccordionTab header="Beverages">
-                    <OrderList v-model="beverages" listStyle="height:auto" dataKey="id" v-model:selection="selection"
+                    <OrderList v-model="beverage" listStyle="height:auto" dataKey="id" v-model:selection="selection"
                                @click="selected">
                       <template> List of Products</template>
                       <template #item="slotProps">
@@ -125,213 +129,48 @@ import OrderList from 'primevue/orderlist';
 import {ref, computed} from 'vue';
 import {useStore} from 'vuex';
 
-//IMPORT IMAGES
-import eggBurger from '@/assets/eggBurger.png';
-import beef from '@/assets/beef.png';
-import cheese from '@/assets/cheese.png';
-import creamy from '@/assets/creamy.png';
-import chicken from '@/assets/chicken.png';
-import barbeque from '@/assets/barbeque.png';
-import melon from '@/assets/melon.png';
-import apple from '@/assets/apple.png';
-import velvet from '@/assets/velvet.png';
-import fruit from '@/assets/fruit.png';
-import fries from '@/assets/fries.png';
-import nugget from '@/assets/nugget.png';
-import sausage from '@/assets/sausage.png';
-import chickenWings from '@/assets/chickenWings.png';
-import lemonade from '@/assets/lemonade.png';
-import softDrink from '@/assets/softDrink.png';
-import lemonTea from '@/assets/lemonTea.png';
-import milkShake from '@/assets/milkShake.png';
-import orangeJuice from '@/assets/orangeJuice.png';
-import appleJuice from '@/assets/appleJuice.png';
-import berryFrappe from '@/assets/berryFrappe.png';
-
 //VARIABLES
 const store = useStore();
 const showModal = ref(false)
 const showCancelModal = ref(false)
 const selection = ref()
-// const selectedItems =
 const selectedTable = store.getters.getSelectedTables;
+
+//GET SELECTED PRODUCTS
 const selectedItems = computed(() => {
   return store.getters.getSelectedProducts;
+});
+
+//GET ALL PRODUCTS LIST
+const mainProducts = computed(() => {
+  return store.getters.getProductList;
+});
+
+
+//FILTER PRODUCTS WITH CATEGORIES
+const burgers = computed(() => {
+  return mainProducts.value.filter(item => item.category === 'burger')
+});
+
+const dessert = computed(() => {
+  return mainProducts.value.filter(item => item.category === 'dessert')
+});
+
+const appetizers = computed(() => {
+  return mainProducts.value.filter(item => item.category === 'appetizer')
+});
+
+const beverage = computed(() => {
+  return mainProducts.value.filter(item => item.category === 'beverages')
 });
 const object = JSON.parse(localStorage.getItem('name'))
 const fromEditPage = window.history.state.back === '/orderList/' + object.id
 const deletedProds = ref([]);
-// const router = useRouter()
-
-
-// LIST OF PRODUCTS
-const products = ref([
-  {
-    name: 'Egg burger',
-    price: '55',
-    img: eggBurger,
-    count: 0,
-    table: ''
-  },
-  {
-    name: 'Beef burger',
-    price: '60',
-    img: beef,
-    count: 0,
-    table: ''
-  },
-  {
-    name: 'Cheese burger',
-    price: '20',
-    img: cheese,
-    count: 0,
-    table: ''
-  },
-  {
-    name: 'Creamy mushroom',
-    price: '55',
-    img: creamy,
-    count: 0,
-    table: ''
-
-  },
-  {
-    name: 'Spicy chicken',
-    price: '60',
-    img: chicken,
-    count: 0,
-    table: ''
-  },
-  {
-    name: 'Barbeque chicken',
-    price: '20',
-    img: barbeque,
-    count: 0,
-    table: ''
-  }
-]);
-const desserts = ref([
-  {
-    name: 'Melon ice cream',
-    price: '55',
-    img: melon,
-    count: 0,
-    table: ''
-  },
-  {
-    name: 'Apple pie',
-    price: '60',
-    img: apple,
-    count: 0,
-    table: ''
-  },
-  {
-    name: 'Red velvet cake',
-    price: '20',
-    img: velvet,
-    count: 0,
-    table: ''
-  },
-  {
-    name: 'Fruit salad',
-    price: '55',
-    img: fruit,
-    count: 0,
-    table: ''
-
-  }
-]);
-const appetizer = ref([
-  {
-    name: 'French fries',
-    price: '55',
-    img: fries,
-    count: 0,
-    table: ''
-  },
-  {
-    name: 'Nugget',
-    price: '60',
-    img: nugget,
-    count: 0,
-    table: ''
-  },
-  {
-    name: 'Sausage',
-    price: '20',
-    img: sausage,
-    count: 0,
-    table: ''
-  },
-  {
-    name: 'Chicken wings',
-    price: '55',
-    img: chickenWings,
-    count: 0,
-    table: ''
-  }
-]);
-const beverages = ref([
-  {
-    name: 'Lemonade',
-    price: '55',
-    img: lemonade,
-    count: 0,
-    table: ''
-  },
-  {
-    name: 'Soft drink',
-    price: '60',
-    img: softDrink,
-    count: 0,
-    table: ''
-  },
-  {
-    name: 'Lemon tea',
-    price: '20',
-    img: lemonTea,
-    count: 0,
-    table: ''
-  },
-  {
-    name: 'Milk shake',
-    price: '55',
-    img: milkShake,
-    count: 0,
-    table: ''
-  },
-  {
-    name: 'Orange juice',
-    price: '55',
-    img: orangeJuice,
-    count: 0,
-    table: ''
-  },
-  {
-    name: 'Apple juice',
-    price: '55',
-    img: appleJuice,
-    count: 0,
-    table: ''
-  },
-  {
-    name: 'Berry frappe',
-    price: '55',
-    img: berryFrappe,
-    count: 0,
-    table: ''
-  }
-]);
-
-
-//get selected items from store with getter
-
 
 //ADD NEW ITEM OF SELECTED PRODUCTS
 
-function selected() {
+function selected(event) {
   const loginId = JSON.parse(localStorage.getItem('name'))
-  // const table = store.getters.getTable
   for (let item of selectedItems.value) {
     for (let sel of selection.value) {
       for (let i = 0; i < selectedTable.length; i++) {
@@ -339,6 +178,12 @@ function selected() {
       }
       if ('name' in item && item.name === sel.name) {
         item.count++
+        item.minCount--
+        //
+        // TODO
+        if (item.minCount === 0) {
+          console.log('empty')
+        }
         return
       }
     }
@@ -351,6 +196,7 @@ function selected() {
         item.table = selectedTable[selectedTable.length - 1].table
       }
       item.count = 1
+      item.minCount--
     }
   }
 }
@@ -382,6 +228,7 @@ function delOrderItem(table, prodName) {
   deletedProds.value = selectedItems.value.filter(item => item.name !== prodName)
   store.commit('updateProducts', deletedProds.value)
 }
+
 </script>
 
 <style scoped lang="scss" src="../styles/orderDetails.scss">

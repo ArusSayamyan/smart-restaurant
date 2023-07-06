@@ -21,5 +21,6 @@ body {
   height: 100vh;
   margin: 0 auto;
 }
+
 </style>
 <style lang="scss" src="./styles/app.scss"></style>
