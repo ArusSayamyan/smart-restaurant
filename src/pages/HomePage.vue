@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-import {ref} from 'vue';
+import {computed, onMounted, ref} from 'vue';
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import data from '@/json/data.json'
@@ -43,6 +43,18 @@ function checkCode() {
   }
 }
 
+const prod = computed(() => {
+  return store.getters.getProductList
+});
+
+onMounted(()=> {
+  if(localStorage.getItem('allProducts')) {
+    const products = JSON.parse(localStorage.getItem('allProducts'))
+    localStorage.setItem('allProducts', JSON.stringify(products))
+  }else {
+    localStorage.setItem('allProducts', JSON.stringify(prod.value))
+  }
+})
 // localStorage.clear();
 </script>
 <style scoped lang="scss" src="../styles/app.scss"></style>

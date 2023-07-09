@@ -50,7 +50,7 @@ const store = createStore({
                     img: eggBurger,
                     count: 0,
                     table: '',
-                    minCount: 'not found',
+                    minCount: 'unlimited',
                     id: '1000',
                     category: 'burger'
 
@@ -61,7 +61,7 @@ const store = createStore({
                     img: beef,
                     count: 0,
                     table: '',
-                    minCount: 'not found',
+                    minCount: 'unlimited',
                     id: '1001',
                     category: 'burger'
 
@@ -72,7 +72,7 @@ const store = createStore({
                     img: cheese,
                     count: 0,
                     table: '',
-                    minCount: 'not found',
+                    minCount: 'unlimited',
                     id: '1002',
                     category: 'burger'
 
@@ -83,7 +83,7 @@ const store = createStore({
                     img: creamy,
                     count: 0,
                     table: '',
-                    minCount: 'not found',
+                    minCount: 'unlimited',
                     id: '1003',
                     category: 'burger'
 
@@ -95,7 +95,7 @@ const store = createStore({
                     img: chicken,
                     count: 0,
                     table: '',
-                    minCount: 'not found',
+                    minCount: 'unlimited',
                     id: '1004',
                     category: 'burger'
 
@@ -106,7 +106,7 @@ const store = createStore({
                     img: barbeque,
                     count: 0,
                     table: '',
-                    minCount: 'not found',
+                    minCount: 'unlimited',
                     id: '1005',
                     category: 'burger'
                 },
@@ -116,7 +116,7 @@ const store = createStore({
                     img: melon,
                     count: 0,
                     table: '',
-                    minCount: 'not found',
+                    minCount: 'unlimited',
                     id: '1006',
                     category: 'dessert'
                 },
@@ -126,7 +126,7 @@ const store = createStore({
                     img: apple,
                     count: 0,
                     table: '',
-                    minCount: 'not found',
+                    minCount: 'unlimited',
                     id: '1007',
                     category: 'dessert'
                 },
@@ -136,7 +136,7 @@ const store = createStore({
                     img: velvet,
                     count: 0,
                     table: '',
-                    minCount: 'not found',
+                    minCount: 'unlimited',
                     id: '1008',
                     category: 'dessert'
 
@@ -147,7 +147,7 @@ const store = createStore({
                     img: fruit,
                     count: 0,
                     table: '',
-                    minCount: 'not found',
+                    minCount: 'unlimited',
                     id: '1009',
                     category: 'dessert'
 
@@ -158,8 +158,8 @@ const store = createStore({
                     img: fries,
                     count: 0,
                     table: '',
-                    minCount: 'not found',
-                    id: '1006',
+                    minCount: 'unlimited',
+                    id: '1010',
                     category: 'appetizer'
 
                 },
@@ -169,8 +169,8 @@ const store = createStore({
                     img: nugget,
                     count: 0,
                     table: '',
-                    minCount: 'not found',
-                    id: '1007',
+                    minCount: 'unlimited',
+                    id: '1011',
                     category: 'appetizer'
 
 
@@ -181,8 +181,8 @@ const store = createStore({
                     img: sausage,
                     count: 0,
                     table: '',
-                    minCount: 'not found',
-                    id: '1008',
+                    minCount: 'unlimited',
+                    id: '1012',
                     category: 'appetizer'
 
                 },
@@ -192,8 +192,8 @@ const store = createStore({
                     img: chickenWings,
                     count: 0,
                     table: '',
-                    minCount: 'not found',
-                    id: '1009',
+                    minCount: 'unlimited',
+                    id: '1013',
                     category: 'appetizer'
 
                 },
@@ -203,8 +203,8 @@ const store = createStore({
                     img: lemonade,
                     count: 0,
                     table: '',
-                    minCount: 'not found',
-                    id: '1010',
+                    minCount: 'unlimited',
+                    id: '1014',
                     category: 'beverages'
 
                 },
@@ -214,8 +214,8 @@ const store = createStore({
                     img: softDrink,
                     count: 0,
                     table: '',
-                    minCount: 'not found',
-                    id: '1011',
+                    minCount: 'unlimited',
+                    id: '1015',
                     category: 'beverages'
 
                 },
@@ -225,8 +225,8 @@ const store = createStore({
                     img: lemonTea,
                     count: 0,
                     table: '',
-                    minCount: 'not found',
-                    id: '1012',
+                    minCount: 'unlimited',
+                    id: '1016',
                     category: 'beverages'
 
                 },
@@ -236,8 +236,8 @@ const store = createStore({
                     img: milkShake,
                     count: 0,
                     table: '',
-                    minCount: 'not found',
-                    id: '1013',
+                    minCount: 'unlimited',
+                    id: '1017',
                     category: 'beverages'
 
                 },
@@ -247,8 +247,8 @@ const store = createStore({
                     img: orangeJuice,
                     count: 0,
                     table: '',
-                    minCount: 'not found',
-                    id: '1014',
+                    minCount: 'unlimited',
+                    id: '1018',
                     category: 'beverages'
 
                 },
@@ -258,8 +258,8 @@ const store = createStore({
                     img: appleJuice,
                     count: 0,
                     table: '',
-                    minCount: 'not found',
-                    id: '1015',
+                    minCount: 'unlimited',
+                    id: '1019',
                     category: 'beverages'
 
                 },
@@ -269,8 +269,8 @@ const store = createStore({
                     img: berryFrappe,
                     count: 0,
                     table: '',
-                    minCount: 'not found',
-                    id: '1016',
+                    minCount: 'unlimited',
+                    id: '1020',
                     category: 'beverages'
 
                 }
@@ -280,7 +280,24 @@ const store = createStore({
     },
     mutations: {
         updateSelectedProducts(state, payload) {
-            state.selectedProducts.push(payload)
+            if(state.selectedProducts.some((item) => item.id === payload.id)) {
+                // let theSame = state.selectedProducts.find(item => item.id === payload.id)
+                payload.count++
+                if(payload.minCount > 0) {
+                    payload.minCount--
+                }
+
+                const idx = state.selectedProducts.findIndex(item => item.id === payload.id)
+                state.selectedProducts[idx] = payload
+            }else {
+                payload.count = 1;
+                if(payload.minCount > 0) {
+                    payload.minCount--
+                }
+                state.selectedProducts.push(payload)
+
+            }
+
         },
 
         updateProducts(state, payload) {
@@ -301,6 +318,9 @@ const store = createStore({
 
        selectTable(state, payload) {
             state.table = payload
+        },
+        updateProductList(state, payload) {
+            state.productList = payload
         },
     },
     getters: {

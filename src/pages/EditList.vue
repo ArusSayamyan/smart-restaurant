@@ -1,7 +1,7 @@
 <template>
   <base-wrapper>
     <div class="card p-fluid editList">
-      <DataTable v-model:filters="filters" filterDisplay="menu" v-model:editingRows="editingRows" :value="products"
+      <DataTable v-model:filters="filters" filterDisplay="menu" v-model:editingRows="editingRows" :value="local"
                  editMode="row" dataKey="id"
                  @row-edit-save="onRowEditSave" :globalFilterFields="['name']" tableClass="editable-cells-table"
                  tableStyle="min-width: 50rem">
@@ -55,21 +55,22 @@ const store = useStore();
 
 //VARIABLES
 const products = ref();
+const local = ref();
 const editingRows = ref([]);
 const prod = computed(() => {
   return store.getters.getProductList
 });
 const svg = ref(svgs)
 
-onMounted(() => {
-  products.value = prod.value;
-});
+local.value = JSON.parse(localStorage.getItem('allProducts'))
 
 const onRowEditSave = (event) => {
   let {newData, index} = event;
   products.value[index] = newData;
-  console.log(newData)
-  console.log(store.state.productList)
+  local.value[index] = newData;
+  localStorage.setItem('allProducts', JSON.stringify(local.value))
+  local.value = JSON.parse(localStorage.getItem('allProducts'))
+  store.commit('updateProductList', products.value)
 };
 const formatCurrency = (value) => {
   return new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'}).format(value);
@@ -80,6 +81,11 @@ const filters = ref(
       name: {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
     }
 );
+
+onMounted(() => {
+  products.value = prod.value;
+});
+
 </script>
 
 <style lang="scss" scoped>

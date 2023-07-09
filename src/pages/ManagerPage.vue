@@ -35,6 +35,15 @@ function getTableNumber(tableNum) {
     width: 70%;
     margin-right: 35px;
     gap: 15px;
+
+    @media(max-width: 520px) {
+      width: 100%;
+      margin-bottom: 25px;
+    }
+  }
+
+  @media(max-width: 520px) {
+    flex-direction: column;
   }
 }
 </style>

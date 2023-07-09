@@ -73,6 +73,15 @@
     text-align: center;
   }
 
+  &__minCount {
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    border-radius: 50%;
+    background: red;
+    color: #fff;
+  }
+
   &__disabled {
     pointer-events: none;
 

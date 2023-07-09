@@ -78,6 +78,7 @@ if (loginId.includes('cashier')) {
   }
 }
 
+
 //UPDATE CHANGED ORDER LIST
 let arr = productsList.filter(subArray =>
     subArray.some(obj => obj.table === table)
