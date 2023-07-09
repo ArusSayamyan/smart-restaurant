@@ -17,7 +17,9 @@
   }
 
   &__list {
-    padding-top: 10px;
+    &:first-child {
+      padding-top: 10px;
+    }
   }
 
   &__editList {

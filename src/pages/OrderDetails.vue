@@ -20,7 +20,8 @@
               <td v-if="sel.name">{{ sel.name }}</td>
               <td v-if="sel.count">{{ sel.count }}</td>
               <td v-if="sel.price">{{ sel.count * +sel.price }}$</td>
-              <td v-if="object.id.includes('manager') && fromEditPage" class="orderDetails__delItem"
+              <td v-if="object.id.includes('manager') && fromEditPage && selectedItems.length > 1"
+                  class="orderDetails__delItem"
                   @click="delOrderItem(sel.table, sel.name)">x
               </td>
             </tr>
@@ -40,19 +41,21 @@
               <AccordionTab header="Kitchen">
                 <Accordion>
                   <AccordionTab header="burgers">
-                    <OrderList v-model="burgers" listStyle="height:auto" dataKey="id" v-model:selection="selection"
-                               @click="selected">
+                    <OrderList v-model="burgers" listStyle="height:auto" dataKey="id"
+                               v-model:selection="selection"
+                               @selection-change="OrderListSelectionChangeEvent(...selection)"
+                    >
                       <template> List of Products</template>
                       <template #item="item">
                         <div class="flex flex-wrap p-2 align-items-center gap-3"
-                             :class="{'orderDetails__disabled':item.item.minCount <= 0}">
+                             :class="{'orderDetails__disabled': +item.item.minCount <= 0}">
                           <img class="w-4rem shadow-2 flex-shrink-0 border-round" :src="item.item.img"
                                :alt="item.item.name"/>
                           <div class="flex-1 flex flex-column gap-2">
                             <span class="font-bold">{{ item.item.name }}</span>
                           </div>
-                          <span class="font-bold text-900" v-if="+item.item.minCount >= 0">{{
-                              item.item.minCount
+                          <span class="font-bold text-900 orderDetails__minCount" v-if="+item.item.minCount >= 0">{{
+                              +item.item.minCount
                             }}</span>
                           <span class="font-bold text-900">$ {{ item.item.price }}</span>
                         </div>
@@ -61,32 +64,40 @@
                   </AccordionTab>
                   <AccordionTab header="Desserts">
                     <OrderList v-model="dessert" listStyle="height:auto" dataKey="id" v-model:selection="selection"
-                               @click="selected">
+                               @selection-change="OrderListSelectionChangeEvent(...selection)">
                       <template> List of Products</template>
-                      <template #item="slotProps">
-                        <div class="flex flex-wrap p-2 align-items-center gap-3">
-                          <img class="w-4rem shadow-2 flex-shrink-0 border-round" :src="slotProps.item.img"
-                               :alt="slotProps.item.name"/>
+                      <template #item="item">
+                        <div class="flex flex-wrap p-2 align-items-center gap-3"
+                             :class="{'orderDetails__disabled': +item.item.minCount <= 0}">
+                          <img class="w-4rem shadow-2 flex-shrink-0 border-round" :src="item.item.img"
+                               :alt="item.item.name"/>
                           <div class="flex-1 flex flex-column gap-2">
-                            <span class="font-bold">{{ slotProps.item.name }}</span>
+                            <span class="font-bold">{{ item.item.name }}</span>
                           </div>
-                          <span class="font-bold text-900">$ {{ slotProps.item.price }}</span>
+                          <span class="font-bold text-900 orderDetails__minCount" v-if="+item.item.minCount >= 0">{{
+                              +item.item.minCount
+                            }}</span>
+                          <span class="font-bold text-900">$ {{ item.item.price }}</span>
                         </div>
                       </template>
                     </OrderList>
                   </AccordionTab>
                   <AccordionTab header="Appetizer">
                     <OrderList v-model="appetizers" listStyle="height:auto" dataKey="id" v-model:selection="selection"
-                               @click="selected">
+                               @selection-change="OrderListSelectionChangeEvent(...selection)">
                       <template> List of Products</template>
-                      <template #item="slotProps">
-                        <div class="flex flex-wrap p-2 align-items-center gap-3">
-                          <img class="w-4rem shadow-2 flex-shrink-0 border-round" :src="slotProps.item.img"
-                               :alt="slotProps.item.name"/>
+                      <template #item="item">
+                        <div class="flex flex-wrap p-2 align-items-center gap-3"
+                             :class="{'orderDetails__disabled': +item.item.minCount <= 0}">
+                          <img class="w-4rem shadow-2 flex-shrink-0 border-round" :src="item.item.img"
+                               :alt="item.item.name"/>
                           <div class="flex-1 flex flex-column gap-2">
-                            <span class="font-bold">{{ slotProps.item.name }}</span>
+                            <span class="font-bold">{{ item.item.name }}</span>
                           </div>
-                          <span class="font-bold text-900">$ {{ slotProps.item.price }}</span>
+                          <span class="font-bold text-900 orderDetails__minCount" v-if="+item.item.minCount >= 0">{{
+                              +item.item.minCount
+                            }}</span>
+                          <span class="font-bold text-900">$ {{ item.item.price }}</span>
                         </div>
                       </template>
                     </OrderList>
@@ -97,16 +108,20 @@
                 <Accordion>
                   <AccordionTab header="Beverages">
                     <OrderList v-model="beverage" listStyle="height:auto" dataKey="id" v-model:selection="selection"
-                               @click="selected">
+                               @selection-change="OrderListSelectionChangeEvent(...selection)">
                       <template> List of Products</template>
-                      <template #item="slotProps">
-                        <div class="flex flex-wrap p-2 align-items-center gap-3">
-                          <img class="w-4rem shadow-2 flex-shrink-0 border-round" :src="slotProps.item.img"
-                               :alt="slotProps.item.name"/>
+                      <template #item="item">
+                        <div class="flex flex-wrap p-2 align-items-center gap-3"
+                             :class="{'orderDetails__disabled': +item.item.minCount <= 0}">
+                          <img class="w-4rem shadow-2 flex-shrink-0 border-round" :src="item.item.img"
+                               :alt="item.item.name"/>
                           <div class="flex-1 flex flex-column gap-2">
-                            <span class="font-bold">{{ slotProps.item.name }}</span>
+                            <span class="font-bold">{{ item.item.name }}</span>
                           </div>
-                          <span class="font-bold text-900">$ {{ slotProps.item.price }}</span>
+                          <span class="font-bold text-900 orderDetails__minCount" v-if="+item.item.minCount >= 0">{{
+                              +item.item.minCount
+                            }}</span>
+                          <span class="font-bold text-900">$ {{ item.item.price }}</span>
                         </div>
                       </template>
                     </OrderList>
@@ -131,10 +146,15 @@ import {useStore} from 'vuex';
 
 //VARIABLES
 const store = useStore();
+const all = computed(() => {
+  return JSON.parse(localStorage.getItem('allProducts'))
+});
 const showModal = ref(false)
 const showCancelModal = ref(false)
 const selection = ref()
-const selectedTable = store.getters.getSelectedTables;
+const selectedTable = computed(() => {
+  return store.getters.getTable
+});
 
 //GET SELECTED PRODUCTS
 const selectedItems = computed(() => {
@@ -149,89 +169,83 @@ const mainProducts = computed(() => {
 
 //FILTER PRODUCTS WITH CATEGORIES
 const burgers = computed(() => {
-  return mainProducts.value.filter(item => item.category === 'burger')
+  return all.value.filter(item => item.category === 'burger')
 });
 
 const dessert = computed(() => {
-  return mainProducts.value.filter(item => item.category === 'dessert')
+  return all.value.filter(item => item.category === 'dessert')
 });
 
 const appetizers = computed(() => {
-  return mainProducts.value.filter(item => item.category === 'appetizer')
+  return all.value.filter(item => item.category === 'appetizer')
 });
 
 const beverage = computed(() => {
-  return mainProducts.value.filter(item => item.category === 'beverages')
+  return all.value.filter(item => item.category === 'beverages')
 });
 const object = JSON.parse(localStorage.getItem('name'))
 const fromEditPage = window.history.state.back === '/orderList/' + object.id
 const deletedProds = ref([]);
 
-//ADD NEW ITEM OF SELECTED PRODUCTS
-
-function selected() {
-  const loginId = JSON.parse(localStorage.getItem('name'))
-  for (let item of selectedItems.value) {
-    for (let sel of selection.value) {
-      for (let i = 0; i < selectedTable.length; i++) {
-        item.table = selectedTable[selectedTable.length - 1].table
-      }
-      if ('name' in item && item.name === sel.name) {
-        item.count++
-        item.minCount--
-        //
-        // TODO
-        if (item.minCount === 0) {
-          console.log('empty')
-        }
-        return
-      }
-    }
-  }
-
-  if (!selectedItems.value.includes(...selection.value) || window.history.state.back === '/orderList/' + loginId.id) {
-    store.commit('updateSelectedProducts', ...selection.value)
-    for (let item of selection.value) {
-      for (let i = 0; i < selectedTable.length; i++) {
-        item.table = selectedTable[selectedTable.length - 1].table
-      }
-      item.count = 1
-      item.minCount--
-    }
-  }
-}
-
+//TOTAL PRICE
 const doubleCount = computed(() => {
   const flattened = selectedItems.value.reduce((acc, curr) => acc.concat(curr), []);
   return flattened.reduce((acc, curr) => acc + (curr.count * curr.price), 0);
 });
 
 
-//DATE
+// GET DATE
 const date = computed(() => {
   const today = new Date();
   const year = today.getFullYear();
-  const month = today.getMonth() + 1; // Months are zero-based, so add 1
+
+  //MONTHS ARE ZERO BASED SO ADD 1
+  const month = today.getMonth() + 1;
   const day = today.getDate();
 
-// GET TIME
+//GET TIME
   const hours = today.getHours();
   const minutes = today.getMinutes();
-
   return `${year}-${month}-${day} ${hours}:${minutes}`;
 })
 
 //DELETE ORDER ITEM
 
+//TODO
 function delOrderItem(table, prodName) {
-  // const id = store.getters.getLoginId
   deletedProds.value = selectedItems.value.filter(item => item.name !== prodName)
+  const deletedItems = selectedItems.value.filter(item => item.name === prodName)
+  for (let item of all.value) {
+    for (let obj of deletedItems) {
+      if (item.name === prodName && item.minCount >= 0) {
+        item.minCount += obj.count
+      }
+    }
+    const idx = mainProducts.value.findIndex(elem => elem.id === item.id)
+    mainProducts.value[idx] = item
+    console.log(mainProducts.value)
+  }
+  localStorage.setItem('allProducts', JSON.stringify(mainProducts.value))
+  store.commit('updateProductList', mainProducts.value)
   store.commit('updateProducts', deletedProds.value)
+
 }
+
+
+//ADD NEW ITEM OF SELECTED PRODUCTS
+
+function OrderListSelectionChangeEvent(selected) {
+  selected.table = selectedTable.value
+  console.log(selectedTable.value)
+
+  if (selected.minCount === 0) {
+    return
+  }
+  console.log(selected)
+  store.commit('updateSelectedProducts', selected)
+}
+
 
 </script>
 
-<style scoped lang="scss" src="../styles/orderDetails.scss">
-
-
-</style>
+<style scoped lang="scss" src="../styles/orderDetails.scss"></style>

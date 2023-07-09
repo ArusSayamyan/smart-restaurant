@@ -27,7 +27,13 @@ const printOrder = ref(false)
 //get selected items from store with getter
 const selectedItems = computed(() => {
   return store.getters.getSelectedProducts;
-});const table = store.getters.getTable;
+})
+
+// const mainProducts = computed(() => {
+//   return store.getters.getProductList;
+// });
+
+const table = store.getters.getTable;
 
 
 //get loginId of waiter
@@ -86,8 +92,6 @@ function saveOrder() {
 
 
     //add table numbers to localStorage
-
-
     let tableArr = JSON.parse(localStorage.getItem('tables')) || [];
     tableArr.push(...tables);
     localStorage.setItem('tables', JSON.stringify(tableArr))
@@ -95,16 +99,36 @@ function saveOrder() {
     //HIDE PRINTING ANIMATION AFTER 3 SECONDS
     setTimeout(() => {
       printOrder.value = false
-      if(loginId.includes('manager')) {
+      if (loginId.includes('manager')) {
         router.push('/manager/' + loginId)
-      }else {
+      } else {
         router.push('/waiter/' + loginId + '/createOrder')
       }
+      store.commit('updateProducts', [])
     }, 3000)
+
+    //ADD PRODUCTS WITH MINCOUNT TO LOCALSTORAGE
+    let products = JSON.parse(localStorage.getItem('allProducts'))
+    for (let prod of selectedItems.value) {
+      products = [
+        prod,
+        ...products.filter(element => element.id !== prod.id),
+
+      ]
+      console.log(products)
+      console.log(selectedItems.value)
+      console.log(store.state.productList)
+      store.commit('updateProductList', products)
+      store.commit('updateProducts', [])
+      localStorage.setItem('allProducts', JSON.stringify(products))
+    }
   } else if (props.id === 'cancel') {
     emit('myEvent', false)
   }
+
+
 }
+
 
 function canselOrder() {
   emit('myEvent', false)

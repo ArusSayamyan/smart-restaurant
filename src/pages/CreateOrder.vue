@@ -30,6 +30,7 @@ import MainTables from "@/pages/MainTables.vue";
 import CalculateInput from '@/components/CalculateInput.vue';
 
 
+
 //VARIABLES
 const tabNumber = ref();
 import {ref} from 'vue';

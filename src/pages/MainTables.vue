@@ -85,6 +85,8 @@ if (localStorage.getItem('tables')) {
 //MAKE TABLE DISABLED
 const emitEvent = (table) => {
   emit('myEvent', table)
+  store.commit('selectTable', table)
+
 
 }
 

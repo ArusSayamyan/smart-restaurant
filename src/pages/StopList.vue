@@ -23,14 +23,11 @@
 <script setup>
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import {computed} from "vue";
-import {useStore} from "vuex";
-const store = useStore();
-const prod = computed(() => {
-  return store.getters.getProductList
-});
 
-const stopList = prod.value.filter(item => +item.minCount === 0)
+const prod = JSON.parse(localStorage.getItem('allProducts'))
+
+
+const stopList = prod.filter(item => +item.minCount === 0)
 
 </script>
 <style scoped lang="scss">
