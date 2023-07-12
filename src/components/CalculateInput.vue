@@ -87,6 +87,9 @@ function setCount() {
 
 
 function orderDetails() {
+  console.log(waiter)
+  console.log(props.tabNumber)
+  console.log(store.state.selectedTables)
   store.commit('updateSelectedTables', {
     id: waiter.id,
     table: props.tabNumber

@@ -41,7 +41,7 @@
         </div>
       </div>
       <transition-group name="p-message" tag="div" v-if="orderDeleted">
-        <Message severity="success">Success Message Content</Message>
+        <Message severity="success" key="message1">Success Message Content</Message>
       </transition-group>
       <h1>Order list page</h1>
       <div class="orderListPage__wrapper">
@@ -101,6 +101,7 @@ const showReasonModal = ref(false);
 const loginId = store.getters.getLoginId;
 const table = store.getters.getTable
 let productsList = JSON.parse(localStorage.getItem(loginId))
+const allProducts = JSON.parse(localStorage.getItem('allProducts'))
 let products;
 const waiter = JSON.parse(localStorage.getItem('name'))
 const checked = ref(false);
@@ -124,6 +125,21 @@ const onSubmit = handleSubmit((values) => {
       filtered = prods.filter(subArray =>
           subArray.some(obj => obj.table !== table)
       );
+      if(checked.value) {
+        const delItems = products.filter(obj => obj.table === table);
+        for(let item of delItems) {
+          if(+item.minCount >= 0) {
+            item.minCount += item.count
+            allProducts.forEach((product, index) => {
+              if(product.id === item.id) {
+                allProducts[index] = item;
+                localStorage.setItem('allProducts', JSON.stringify(allProducts))
+              }
+            })
+          }
+        }
+      }
+
       filteredTabs = worker.filter(obj => obj.table !== table);
       store.commit('updateTables', filteredTabs)
       localStorage.setItem(item.id, JSON.stringify(filtered))

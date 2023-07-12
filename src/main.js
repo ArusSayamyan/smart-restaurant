@@ -310,7 +310,7 @@ const store = createStore({
         },
 
         updateTables(state, payload) {
-            state.selectedTables.push = payload
+            state.selectedTables = payload
         },
 
         changeLoginId(state, payload) {
