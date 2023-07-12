@@ -27,6 +27,7 @@ import milkShake from "@/assets/milkShake.png";
 import orangeJuice from "@/assets/orangeJuice.png";
 import appleJuice from "@/assets/appleJuice.png";
 import berryFrappe from "@/assets/berryFrappe.png";
+import ToastService from 'primevue/toastservice';
 
 
 //MODAL COMPONENT
@@ -347,7 +348,10 @@ const app = createApp(App);
 
 app.component('base-wrapper', BaseWrapper)
 app.component('save-order', SaveOrderModal)
+
 app.use(router)
 app.use(PrimeVue)
 app.use(store)
+app.use(ToastService);
+
 app.mount('#app')

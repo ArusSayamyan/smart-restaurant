@@ -1,7 +1,6 @@
 <template>
   <base-wrapper>
     <div class="createOrder">
-
       <div class="createOrder__block">
         <div class="createOrder__categories">
           <MainTables @myEvent="getTableNumber"/>
