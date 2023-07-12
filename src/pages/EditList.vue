@@ -21,7 +21,7 @@
             {{ formatCurrency(data[field]) }}
           </template>
           <template #editor="{ data, field }">
-            <InputNumber v-model="data[field]" mode="currency" currency="USD" locale="en-US"/>
+            <InputText v-model="data[field]" mode="currency" currency="USD" locale="en-US"/>
           </template>
         </Column>
         <Column field="minCount" header="minCount" style="width: 20%">
@@ -41,7 +41,7 @@
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import InputText from 'primevue/inputtext';
-import InputNumber from 'primevue/inputnumber';
+// import InputNumber from 'primevue/inputnumber';
 import {FilterMatchMode, FilterOperator} from 'primevue/api';
 
 //IMPORT SVG FILES
