@@ -45,12 +45,13 @@ import InputNumber from 'primevue/inputnumber';
 import {FilterMatchMode, FilterOperator} from 'primevue/api';
 
 //IMPORT SVG FILES
-import { svgs } from '../assets/_svgs'
+import {svgs} from '../assets/_svgs'
 
 import {ref, onMounted, computed} from 'vue';
 import {useStore} from "vuex";
 //IMPORT IMAGE OF PRODUCTS
 import BaseWrapper from "@/base/BaseWrapper.vue";
+
 const store = useStore();
 
 //VARIABLES
@@ -103,6 +104,7 @@ onMounted(() => {
   padding-top: 0.6rem;
   padding-bottom: 0.6rem;
 }
+
 .p-input-icon-left {
   position: relative;
 }

@@ -89,4 +89,23 @@
 .p-orderlist-controls {
   display: none !important;
 }
+.p-radiobutton .p-radiobutton-box, .p-radiobutton {
+  width: 15px !important;
+  height: 15px !important;
+  margin-right: 10px
+}
 
+.p-inputswitch {
+  width: 30px !important;
+  height: 17px !important;
+}
+
+.p-inputswitch .p-inputswitch-slider:before {
+  width: 12px !important;
+  height: 12px !important;
+  left: 3px !important;
+  margin-top: -6px !important;
+}
+.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider:before {
+  transform: translateX(12px) !important;
+}

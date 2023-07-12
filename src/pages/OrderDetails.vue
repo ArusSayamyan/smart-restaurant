@@ -236,16 +236,11 @@ function delOrderItem(table, prodName) {
 
 function OrderListSelectionChangeEvent(selected) {
   selected.table = selectedTable.value
-  console.log(selectedTable.value)
-
-  if (selected.minCount === 0) {
+  if (+selected.minCount === 0) {
     return
   }
-  console.log(selected)
   store.commit('updateSelectedProducts', selected)
 }
-
-
 </script>
 
 <style scoped lang="scss" src="../styles/orderDetails.scss"></style>
