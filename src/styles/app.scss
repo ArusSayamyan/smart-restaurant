@@ -52,7 +52,7 @@
     border: none;
     border-radius: 5px;
     padding: 15px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     box-shadow: rgba(14, 30, 37, 0.12) 0 2px 4px 0, rgba(14, 30, 37, 0.32) 0 2px 16px 0;
     outline: none;
     width: 100%;
@@ -75,7 +75,7 @@
     text-transform: uppercase;
     border-radius: 8px;
     background-color: #008000FF;
-    margin: 0 auto;
+    margin: 5px auto 0;
     font-weight: 700;
     cursor: pointer;
 
@@ -108,4 +108,16 @@
 }
 .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider:before {
   transform: translateX(12px) !important;
+}
+
+.p-accordion .p-accordion-content {
+  @media(max-width: 440px) {
+    padding: 5px !important;
+  }
+
+  .p-orderlist .p-orderlist-list .p-orderlist-item {
+    @media(max-width: 440px) {
+      padding: 10px !important;
+    }
+  }
 }
