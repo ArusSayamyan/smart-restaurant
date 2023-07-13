@@ -12,6 +12,14 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+    column-gap: 15px;
+
+    @media(max-width: 372px) {
+      flex-direction: column;
+      row-gap: 15px;
+      justify-content: center;
+      align-items: center;
+    }
   }
 
   &__createOrder {
@@ -30,6 +38,11 @@
     text-align: center;
     text-transform: uppercase;
     color: #ffffff;
+
+    @media(max-width: 420px) {
+      font-size: 12px;
+      margin: 0;
+    }
   }
 
   &__date {

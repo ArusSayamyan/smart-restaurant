@@ -10,9 +10,6 @@
           <router-link :to="object.id + '/createOrder'" class="waitersPage__createOrder">
             <span class="waitersPage__text">Create order</span>
           </router-link>
-          <div class="waitersPage__createOrder">
-            <p class="waitersPage__text">change order</p>
-          </div>
         </div>
       </div>
     </base-wrapper>
