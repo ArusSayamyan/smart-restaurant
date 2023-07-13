@@ -59,8 +59,18 @@
     max-width: 110px;
     margin-bottom: 15px;
   }
+
+  &__submitBtn {
+    position: relative;
+    padding: 20px 0;
+
+    .p-error {
+      position: absolute;
+      top: 0;
+    }
+  }
 }
 
 .flex.flex-wrap.gap-3 {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
