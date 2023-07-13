@@ -87,9 +87,6 @@ function setCount() {
 
 
 function orderDetails() {
-  console.log(waiter)
-  console.log(props.tabNumber)
-  console.log(store.state.selectedTables)
   store.commit('updateSelectedTables', {
     id: waiter.id,
     table: props.tabNumber
@@ -104,8 +101,6 @@ function delNumber() {
 }
 
 //PAY FOR ORDER
-
-
 const emitEvent = (paid) => {
   if (countOfGuests.value.textContent) {
     emit('payOrder', paid)

@@ -115,9 +115,6 @@ function saveOrder() {
         ...products.filter(element => element.id !== prod.id),
 
       ]
-      console.log(products)
-      console.log(selectedItems.value)
-      console.log(store.state.productList)
       store.commit('updateProductList', products)
       store.commit('updateProducts', [])
       localStorage.setItem('allProducts', JSON.stringify(products))

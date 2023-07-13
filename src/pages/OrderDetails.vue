@@ -223,7 +223,6 @@ function delOrderItem(table, prodName) {
     }
     const idx = mainProducts.value.findIndex(elem => elem.id === item.id)
     mainProducts.value[idx] = item
-    console.log(mainProducts.value)
   }
   localStorage.setItem('allProducts', JSON.stringify(mainProducts.value))
   store.commit('updateProductList', mainProducts.value)
