@@ -20,7 +20,11 @@
               <td v-if="sel.name">{{ sel.name }}</td>
               <td v-if="sel.count">{{ sel.count }}</td>
               <td v-if="sel.price">{{ sel.count * +sel.price }}$</td>
-              <td v-if="object.id.includes('manager') && fromEditPage && selectedItems.length > 1"
+              <td v-if="object.id.includes('manager') && fromEditPage && sel.count > 1"
+                  class="orderDetails__changeCount"
+                  @click="changeCount(sel.count, sel.id)">-
+              </td>
+              <td colspan="2" v-if="object.id.includes('manager') && fromEditPage && selectedItems.length > 1"
                   class="orderDetails__delItem"
                   @click="delOrderItem(sel.table, sel.name)">x
               </td>
@@ -152,6 +156,7 @@ const all = computed(() => {
 const showModal = ref(false)
 const showCancelModal = ref(false)
 const selection = ref()
+// const changedCount = ref()
 const selectedTable = computed(() => {
   return store.getters.getTable
 });
@@ -228,6 +233,15 @@ function delOrderItem(table, prodName) {
   store.commit('updateProductList', mainProducts.value)
   store.commit('updateProducts', deletedProds.value)
 
+}
+
+//CHANGE COUNT OF SELECTED PRODUCT
+
+function changeCount(count, id) {
+  const changedItem = selectedItems.value.find(item => item.id === id)
+  changedItem.count--
+  changedItem.minCount++
+  console.log(changedItem)
 }
 
 

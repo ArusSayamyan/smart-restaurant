@@ -107,7 +107,7 @@ function saveOrder() {
       store.commit('updateProducts', [])
     }, 3000)
 
-    //ADD PRODUCTS WITH MINCOUNT TO LOCALSTORAGE
+    //ADD PRODUCTS WITH MIN-COUNT TO LOCALSTORAGE
     let products = JSON.parse(localStorage.getItem('allProducts'))
     for (let prod of selectedItems.value) {
       products = [

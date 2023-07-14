@@ -78,6 +78,11 @@
 
   &__delItem {
     cursor: pointer;
+    text-align: end;
+    padding-right: 5px;
+  }
+
+  &__changeCount {
     text-align: center;
   }
 

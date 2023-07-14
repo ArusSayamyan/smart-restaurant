@@ -282,7 +282,6 @@ const store = createStore({
     mutations: {
         updateSelectedProducts(state, payload) {
             if(state.selectedProducts.some((item) => item.id === payload.id)) {
-                // let theSame = state.selectedProducts.find(item => item.id === payload.id)
                 payload.count++
                 if(payload.minCount > 0) {
                     payload.minCount--
