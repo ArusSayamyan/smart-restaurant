@@ -22,7 +22,7 @@
               <td v-if="sel.price">{{ sel.count * +sel.price }}$</td>
               <td v-if="object.id.includes('manager') && fromEditPage && sel.count > 1"
                   class="orderDetails__changeCount"
-                  @click="changeCount(sel.count, sel.id)">-
+                  @click="changeCount(sel.id)">-
               </td>
               <td colspan="2" v-if="object.id.includes('manager') && fromEditPage && selectedItems.length > 1"
                   class="orderDetails__delItem"
@@ -145,14 +145,12 @@
 import Accordion from 'primevue/accordion';
 import AccordionTab from 'primevue/accordiontab';
 import OrderList from 'primevue/orderlist';
-import {ref, computed} from 'vue';
+import {ref, computed,onMounted} from 'vue';
 import {useStore} from 'vuex';
 
 //VARIABLES
 const store = useStore();
-const all = computed(() => {
-  return JSON.parse(localStorage.getItem('allProducts'))
-});
+
 const showModal = ref(false)
 const showCancelModal = ref(false)
 const selection = ref()
@@ -160,6 +158,10 @@ const selection = ref()
 const selectedTable = computed(() => {
   return store.getters.getTable
 });
+
+const all = ref(JSON.parse(localStorage.getItem('allProducts')))
+const allItems = all.value
+
 
 //GET SELECTED PRODUCTS
 const selectedItems = computed(() => {
@@ -170,7 +172,6 @@ const selectedItems = computed(() => {
 const mainProducts = computed(() => {
   return store.getters.getProductList;
 });
-
 
 //FILTER PRODUCTS WITH CATEGORIES
 const burgers = computed(() => {
@@ -215,17 +216,18 @@ const date = computed(() => {
 })
 
 //DELETE ORDER ITEM
-
 //TODO
 function delOrderItem(table, prodName) {
   deletedProds.value = selectedItems.value.filter(item => item.name !== prodName)
   const deletedItems = selectedItems.value.filter(item => item.name === prodName)
-  for (let item of all.value) {
+  for (let item of allItems) {
     for (let obj of deletedItems) {
       if (item.name === prodName && item.minCount >= 0) {
-        item.minCount += obj.count
+        item.minCount = obj.count + obj.minCount
+        item.count = 0;
       }
     }
+    console.log(mainProducts.value)
     const idx = mainProducts.value.findIndex(elem => elem.id === item.id)
     mainProducts.value[idx] = item
   }
@@ -236,17 +238,18 @@ function delOrderItem(table, prodName) {
 }
 
 //CHANGE COUNT OF SELECTED PRODUCT
-
-function changeCount(count, id) {
+function changeCount(id) {
   const changedItem = selectedItems.value.find(item => item.id === id)
+  const idx = all.value.findIndex(prod => prod.id === id)
   changedItem.count--
-  changedItem.minCount++
-  console.log(changedItem)
+  if (changedItem.minCount >= 0) {
+    changedItem.minCount++
+  }
+  all.value[idx] = changedItem
+  localStorage.setItem('allProducts', JSON.stringify(all.value))
 }
 
-
 //ADD NEW ITEM OF SELECTED PRODUCTS
-
 function OrderListSelectionChangeEvent(selected) {
   selected.table = selectedTable.value
   if (+selected.minCount === 0) {
@@ -254,6 +257,10 @@ function OrderListSelectionChangeEvent(selected) {
   }
   store.commit('updateSelectedProducts', selected)
 }
+
+onMounted(() => {
+  all.value = JSON.parse(localStorage.getItem('allProducts'))
+})
 </script>
 
 <style scoped lang="scss" src="../styles/orderDetails.scss"></style>
