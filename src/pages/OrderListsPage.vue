@@ -11,29 +11,18 @@
                 <div class="flex flex-wrap gap-3">
                   <div class="flex align-items-center">
                     <RadioButton @change="getInputId($event)" v-model="value" inputId="reason1" name="pizza2"
-                                 value="Rotten, acidic, or abnormal smell. Including the unpleasant smells of meats"/>
-                    <label for="reason1" class="ml-2">Rotten, acidic, or abnormal smell. Including the unpleasant smells
-                      of meats</label>
+                                 value="customer failure"/>
+                    <label for="reason1" class="ml-2">customer failure</label>
                   </div>
                   <div class="flex align-items-center">
                     <RadioButton @change="getInputId($event)" v-model="value" inputId="reason2" name="pizza2"
                                  value="Unpleasant Odor or Appearance"/>
-                    <label for="reason2" class="ml-2">Unpleasant Odor or Appearance</label>
+                    <label for="reason2" class="ml-2">treat</label>
                   </div>
                   <div class="flex align-items-center">
                     <RadioButton @change="getInputId($event)" v-model="value" inputId="reason3" name="pizza2"
                                  value="Incorrect Order"/>
                     <label for="reason3" class="ml-2">Incorrect Order</label>
-                  </div>
-                  <div class="flex align-items-center">
-                    <RadioButton @change="getInputId($event)" v-model="value" inputId="reason4" name="pizza2"
-                                 value="Personal Taste Preferences"/>
-                    <label for="reason4" class="ml-2">Personal Taste Preferences</label>
-                  </div>
-                  <div class="flex align-items-center">
-                    <RadioButton @change="getInputId($event)" v-model="value" inputId="reason5" name="pizza2"
-                                 value="Portion Size"/>
-                    <label for="reason5" class="ml-2">Portion Size</label>
                   </div>
                 </div>
                 <div class="orderListPage__submitBtn">
@@ -240,8 +229,6 @@ function payForOrder() {
 function delOrder() {
   showReasonModal.value = true;
 }
-
-
 </script>
-<style scoped lang="scss" src="@/styles/orderListPage.scss">
-</style>
+
+<style scoped lang="scss" src="@/styles/orderListPage.scss"></style>
