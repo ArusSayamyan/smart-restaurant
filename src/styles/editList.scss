@@ -1,0 +1,22 @@
+.editList {
+  padding-top: 155px;
+
+  &__iconContainer {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+  }
+}
+
+::v-deep(.editable-cells-table td.p-cell-editing) {
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+}
+
+.p-input-icon-left {
+  position: relative;
+}
+
+.p-input-icon-left > .p-inputtext {
+  width: unset;
+}

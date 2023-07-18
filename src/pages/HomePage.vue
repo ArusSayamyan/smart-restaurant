@@ -17,11 +17,16 @@
 </template>
 
 <script setup>
+
+//IMPORT VUE COMPONENTS
 import {computed, onMounted, ref} from 'vue';
 import {useRouter} from 'vue-router'
 import {useStore} from 'vuex'
+
+//IMPORT DATA FROM LOCAL JSON FILE
 import data from '@/json/data.json'
 
+//VARIABLES
 const enteredCode = ref();
 const status = ref('');
 const codeNotFound = ref(false)
@@ -54,10 +59,6 @@ function checkCode() {
 const prod = computed(() => {
   return store.getters.getProductList
 });
-
-// function isMobileDevice() {
-//   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-// }
 
 onMounted(() => {
   if (localStorage.getItem('allProducts')) {

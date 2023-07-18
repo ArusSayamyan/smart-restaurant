@@ -34,7 +34,7 @@ import CalculateInput from '@/components/CalculateInput.vue';
 const tabNumber = ref();
 import {ref} from 'vue';
 
-//GET TABLE NUMBER
+//GET TABLE NUMBER WITH EMIT FROM CHILD COMPONENT
 function getTableNumber(tableNum) {
   tabNumber.value = tableNum
 }

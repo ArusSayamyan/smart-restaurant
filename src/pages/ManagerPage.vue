@@ -23,27 +23,5 @@ function getTableNumber(tableNum) {
 </script>
 
 
-<style scoped lang="scss">
-.managerPage {
-  padding-top: 155px;
-  display: flex;
-  justify-content: space-between;
-
-  &__checks {
-    display: flex;
-    flex-direction: column;
-    width: 70%;
-    margin-right: 35px;
-    gap: 15px;
-
-    @media(max-width: 520px) {
-      width: 100%;
-      margin-bottom: 25px;
-    }
-  }
-
-  @media(max-width: 520px) {
-    flex-direction: column;
-  }
-}
+<style scoped lang="scss" src="@/styles/managerPage.scss">
 </style>

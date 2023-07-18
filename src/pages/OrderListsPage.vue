@@ -40,7 +40,7 @@
       <h1>Order list page</h1>
       <div class="orderListPage__wrapper">
         <div class="orderListPage__checkList">
-          <img src="../assets/pencil.svg" alt="" class="orderListPage__editList" @click="editList" v-if="!showPayBlock">
+          <img src="../assets/pencil.svg" alt="" class="orderListPage__editList" @click="editList" v-if="!loginId.includes('cashier')">
           <img src="../assets/pay.svg" alt="" class="orderListPage__editList orderListPage__editList--payCard"
                v-if="showPayCard" @click="payForOrder">
           <img src="../assets/trash.svg" alt="" class="orderListPage__editList orderListPage__editList--delCard"
@@ -107,7 +107,6 @@ const inputId = ref();
 
 
 //GET INPUT ID
-
 function getInputId(event) {
   inputId.value = event.target.id
 }
@@ -130,15 +129,14 @@ const onSubmit = handleSubmit((values) => {
       if (inputId.value === 'reason3') {
         const delItems = products.filter(obj => obj.table === table);
         for (let item of delItems) {
-          if (+item.minCount >= 0) {
-            item.minCount += item.count
-            allProducts.forEach((product, index) => {
-              if (product.id === item.id) {
-                allProducts[index] = item;
-                localStorage.setItem('allProducts', JSON.stringify(allProducts))
-              }
-            })
-          }
+          allProducts.forEach((product, index) => {
+            if (product.id === item.id && product.minCount >= 0) {
+              item.minCount = product.minCount + item.count
+              item.count = 0;
+              allProducts[index] = item;
+              localStorage.setItem('allProducts', JSON.stringify(allProducts))
+            }
+          })
         }
       }
 
@@ -185,7 +183,7 @@ if (loginId.includes('cashier')) {
 }
 
 
-//UPDATE CHANGED ORDER LIST
+//UPDATE  ORDER LIST
 let arr = productsList.filter(subArray =>
     subArray.some(obj => obj.table === table)
 );
@@ -209,7 +207,7 @@ function paidOrder(paid) {
   orderPaid.value = paid
   setTimeout(() => {
     printOrder.value = false
-    router.push('/cashier/' + waiter.id)
+    router.push('/' + waiter.statue + '/' + waiter.id)
   }, 3000)
 }
 

@@ -6,7 +6,7 @@
         <p class="saveOrderModal__desc">{{ props.content }}</p>
         <div class="saveOrderModal__btns">
           <button class="saveOrderModal__enter" @click="saveOrder">Ok</button>
-          <button class="saveOrderModal__cancel" @click="canselOrder">cancel</button>
+          <button class="saveOrderModal__cancel" @click="cancelOrder">cancel</button>
         </div>
       </div>
     </div>
@@ -14,30 +14,28 @@
 </template>
 
 <script setup>
+
+//IMPORT VUE COMPONENTS
 import {defineProps, defineEmits, defineAsyncComponent, ref, computed} from 'vue';
 import {useStore} from 'vuex';
 import {useRouter} from "vue-router";
 
+//VARIABLES
 const router = useRouter()
 const store = useStore();
-
-
+const table = store.getters.getTable;
 const printOrder = ref(false)
+const tables = store.getters.getSelectedTables;
 
-//get selected items from store with getter
+//GET SELECTED ITEM FROM STORE WITH GETTER
 const selectedItems = computed(() => {
   return store.getters.getSelectedProducts;
 })
 
-// const mainProducts = computed(() => {
-//   return store.getters.getProductList;
-// });
 
-const table = store.getters.getTable;
-
-
-//get loginId of waiter
+//GET LOGIN ID
 const loginId = store.getters.getLoginId;
+
 
 const PrintOrder = defineAsyncComponent(() =>
     import('@/components/PrintOrder.vue')
@@ -50,7 +48,6 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['myEvent'])
-const tables = store.getters.getSelectedTables;
 
 
 //FUNCTION OF SAVING ORDER
@@ -62,7 +59,7 @@ function saveOrder() {
     printOrder.value = true
 
 
-    //add items to localStorage
+    //ADD ITEMS TO LOCALSTORAGE
     let dataArr = JSON.parse(localStorage.getItem(loginId)) || [];
     if (window.history.state.back === '/orderList/' + loginId) {
       let filteredArray;
@@ -91,12 +88,14 @@ function saveOrder() {
     }
 
 
-    //add table numbers to localStorage
+    //ADD TABLE NUMBERS TO LOCALSTORAGE
+
     let tableArr = JSON.parse(localStorage.getItem('tables')) || [];
     tableArr.push(...tables);
     localStorage.setItem('tables', JSON.stringify(tableArr))
 
     //HIDE PRINTING ANIMATION AFTER 3 SECONDS
+
     setTimeout(() => {
       printOrder.value = false
       if (loginId.includes('manager')) {
@@ -108,6 +107,7 @@ function saveOrder() {
     }, 3000)
 
     //ADD PRODUCTS WITH MIN-COUNT TO LOCALSTORAGE
+
     let products = JSON.parse(localStorage.getItem('allProducts'))
     for (let prod of selectedItems.value) {
       products = [
@@ -118,16 +118,15 @@ function saveOrder() {
       store.commit('updateProductList', products)
       store.commit('updateProducts', [])
       localStorage.setItem('allProducts', JSON.stringify(products))
+
     }
   } else if (props.id === 'cancel') {
     emit('myEvent', false)
   }
-
-
 }
 
 
-function canselOrder() {
+function cancelOrder() {
   emit('myEvent', false)
 }
 
