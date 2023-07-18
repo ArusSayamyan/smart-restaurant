@@ -282,11 +282,10 @@ const store = createStore({
     mutations: {
         updateSelectedProducts(state, payload) {
             if(state.selectedProducts.some((item) => item.id === payload.id)) {
-                payload.count++
+                // payload.count++
                 if(payload.minCount > 0) {
                     payload.minCount--
                 }
-
                 const idx = state.selectedProducts.findIndex(item => item.id === payload.id)
                 state.selectedProducts[idx] = payload
             }else {

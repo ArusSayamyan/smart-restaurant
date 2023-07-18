@@ -1,5 +1,3 @@
-
-
 <template>
   <div class="printContent">
     <div class='container'>

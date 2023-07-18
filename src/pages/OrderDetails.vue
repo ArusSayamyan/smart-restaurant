@@ -20,7 +20,7 @@
               <td v-if="sel.name">{{ sel.name }}</td>
               <td v-if="sel.count">{{ sel.count }}</td>
               <td v-if="sel.price">{{ sel.count * +sel.price }}$</td>
-              <td v-if="object.id.includes('manager') && fromEditPage && sel.count > 1"
+              <td v-if="sel.count > 1"
                   class="orderDetails__changeCount"
                   @click="changeCount(sel.id)">-
               </td>
@@ -154,7 +154,6 @@ const store = useStore();
 const showModal = ref(false)
 const showCancelModal = ref(false)
 const selection = ref()
-// const changedCount = ref()
 const selectedTable = computed(() => {
   return store.getters.getTable
 });
@@ -216,18 +215,16 @@ const date = computed(() => {
 })
 
 //DELETE ORDER ITEM
-//TODO
 function delOrderItem(table, prodName) {
   deletedProds.value = selectedItems.value.filter(item => item.name !== prodName)
   const deletedItems = selectedItems.value.filter(item => item.name === prodName)
   for (let item of allItems) {
     for (let obj of deletedItems) {
       if (item.name === prodName && item.minCount >= 0) {
-        item.minCount = obj.count + obj.minCount
+        item.minCount = obj.count + item.minCount
         item.count = 0;
       }
     }
-    console.log(mainProducts.value)
     const idx = mainProducts.value.findIndex(elem => elem.id === item.id)
     mainProducts.value[idx] = item
   }
@@ -240,13 +237,16 @@ function delOrderItem(table, prodName) {
 //CHANGE COUNT OF SELECTED PRODUCT
 function changeCount(id) {
   const changedItem = selectedItems.value.find(item => item.id === id)
+  // const allItem = all.value.find(item => item.id === id)
   const idx = all.value.findIndex(prod => prod.id === id)
   changedItem.count--
   if (changedItem.minCount >= 0) {
     changedItem.minCount++
   }
   all.value[idx] = changedItem
+  const products = selectedItems.value
   localStorage.setItem('allProducts', JSON.stringify(all.value))
+  store.commit('updateProducts', products)
 }
 
 //ADD NEW ITEM OF SELECTED PRODUCTS
@@ -255,11 +255,22 @@ function OrderListSelectionChangeEvent(selected) {
   if (+selected.minCount === 0) {
     return
   }
-  store.commit('updateSelectedProducts', selected)
+  if(selected.table === selectedTable.value) {
+    selected.count++
+    store.commit('updateSelectedProducts', selected)
+  }
 }
 
 onMounted(() => {
   all.value = JSON.parse(localStorage.getItem('allProducts'))
+  for(let item of all.value) {
+    for(let obj of selectedItems.value) {
+      if(obj.id === item.id) {
+        obj.minCount = item.minCount
+      }
+    }
+  }
+
 })
 </script>
 

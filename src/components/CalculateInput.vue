@@ -45,42 +45,40 @@
 
 <script setup>
 
-import {ref, defineProps, defineEmits} from 'vue';
-
-
+//IMPORT VUE COMPONENTS
+import {ref, defineProps, defineEmits, onUpdated} from 'vue';
 import {useRouter} from 'vue-router'
 import {useStore} from 'vuex';
 
+//VARIABLES
 const store = useStore();
 const router = useRouter()
-
 const addCount = ref();
 const countOfGuests = ref();
 const tables = JSON.parse(localStorage.getItem('tables'))
 const emit = defineEmits(['payOrder'])
 const currentRout = router.currentRoute.value.path.includes('orderList')
-
+const count = ref();
+const disabled = ref(true);
+const waiter = JSON.parse(localStorage.getItem('name'))
 
 const props = defineProps({
   tabNumber: {type: Number, required: false},
 })
 
-const count = ref();
-const disabled = ref(true);
-const waiter = JSON.parse(localStorage.getItem('name'))
-
+//METHODS
 function getNumber(event) {
   count.value.value = count.value.value + event.target.textContent
 }
 
 function setCount() {
-  if (waiter.statue === 'cashier') {
+  if (waiter.statue !== 'waiter' && currentRout) {
     countOfGuests.value.textContent = count.value.value + '$'
   } else {
     countOfGuests.value.textContent = count.value.value
   }
   count.value.value = ''
-  if (props.tabNumber !== undefined && countOfGuests.value.textContent !== '') {
+  if (store.getters.getTable && countOfGuests.value.textContent !== '') {
     disabled.value = false
   }
 }
@@ -94,7 +92,7 @@ function orderDetails() {
   router.push('/order')
 }
 
-//delete input value
+//DELETE INPUT VALUES
 
 function delNumber() {
   count.value.value = '';
@@ -110,6 +108,7 @@ const emitEvent = (paid) => {
     //delete paid order from localStorage
     const changedTables = tables.filter(item => item.table !== table)
     localStorage.setItem('tables', JSON.stringify(changedTables))
+    store.commit('updateTables', changedTables)
 
     //delete paid order products from localStorage
     let waiterId = '';
@@ -124,13 +123,15 @@ const emitEvent = (paid) => {
       }
     }
   }
-
 }
+
+onUpdated(() => {
+  if(store.getters.getTable && countOfGuests.value.textContent) {
+    disabled.value = false
+  }
+})
 
 </script>
 
 
-<style scoped lang="scss" src="../styles/createOrder.scss">
-
-
-</style>
+<style scoped lang="scss" src="../styles/createOrder.scss"></style>

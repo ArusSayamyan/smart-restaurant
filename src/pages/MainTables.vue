@@ -13,14 +13,16 @@
 </template>
 
 <script setup>
-import {useRouter} from 'vue-router'
 
+//IMPORT VUE COMPONENTS
+import {useRouter} from 'vue-router'
+import {useStore} from "vuex";
+import {defineEmits} from 'vue';
+
+//VARIABLES
+const store = useStore()
 const router = useRouter();
 
-import {useStore} from "vuex";
-
-const store = useStore()
-import {defineEmits} from 'vue';
 
 const tables = [
   {
@@ -68,6 +70,8 @@ const tables = [
 const waiters = JSON.parse(localStorage.getItem('name'))
 const emit = defineEmits(['myEvent'])
 let tablesList = [];
+
+
 if (localStorage.getItem('tables')) {
   tablesList = JSON.parse(localStorage.getItem('tables'))
   for (let tab of tables) {

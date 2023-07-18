@@ -41,27 +41,29 @@
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import InputText from 'primevue/inputtext';
-// import InputNumber from 'primevue/inputnumber';
 import {FilterMatchMode, FilterOperator} from 'primevue/api';
 
 //IMPORT SVG FILES
 import {svgs} from '../assets/_svgs'
 
+//IMPORT VUE COMPONENTS
 import {ref, onMounted, computed} from 'vue';
 import {useStore} from "vuex";
+const store = useStore();
+
+
 //IMPORT IMAGE OF PRODUCTS
 import BaseWrapper from "@/base/BaseWrapper.vue";
 
-const store = useStore();
 
 //VARIABLES
 const products = ref();
 const local = ref();
 const editingRows = ref([]);
+const svg = ref(svgs)
 const prod = computed(() => {
   return store.getters.getProductList
 });
-const svg = ref(svgs)
 
 local.value = JSON.parse(localStorage.getItem('allProducts'))
 
@@ -89,27 +91,4 @@ onMounted(() => {
 
 </script>
 
-<style lang="scss" scoped>
-.editList {
-  padding-top: 155px;
-
-  &__iconContainer {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-  }
-}
-
-::v-deep(.editable-cells-table td.p-cell-editing) {
-  padding-top: 0.6rem;
-  padding-bottom: 0.6rem;
-}
-
-.p-input-icon-left {
-  position: relative;
-}
-
-.p-input-icon-left > .p-inputtext {
-  width: unset;
-}
-</style>
+<style lang="scss" scoped src="@/styles/editList.scss"></style>
