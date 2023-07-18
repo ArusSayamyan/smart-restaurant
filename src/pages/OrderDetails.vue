@@ -12,7 +12,7 @@
         </div>
         <div class="orderDetails__check">
           <div class="orderDetails__header">
-            <h1>Order list</h1>
+            <h1 class="orderDetails__title">Order list</h1>
             <span v-if="selectedItems.length > 0">total price is {{ doubleCount }}$</span>
           </div>
           <table v-if="selectedItems.length > 0">

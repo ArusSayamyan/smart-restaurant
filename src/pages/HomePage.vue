@@ -5,7 +5,7 @@
         <form action="" class="homePage__signInForm" @submit.prevent="checkCode">
           <h3 class="homePage__formTitle">enter your access code</h3>
           <div class="homePage__inputBlock">
-            <input type="number" required class="homePage__pin" placeholder="your code" v-model="enteredCode">
+            <input type="number" required class="homePage__pin" placeholder="your code" v-model="enteredCode" id="accessCode">
             <p class="homePage__codeNotFound" v-if="codeNotFound">This code not found</p>
             <p class="homePage__codeNotFound" v-if="isMobile">Can't be accessed by phone</p>
           </div>
