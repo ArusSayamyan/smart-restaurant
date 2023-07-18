@@ -9,6 +9,12 @@
 
 <script setup>
 import TheNav from "@/layout/TheNav.vue";
+import {useRouter} from 'vue-router'
+const router = useRouter()
+
+window.onload = function () {
+  router.push('/')
+}
 </script>
 <style>
 body {
