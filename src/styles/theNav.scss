@@ -44,4 +44,15 @@
     width: 30px;
     height: 30px;
   }
+
+  &__workerInfo {
+    display: flex;
+    justify-content: space-between;
+    width: 30%;
+  }
+
+  &__workerName {
+    color: #ffffff;
+    font-size: 15px;
+  }
 }

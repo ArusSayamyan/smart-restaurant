@@ -1,19 +1,20 @@
 <template>
-  <div class="homePage">
-    <base-wrapper>
-      <div class="homePage__signIn">
-        <form action="" class="homePage__signInForm" @submit.prevent="checkCode">
-          <h3 class="homePage__formTitle">enter your access code</h3>
-          <div class="homePage__inputBlock">
-            <input type="number" required class="homePage__pin" placeholder="your code" v-model="enteredCode" id="accessCode">
-            <p class="homePage__codeNotFound" v-if="codeNotFound">This code not found</p>
-            <p class="homePage__codeNotFound" v-if="isMobile">Can't be accessed by phone</p>
-          </div>
-          <button class="homePage__btn">Login</button>
-        </form>
-      </div>
-    </base-wrapper>
-  </div>
+    <div class="homePage">
+      <base-wrapper>
+        <div class="homePage__signIn">
+          <form action="" class="homePage__signInForm" @submit.prevent="checkCode">
+            <h3 class="homePage__formTitle">enter your access code</h3>
+            <div class="homePage__inputBlock">
+              <input type="number" required class="homePage__pin" placeholder="your code" v-model="enteredCode"
+                     id="accessCode">
+              <p class="homePage__codeNotFound" v-if="codeNotFound">This code not found</p>
+              <p class="homePage__codeNotFound" v-if="isMobile">Can't be accessed by phone</p>
+            </div>
+            <button class="homePage__btn">Login</button>
+          </form>
+        </div>
+      </base-wrapper>
+    </div>
 </template>
 
 <script setup>
@@ -37,9 +38,9 @@ const store = useStore()
 function checkCode() {
   const elem = data.find(item => +item.code === enteredCode.value)
   if (elem !== undefined) {
-    if(elem.status !== 'waiter' && window.outerWidth < 420) {
+    if (elem.status !== 'waiter' && window.outerWidth < 420) {
       isMobile.value = true;
-    }else {
+    } else {
       store.commit('changeLoginId', elem.id)
       status.value = elem.status
       enteredCode.value = null;
@@ -49,6 +50,12 @@ function checkCode() {
         statue: elem.status,
         id: elem.id
       }))
+      store.commit('updateWorker', {
+        name: elem.name,
+        statue: elem.status,
+        id: elem.id
+      })
+
     }
 
   } else {
