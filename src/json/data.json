@@ -29,11 +29,13 @@
   {
     "code": "155265",
     "status": "manager",
+    "name": "Lili",
     "id": "manager1"
   },
   {
     "code": "125478",
     "status": "manager",
+    "name": "Jessica",
     "id": "manager2"
   },
   {

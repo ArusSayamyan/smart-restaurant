@@ -44,6 +44,7 @@ const store = createStore({
             selectedTables: [],
             table: null,
             loginId: '',
+            worker: [],
             productList: [
                 {
                     name: 'Egg burger',
@@ -303,12 +304,17 @@ const store = createStore({
             state.selectedProducts = payload
         },
 
+
         updateSelectedTables(state, payload) {
             state.selectedTables.push(payload)
         },
 
         updateTables(state, payload) {
             state.selectedTables = payload
+        },
+
+        updateWorker(state, payload) {
+            state.worker = payload
         },
 
         changeLoginId(state, payload) {
@@ -338,6 +344,9 @@ const store = createStore({
         },
         getProductList(state) {
             return state.productList
+        },
+        getWorker(state) {
+            return state.worker
         }
     },
 })

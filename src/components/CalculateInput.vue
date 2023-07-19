@@ -78,7 +78,7 @@ function setCount() {
     countOfGuests.value.textContent = count.value.value
   }
   count.value.value = ''
-  if (store.getters.getTable && countOfGuests.value.textContent !== '') {
+  if (addCount.value.textContent !== '' && countOfGuests.value.textContent !== '') {
     disabled.value = false
   }
 }
@@ -130,7 +130,6 @@ onUpdated(() => {
     disabled.value = false
   }
 })
-
 </script>
 
 

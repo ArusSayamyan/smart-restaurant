@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import {ref} from 'vue';
+import { ref} from 'vue';
 import MainTables from "@/pages/MainTables.vue";
 import CalculateInput from "@/components/CalculateInput.vue";
 

@@ -15,6 +15,8 @@ const router = useRouter()
 window.onload = function () {
   router.push('/')
 }
+
+
 </script>
 <style>
 body {
