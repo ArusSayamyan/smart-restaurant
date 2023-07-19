@@ -76,11 +76,12 @@ function setCount() {
     countOfGuests.value.textContent = count.value.value + '$'
   } else {
     countOfGuests.value.textContent = count.value.value
+    if ( addCount.value.textContent !== '' && countOfGuests.value.textContent !== '') {
+      disabled.value = false
+    }
   }
   count.value.value = ''
-  if (addCount.value.textContent !== '' && countOfGuests.value.textContent !== '') {
-    disabled.value = false
-  }
+
 }
 
 
