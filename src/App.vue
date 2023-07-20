@@ -37,11 +37,12 @@ body {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+  transform: scale(0.9);
 }
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.2s ease-out;
+  transition: all 0.3s ease;
 }
 
 </style>
