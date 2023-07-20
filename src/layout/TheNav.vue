@@ -45,8 +45,6 @@ const date = computed(()=> {
   let minutes = today.getMinutes();
   return `${year}-${month}-${day} ${hours}:${minutes}`;
 })
-
-
 function exit() {
   router.push('/')
 }
