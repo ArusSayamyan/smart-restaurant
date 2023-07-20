@@ -24,7 +24,7 @@
                   class="orderDetails__changeCount"
                   @click="changeCount(sel.id)">-
               </td>
-              <td colspan="2" v-if="object.id.includes('manager') && selectedItems.length > 1 || !fromEditPage"
+              <td colspan="2" v-if="object.id.includes('manager') && selectedItems.length >= 1 || !fromEditPage"
                   class="orderDetails__delItem"
                   @click="delOrderItem(sel.table, sel.name)">x
               </td>
