@@ -20,11 +20,11 @@
               <td v-if="sel.name">{{ sel.name }}</td>
               <td v-if="sel.count">{{ sel.count }}</td>
               <td v-if="sel.price">{{ sel.count * +sel.price }}$</td>
-              <td v-if="sel.count > 1"
+              <td v-if="sel.count > 1 && object.id.includes('manager') || !fromEditPage"
                   class="orderDetails__changeCount"
                   @click="changeCount(sel.id)">-
               </td>
-              <td colspan="2" v-if="object.id.includes('manager') && fromEditPage && selectedItems.length > 1"
+              <td colspan="2" v-if="object.id.includes('manager') && selectedItems.length > 1 || !fromEditPage"
                   class="orderDetails__delItem"
                   @click="delOrderItem(sel.table, sel.name)">x
               </td>
@@ -220,8 +220,11 @@ function delOrderItem(table, prodName) {
   const deletedItems = selectedItems.value.filter(item => item.name === prodName)
   for (let item of allItems) {
     for (let obj of deletedItems) {
-      if (item.name === prodName && item.minCount >= 0) {
+      if (item.name === prodName && item.name === obj.name && item.minCount >= 0 && fromEditPage) {
         item.minCount = obj.count + item.minCount
+        item.count = 0;
+      }else if(item.minCount >= 0 && !fromEditPage) {
+        item.minCount = obj.count + obj.minCount
         item.count = 0;
       }
     }
@@ -237,7 +240,6 @@ function delOrderItem(table, prodName) {
 //CHANGE COUNT OF SELECTED PRODUCT
 function changeCount(id) {
   const changedItem = selectedItems.value.find(item => item.id === id)
-  // const allItem = all.value.find(item => item.id === id)
   const idx = all.value.findIndex(prod => prod.id === id)
   changedItem.count--
   if (changedItem.minCount >= 0) {
