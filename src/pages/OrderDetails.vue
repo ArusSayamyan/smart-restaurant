@@ -1,10 +1,10 @@
 <template>
   <base-wrapper>
     <div class="orderDetails">
-      <save-order :showModal="showModal" @myEvent="showModal = false" content="do you really want to save this order"
+      <save-order :showModal="showModal" @myEvent="showModal = false" content="Do you really want to save this order?"
                   id="save"></save-order>
       <save-order :showCancelModal="showCancelModal" @myEvent="showCancelModal = false"
-                  content="do you really want to cancel this order" id="cancel"></save-order>
+                  content="Do you really want to cancel this order?" id="cancel"></save-order>
       <div class="orderDetails__info">
         <div class="orderDetails__nav">
           <span>{{ object.statue }} {{ object.name }}</span>

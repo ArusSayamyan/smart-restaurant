@@ -1,7 +1,7 @@
 <template>
   <div class="stopList">
     <base-wrapper>
-      <h1>stop list</h1>
+      <h1>Stop list</h1>
       <p v-if="stopList.length === 0">Stop list is empty</p>
       <div class="card" v-else>
         <DataTable :value="stopList" tableStyle="min-width: 50rem">
