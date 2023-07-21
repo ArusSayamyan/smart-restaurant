@@ -32,12 +32,16 @@
     justify-content: center;
     align-items: center;
     text-decoration: none;
-  }
-
-  &__text {
     text-align: center;
     text-transform: uppercase;
     color: #ffffff;
+
+    &:hover {
+      color: darkolivegreen;
+      outline: 1px solid darkolivegreen;
+      background-color: #ffffff;
+      box-shadow: darkolivegreen 0 -50px 36px -28px inset;
+    }
 
     @media(max-width: 420px) {
       font-size: 12px;

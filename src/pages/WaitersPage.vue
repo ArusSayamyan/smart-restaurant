@@ -8,7 +8,7 @@
       <div class="waitersPage__main">
         <div class="waitersPage__orders">
           <router-link :to="object.id + '/createOrder'" class="waitersPage__createOrder">
-            <span class="waitersPage__text">Create order</span>
+            Create order
           </router-link>
         </div>
       </div>
