@@ -3,9 +3,10 @@
     <PrintOrder v-if="printOrder"></PrintOrder>
     <div class="saveOrderModal" :id="props.id" v-if="props.showModal || props.showCancelModal">
       <div class="saveOrderModal__content">
-        <p class="saveOrderModal__desc">{{ props.content }}</p>
+        <p class="saveOrderModal__desc" v-if="!orderIsEmpty">{{ props.content }}</p>
+        <p class="saveOrderModal__desc" v-else>Order is empty</p>
         <div class="saveOrderModal__btns">
-          <button class="saveOrderModal__enter" @click="saveOrder">Ok</button>
+          <button class="saveOrderModal__enter" v-if="!orderIsEmpty" @click="saveOrder">Ok</button>
           <button class="saveOrderModal__cancel" @click="cancelOrder">cancel</button>
         </div>
       </div>
@@ -25,6 +26,7 @@ const router = useRouter()
 const store = useStore();
 const table = store.getters.getTable;
 const printOrder = ref(false)
+const orderIsEmpty = ref(false)
 const tables = store.getters.getSelectedTables;
 
 //GET SELECTED ITEM FROM STORE WITH GETTER
@@ -52,9 +54,9 @@ const emit = defineEmits(['myEvent'])
 
 //FUNCTION OF SAVING ORDER
 function saveOrder() {
-  if (props.id === 'save') {
+  if (props.id === 'save' && selectedItems.value.length > 0) {
+    orderIsEmpty.value = false
     emit('myEvent', false)
-
     //SHOW PRINTING ANIMATION
     printOrder.value = true
 
@@ -122,12 +124,15 @@ function saveOrder() {
     }
   } else if (props.id === 'cancel') {
     emit('myEvent', false)
+  }else {
+    orderIsEmpty.value = true
   }
 }
 
 
 function cancelOrder() {
   emit('myEvent', false)
+  orderIsEmpty.value = false
 }
 
 </script>
