@@ -2,38 +2,7 @@
   <base-wrapper>
     <PrintOrder v-if="printOrder"></PrintOrder>
     <div class="orderListPage">
-      <div class="orderListPage__reasonsModal" v-if="showReasonModal">
-        <div class="card flex justify-content-center">
-          <Dialog v-model:visible="showReasonModal" maximizable modal header="Reasons for rejection"
-                  :style="{ width: '50vw' }">
-            <div class="card flex justify-content-center">
-              <form @submit="onSubmit" class="flex flex-column gap-2">
-                <div class="flex flex-wrap gap-3">
-                  <div class="flex align-items-center">
-                    <RadioButton @change="getInputId($event)" v-model="value" inputId="reason1" name="pizza2"
-                                 value="customer failure"/>
-                    <label for="reason1" class="ml-2">customer failure</label>
-                  </div>
-                  <div class="flex align-items-center">
-                    <RadioButton @change="getInputId($event)" v-model="value" inputId="reason2" name="pizza2"
-                                 value="Unpleasant Odor or Appearance"/>
-                    <label for="reason2" class="ml-2">treat</label>
-                  </div>
-                  <div class="flex align-items-center">
-                    <RadioButton @change="getInputId($event)" v-model="value" inputId="reason3" name="pizza2"
-                                 value="Incorrect Order"/>
-                    <label for="reason3" class="ml-2">Incorrect Order</label>
-                  </div>
-                </div>
-                <div class="orderListPage__submitBtn">
-                  <small id="text-error" class="p-error">{{ errorMessage || '&nbsp;' }}</small>
-                  <Button type="submit" label="Submit"/>
-                </div>
-              </form>
-            </div>
-          </Dialog>
-        </div>
-      </div>
+      <ReasonDialog :showModal="showReasonModal"  @update:showModal="updateDialogVisible"></ReasonDialog>
       <transition-group name="p-message" tag="div" v-if="orderDeleted">
         <Message severity="success" key="message1"> Order successfully deleted</Message>
       </transition-group>
@@ -53,6 +22,7 @@
             </div>
           </div>
           <p class="orderListPage__totalPrice">total Price {{ totalPrice }}$</p>
+          <p class="orderListPage__totalPrice">Table {{ table }}</p>
         </div>
         <div class="orderListPage__payBlock" v-if="showPayBlock">
           <CalculateInput @payOrder="paidOrder"/>
@@ -71,15 +41,11 @@ import {computed, defineAsyncComponent, ref} from 'vue'
 
 //IMPORT COMPONENTS FROM PRIME-VUE
 import Message from "primevue/message";
-import Dialog from 'primevue/dialog';
-import RadioButton from 'primevue/radiobutton';
-import {useToast} from 'primevue/usetoast';
-import {useField, useForm} from 'vee-validate';
-import Button from 'primevue/button';
 
 //IMPORT COMPONENTS
 import BaseWrapper from "@/base/BaseWrapper.vue";
 import CalculateInput from "@/components/CalculateInput.vue";
+import ReasonDialog from "@/components/ReasonDialog.vue";
 
 const PrintOrder = defineAsyncComponent(() =>
     import('@/components/PrintOrder.vue')
@@ -96,71 +62,12 @@ const orderDeleted = ref(false);
 const showReasonModal = ref(false);
 const loginId = store.getters.getLoginId;
 const table = store.getters.getTable
-let productsList = JSON.parse(localStorage.getItem(loginId))
-const allProducts = JSON.parse(localStorage.getItem('allProducts'))
+let productsList
 let products;
 const waiter = JSON.parse(localStorage.getItem('name'))
-const {handleSubmit, resetForm} = useForm();
-const {value, errorMessage} = useField('value', validateField);
-const toast = useToast();
-const inputId = ref();
 
-
-//GET INPUT ID
-function getInputId(event) {
-  inputId.value = event.target.id
-}
-
-//DELETE ORDER
-const onSubmit = handleSubmit((values) => {
-  if (values.value && values.value.length > 0) {
-    toast.add({severity: 'info', summary: 'Form Submitted', detail: values.value, life: 3000});
-    resetForm();
-  }
-  let worker = JSON.parse(localStorage.getItem('tables'))
-  let filtered;
-  let filteredTabs;
-  for (let item of worker) {
-    if (item.table === table) {
-      const prods = JSON.parse(localStorage.getItem(item.id))
-      filtered = prods.filter(subArray =>
-          subArray.some(obj => obj.table !== table)
-      );
-      if (inputId.value === 'reason3') {
-        const delItems = products.filter(obj => obj.table === table);
-        for (let item of delItems) {
-          allProducts.forEach((product, index) => {
-            if (product.id === item.id && product.minCount >= 0) {
-              item.minCount = product.minCount + item.count
-              item.count = 0;
-              allProducts[index] = item;
-              localStorage.setItem('allProducts', JSON.stringify(allProducts))
-            }
-          })
-        }
-      }
-
-      filteredTabs = worker.filter(obj => obj.table !== table);
-      store.commit('updateTables', filteredTabs)
-      localStorage.setItem(item.id, JSON.stringify(filtered))
-      localStorage.setItem('tables', JSON.stringify(filteredTabs))
-    }
-    orderDeleted.value = true
-    showReasonModal.value = false
-    setTimeout(() => {
-      orderDeleted.value = false
-      router.push('/manager/' + loginId)
-    }, 3000)
-  }
-});
-
-
-function validateField(value) {
-  if (!value) {
-    return 'Value is required.';
-  }
-
-  return true;
+if(JSON.parse(localStorage.getItem(loginId))) {
+  productsList = JSON.parse(localStorage.getItem(loginId));
 }
 
 //CASHIER AND MANAGER CAN SEE OLL ORDERS
@@ -184,11 +91,13 @@ if (loginId.includes('cashier')) {
 
 
 //UPDATE  ORDER LIST
-let arr = productsList.filter(subArray =>
-    subArray.some(obj => obj.table === table)
-);
-for (let i = 0; i < arr.length; i++) {
-  products = arr[arr.length - 1]
+if(productsList) {
+  let arr = productsList.filter(subArray =>
+      subArray.some(obj => obj.table === table)
+  );
+  for (let i = 0; i < arr.length; i++) {
+    products = arr[arr.length - 1]
+  }
 }
 
 //GET TOTAL PRICE
@@ -199,7 +108,6 @@ const totalPrice = computed(() => {
   }
   return price;
 });
-
 
 //EMIT PAID VALUE AND ADD PRINTING COMPONENT WITH ANIMATION
 function paidOrder(paid) {
@@ -226,6 +134,10 @@ function payForOrder() {
 //SHOW MODAL FOR DELETING ORDER
 function delOrder() {
   showReasonModal.value = true;
+}
+
+function updateDialogVisible(newValue) {
+  showReasonModal.value = newValue;
 }
 </script>
 
