@@ -12,13 +12,15 @@
 <script setup>
 import TheNav from "@/layout/TheNav.vue";
 import {useRouter} from 'vue-router'
+import {useStore} from "vuex";
+const store = useStore()
 
 const router = useRouter()
 
 window.onload = function () {
   router.push('/')
+  store.commit('updateProducts', [])
 }
-
 
 </script>
 <style>

@@ -32,7 +32,7 @@
     }
   }
 
-  &__saveOrder, &__delOrder {
+  &__saveOrder, &__delOrder, &__printOrder {
     width: 50px;
     background: red;
     margin: 0;
@@ -54,6 +54,10 @@
     box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
     transform: scale(1);
     animation: pulse 2s infinite;
+  }
+
+  &__printOrder {
+    background-color: #182b60;
   }
 
   &__icon {

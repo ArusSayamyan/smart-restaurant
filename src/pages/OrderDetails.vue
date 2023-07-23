@@ -3,11 +3,16 @@
     <div class="orderDetails">
       <save-order :showModal="showModal" @myEvent="showModal = false" content="Do you really want to save this order?"
                   id="save"></save-order>
+      <save-order :showPrintModal="showPrintModal" @myEvent="showPrintModal = false" content="Do you really want to print this order?"
+                  id="print"></save-order>
       <save-order :showCancelModal="showCancelModal" @myEvent="showCancelModal = false"
                   content="Do you really want to cancel this order?" id="cancel"></save-order>
+      <ReasonDialog :showModal="showReasonModal"  @update:showModal="updateDialogVisible"></ReasonDialog>
+
       <div class="orderDetails__info">
         <div class="orderDetails__nav">
           <span>{{ object.statue }} {{ object.name }}</span>
+          <span>Table {{ tableNumber }}</span>
           <span>{{ date }}</span>
         </div>
         <div class="orderDetails__check">
@@ -20,11 +25,11 @@
               <td v-if="sel.name">{{ sel.name }}</td>
               <td v-if="sel.count">{{ sel.count }}</td>
               <td v-if="sel.price">{{ sel.count * +sel.price }}$</td>
-              <td v-if="sel.count > 1 && object.id.includes('manager') || !fromEditPage"
+              <td v-if="sel.count > 1 && object.id.includes('manager') || !fromEditPage && !object.id.includes('cashier')"
                   class="orderDetails__changeCount"
                   @click="changeCount(sel.id)">-
               </td>
-              <td colspan="2" v-if="object.id.includes('manager') && selectedItems.length >= 1 || !fromEditPage"
+              <td colspan="2" v-if="object.id.includes('manager') && selectedItems.length >= 1 || !fromEditPage && !object.id.includes('cashier')"
                   class="orderDetails__delItem"
                   @click="delOrderItem(sel.table, sel.name)">x
               </td>
@@ -36,6 +41,10 @@
                                                        @click="showModal = true"></button>
           <button class="orderDetails__delOrder"><img src="../assets/exit.svg" alt="" class="orderDetails__icon"
                                                       @click="showCancelModal = true"></button>
+          <button class="orderDetails__printOrder" v-if="fromEditPage || object.statue === 'cashier'"><img src="../assets/printer.svg" alt="" class="orderDetails__icon"
+                                                      @click="printOrder"></button>
+          <button class="orderDetails__delOrder" v-if="fromEditPage && object.statue === 'waiter'"><img src="../assets/trash.svg" alt="" class="orderDetails__icon"
+                                                                                                           @click="delOrder"></button>
         </div>
       </div>
       <div class="orderDetails__menu">
@@ -147,13 +156,16 @@ import AccordionTab from 'primevue/accordiontab';
 import OrderList from 'primevue/orderlist';
 import {ref, computed,onMounted} from 'vue';
 import {useStore} from 'vuex';
+import ReasonDialog from "@/components/ReasonDialog.vue";
 
 //VARIABLES
 const store = useStore();
 
 const showModal = ref(false)
+const showPrintModal = ref(false)
 const showCancelModal = ref(false)
 const selection = ref()
+const showReasonModal = ref(false);
 const selectedTable = computed(() => {
   return store.getters.getTable
 });
@@ -274,6 +286,26 @@ onMounted(() => {
   }
 
 })
+
+//GET TABLE NUMBER
+
+const tableNumber = computed(() => {
+  return store.getters.getTable
+})
+
+
+//PRINT ORDER
+
+function printOrder() {
+  showPrintModal.value = true
+}
+
+function delOrder() {
+  showReasonModal.value = true;
+}
+function updateDialogVisible(newValue) {
+  showReasonModal.value = newValue;
+}
 </script>
 
 <style scoped lang="scss" src="../styles/orderDetails.scss"></style>

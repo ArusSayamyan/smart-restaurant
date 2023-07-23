@@ -47,6 +47,8 @@ const date = computed(()=> {
 })
 function exit() {
   router.push('/')
+  store.commit('updateProducts', [])
+
 }
 
 

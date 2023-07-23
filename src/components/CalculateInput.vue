@@ -88,7 +88,8 @@ function setCount() {
 function orderDetails() {
   store.commit('updateSelectedTables', {
     id: waiter.id,
-    table: props.tabNumber
+    table: props.tabNumber,
+    isPrinted: false
   })
   router.push('/order')
 }

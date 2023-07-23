@@ -1,12 +1,12 @@
 <template>
   <div>
     <PrintOrder v-if="printOrder"></PrintOrder>
-    <div class="saveOrderModal" :id="props.id" v-if="props.showModal || props.showCancelModal">
+    <div class="saveOrderModal" :id="props.id" v-if="props.showModal || props.showCancelModal || props.showPrintModal">
       <div class="saveOrderModal__content">
         <p class="saveOrderModal__desc" v-if="!orderIsEmpty">{{ props.content }}</p>
         <p class="saveOrderModal__desc" v-else>Order is empty</p>
         <div class="saveOrderModal__btns">
-          <button class="saveOrderModal__enter" v-if="!orderIsEmpty" @click="saveOrder">Ok</button>
+          <button class="saveOrderModal__enter" v-if="!orderIsEmpty" @click="props.id !== 'print' ? saveOrder(): printingOrder()">Ok</button>
           <button class="saveOrderModal__cancel" @click="cancelOrder">cancel</button>
         </div>
       </div>
@@ -35,6 +35,11 @@ const selectedItems = computed(() => {
 })
 
 
+const tableNum = computed(() => {
+  return store.getters.getTable;
+})
+
+
 //GET LOGIN ID
 const loginId = store.getters.getLoginId;
 
@@ -47,14 +52,13 @@ const props = defineProps({
   id: {type: String, required: true},
   showModal: {type: Boolean},
   showCancelModal: {type: Boolean},
+  showPrintModal: {type: Boolean},
 })
 
 const emit = defineEmits(['myEvent'])
 
-
-//FUNCTION OF SAVING ORDER
-function saveOrder() {
-  if (props.id === 'save' && selectedItems.value.length > 0) {
+//SAVE ORDER
+function save() {
     orderIsEmpty.value = false
     emit('myEvent', false)
     //SHOW PRINTING ANIMATION
@@ -63,7 +67,7 @@ function saveOrder() {
 
     //ADD ITEMS TO LOCALSTORAGE
     let dataArr = JSON.parse(localStorage.getItem(loginId)) || [];
-    if (window.history.state.back === '/orderList/' + loginId) {
+    if (window.history.state.back === '/orderList/' + loginId || loginId.includes('cashier')) {
       let filteredArray;
       for (let item of selectedItems.value) {
         filteredArray = dataArr.filter(subArray =>
@@ -73,7 +77,7 @@ function saveOrder() {
       }
       filteredArray.push(selectedItems.value);
       localStorage.setItem(loginId, JSON.stringify(filteredArray))
-      if (loginId.includes('manager')) {
+      if (loginId.includes('manager') || loginId.includes('cashier')) {
         const worker = JSON.parse(localStorage.getItem('tables'))
         for (let item of worker) {
           if (item.table === table) {
@@ -102,8 +106,10 @@ function saveOrder() {
       printOrder.value = false
       if (loginId.includes('manager')) {
         router.push('/manager/' + loginId)
-      } else {
+      } else if(loginId.includes('waiter')) {
         router.push('/waiter/' + loginId + '/createOrder')
+      } else {
+        router.push('/cashier/' + loginId)
       }
       store.commit('updateProducts', [])
     }, 3000)
@@ -122,10 +128,28 @@ function saveOrder() {
       localStorage.setItem('allProducts', JSON.stringify(products))
 
     }
-  } else if (props.id === 'cancel') {
+  }
+
+//FUNCTION OF SAVING ORDER
+function saveOrder() {
+  if (props.id === 'save' && selectedItems.value.length > 0) {
+    save();
+  }else if (props.id === 'cancel') {
     emit('myEvent', false)
+    router.back();
   }else {
     orderIsEmpty.value = true
+  }
+}
+
+function printingOrder() {
+  save();
+  const tables = JSON.parse(localStorage.getItem('tables'))
+  for(let item of tables) {
+    if(item.table === tableNum.value) {
+      item.isPrinted = true;
+    }
+    localStorage.setItem('tables', JSON.stringify(tables))
   }
 }
 
