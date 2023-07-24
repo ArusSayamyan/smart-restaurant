@@ -1,10 +1,13 @@
 <template>
   <base-wrapper>
-    <PrintOrder v-if="printOrder"></PrintOrder>
+    <PrintOrder v-if="printOrder" :minPrice="minPrice" printId="paid"></PrintOrder>
     <div class="orderListPage">
       <ReasonDialog :showModal="showReasonModal"  @update:showModal="updateDialogVisible"></ReasonDialog>
       <transition-group name="p-message" tag="div" v-if="orderDeleted">
         <Message severity="success" key="message1"> Order successfully deleted</Message>
+      </transition-group>
+      <transition-group name="p-message" tag="div" v-if="errorText">
+        <Message severity="error" key="message1"> little money</Message>
       </transition-group>
       <h1>Order list page</h1>
       <div class="orderListPage__wrapper">
@@ -60,6 +63,8 @@ const orderPaid = ref(false);
 const printOrder = ref(false);
 const orderDeleted = ref(false);
 const showReasonModal = ref(false);
+const errorText = ref(false);
+const minPrice = ref(null);
 const loginId = store.getters.getLoginId;
 const table = store.getters.getTable
 let productsList
@@ -110,13 +115,26 @@ const totalPrice = computed(() => {
 });
 
 //EMIT PAID VALUE AND ADD PRINTING COMPONENT WITH ANIMATION
-function paidOrder(paid) {
-  printOrder.value = true
-  orderPaid.value = paid
-  setTimeout(() => {
+function paidOrder(paid, price) {
+  const userPrice = parseInt(price.match(/\d+/)[0]);
+  if(userPrice > totalPrice.value) {
+    printOrder.value = true
+    minPrice.value = userPrice - totalPrice.value
+    setTimeout(() => {
+      printOrder.value = false
+      router.push('/' + waiter.statue + '/' + waiter.id)
+    }, 3000)
+  } else if(userPrice === totalPrice.value) {
+    printOrder.value = true
+    setTimeout(() => {
+      printOrder.value = false
+      router.push('/' + waiter.statue + '/' + waiter.id)
+    }, 3000)
+  } else {
+    errorText.value = true
+    orderPaid.value = false
     printOrder.value = false
-    router.push('/' + waiter.statue + '/' + waiter.id)
-  }, 3000)
+  }
 }
 
 

@@ -22,11 +22,15 @@
           </div>
           <div class='e5'>
             <div class='e51'></div>
-            <div class='text' v-if="names.statue !== 'cashier'">
+            <div class='text' v-if="props.printId === 'save'" >
               SAVED
+            </div>
+            <div class='text' v-else-if="props.printId === 'print'">
+              PRINTED
             </div>
             <div class='text' v-else>
               PAID
+              <p style="font-size: 12px">Your change is {{ props.minPrice }}$</p>
             </div>
             <div class='e52'></div>
           </div>
@@ -50,7 +54,13 @@
 </template>
 
 <script setup>
-const names = JSON.parse(localStorage.getItem('name'))
+import {defineProps} from 'vue';
+// const names = JSON.parse(localStorage.getItem('name'))
+
+const props = defineProps({
+  minPrice: {type: Number, required: false},
+  printId: {type: String, required: true},
+})
 </script>
 
 <style scoped lang="scss" src="../styles/printOrder.scss">
