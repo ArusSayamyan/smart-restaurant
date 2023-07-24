@@ -103,7 +103,7 @@ function delNumber() {
 //PAY FOR ORDER
 const emitEvent = (paid) => {
   if (countOfGuests.value.textContent) {
-    emit('payOrder', paid)
+    emit('payOrder', paid, countOfGuests.value.textContent)
     countOfGuests.value.textContent = '';
     const table = store.getters.getTable
 

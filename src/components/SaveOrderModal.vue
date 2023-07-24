@@ -1,6 +1,6 @@
 <template>
   <div>
-    <PrintOrder v-if="printOrder"></PrintOrder>
+    <PrintOrder v-if="printOrder" :printId="props.id"></PrintOrder>
     <div class="saveOrderModal" :id="props.id" v-if="props.showModal || props.showCancelModal || props.showPrintModal">
       <div class="saveOrderModal__content">
         <p class="saveOrderModal__desc" v-if="!orderIsEmpty">{{ props.content }}</p>
