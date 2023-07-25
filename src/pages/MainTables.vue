@@ -4,7 +4,7 @@
     <div class="tables__tableWrapper">
       <div class="tables__content" v-for="table in tables" :key="table.table"
            @click="!table.selected ? emitEvent(table.table) : allLists(table.table)"
-           :class="{'tables__selected': table.selected, 'tables__selected--disabled': table.disabled || table.isPrinted && waiters.id === 'waiter'}">
+           :class="{'tables__selected': table.selected, 'tables__selected--disabled': table.disabled || table.isPrinted && waiters.statue === 'waiter'}">
         <img src="../assets/table.png" alt="" class="tables__img">
         <img src="../assets/payedOrder.svg" alt="" class="tables__printed" v-if="table.isPrinted">
         <p class="tables__number">{{ table.table }}</p>
