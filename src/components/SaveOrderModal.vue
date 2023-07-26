@@ -42,6 +42,7 @@ const tableNum = computed(() => {
 
 //GET LOGIN ID
 const loginId = store.getters.getLoginId;
+// const fromEditPage = window.history.state.back === '/orderList/' + loginId
 
 
 const PrintOrder = defineAsyncComponent(() =>
@@ -64,29 +65,24 @@ function save() {
     //SHOW PRINTING ANIMATION
     printOrder.value = true
 
-
     //ADD ITEMS TO LOCALSTORAGE
     let dataArr = JSON.parse(localStorage.getItem(loginId)) || [];
     if (window.history.state.back === '/orderList/' + loginId || loginId.includes('cashier')) {
-      let filteredArray;
-      for (let item of selectedItems.value) {
-        filteredArray = dataArr.filter(subArray =>
-            subArray.some(obj => obj.table !== item.table)
-        );
-        item.table = table
-      }
-      filteredArray.push(selectedItems.value);
-      localStorage.setItem(loginId, JSON.stringify(filteredArray))
-      if (loginId.includes('manager') || loginId.includes('cashier')) {
-        const worker = JSON.parse(localStorage.getItem('tables'))
-        for (let item of worker) {
-          if (item.table === table) {
-            dataArr = JSON.parse(localStorage.getItem(item.id))
-            dataArr.push(selectedItems.value);
-            localStorage.setItem(item.id, JSON.stringify(dataArr))
+      const worker = JSON.parse(localStorage.getItem('tables'))
+      let filteredArray = [];
+      for (let item of worker) {
+        if (item.table === table) {
+          dataArr = JSON.parse(localStorage.getItem(item.id))
+          for (let item of selectedItems.value) {
+            filteredArray = dataArr.filter(subArray =>
+                subArray.some(obj => obj.table !== item.table)
+            );
+            item.table = table
           }
-
+          filteredArray.push(selectedItems.value);
+          localStorage.setItem(item.id, JSON.stringify(filteredArray))
         }
+
       }
     } else {
       dataArr.push(selectedItems.value);
@@ -95,10 +91,7 @@ function save() {
 
 
     //ADD TABLE NUMBERS TO LOCALSTORAGE
-
-    let tableArr = JSON.parse(localStorage.getItem('tables')) || [];
-    tableArr.push(...tables);
-    localStorage.setItem('tables', JSON.stringify(tableArr))
+    localStorage.setItem('tables', JSON.stringify(tables))
 
     //HIDE PRINTING ANIMATION AFTER 3 SECONDS
 
@@ -137,6 +130,7 @@ function saveOrder() {
   }else if (props.id === 'cancel') {
     emit('myEvent', false)
     router.back();
+    store.commit('updateProducts', [])
   }else {
     orderIsEmpty.value = true
   }

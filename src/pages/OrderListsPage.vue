@@ -7,7 +7,7 @@
         <Message severity="success" key="message1"> Order successfully deleted</Message>
       </transition-group>
       <transition-group name="p-message" tag="div" v-if="errorText">
-        <Message severity="error" key="message1"> little money</Message>
+        <Message severity="error" key="message1">Not enough money to order</Message>
       </transition-group>
       <h1>Order list page</h1>
       <div class="orderListPage__wrapper">

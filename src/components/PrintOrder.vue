@@ -30,7 +30,7 @@
             </div>
             <div class='text' v-else>
               PAID
-              <p style="font-size: 12px">Your change is {{ props.minPrice }}$</p>
+              <p style="font-size: 12px" v-if="props.minPrice > 0">Your change is {{ props.minPrice }}$</p>
             </div>
             <div class='e52'></div>
           </div>
@@ -55,7 +55,6 @@
 
 <script setup>
 import {defineProps} from 'vue';
-// const names = JSON.parse(localStorage.getItem('name'))
 
 const props = defineProps({
   minPrice: {type: Number, required: false},
