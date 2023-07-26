@@ -43,7 +43,7 @@
                                                       @click="showCancelModal = true"></button>
           <button class="orderDetails__printOrder" v-if="fromEditPage || object.statue === 'cashier'"><img src="../assets/printer.svg" alt="" class="orderDetails__icon"
                                                       @click="printOrder"></button>
-          <button class="orderDetails__delOrder" v-if="fromEditPage && object.statue === 'waiter'"><img src="../assets/trash.svg" alt="" class="orderDetails__icon"
+          <button class="orderDetails__delOrder" v-if="fromEditPage && object.statue === 'waiter'"><img src="../assets/file-minus.svg" alt="" class="orderDetails__icon"
                                                                                                            @click="delOrder"></button>
         </div>
       </div>
